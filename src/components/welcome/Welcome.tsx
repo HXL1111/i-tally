@@ -1,22 +1,16 @@
-import { defineComponent, PropType } from 'vue'
+import { FunctionalComponent } from 'vue'
 import s from './Welcome.module.scss'
-export const Welcome = defineComponent({
-  props: {
-    name: {
-      type: String as PropType<string>,
-    },
-  },
-  setup: (props, context) => {
-    return () => (
-      <div class={s.wrapper}>
-        <header>
-          <svg>
-            <use xlinkHref="#pig" />
-          </svg>
-        </header>
-        <main></main>
-        <footer></footer>
+export const Welcome: FunctionalComponent = (props, context) => {
+  const {
+    slots: { icon, title, buttons },
+  } = context
+  return (
+    <div class={s.wrapper}>
+      <div class={s.card}>
+        {icon?.()}
+        {title?.()}
       </div>
-    )
-  },
-})
+      <div class={s.actions}>{buttons?.()}</div>
+    </div>
+  )
+}

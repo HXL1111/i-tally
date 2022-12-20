@@ -1,16 +1,19 @@
-import { defineComponent, PropType } from 'vue'
+import { Icon } from '@/shared/Icon'
+import { defineComponent } from 'vue'
 import { RouterView } from 'vue-router'
+import s from './WelcomePage.module.scss'
 
 export const WelcomePage = defineComponent({
-  props: {
-    name: {
-      type: String as PropType<string>,
-    },
-  },
   setup: (props, context) => {
     return () => (
-      <div>
-        <RouterView />
+      <div class={s.wrapper}>
+        <header>
+          <Icon name="wallet" class={s.icon} />
+          <h1>山竹记账</h1>
+        </header>
+        <main>
+          <RouterView />
+        </main>
       </div>
     )
   },

@@ -2,8 +2,11 @@ import { createApp } from 'vue'
 import { App } from './App'
 import { routes } from './config/routes'
 import { createRouter } from 'vue-router';
-import { history } from './share/history';
+import { history } from './shared/history';
+import '@/assets/stylesheet/reset.scss'
+import '@/assets/stylesheet/vars.scss'
 import '@svgstore'
+
 const router = createRouter({
   history,
   routes,
