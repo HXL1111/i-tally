@@ -1,7 +1,7 @@
 import { defineComponent, PropType } from 'vue'
 import { RouterView } from 'vue-router'
 
-export const Welcome = defineComponent({
+export const WelcomePage = defineComponent({
   props: {
     name: {
       type: String as PropType<string>,
