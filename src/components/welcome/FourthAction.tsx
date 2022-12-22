@@ -5,7 +5,7 @@ export const FourthActions = () => (
     <RouterLink class={s.fake} to="/start">
       跳过
     </RouterLink>
-    <RouterLink to="/start">完成</RouterLink>
+    <RouterLink to="/start">开启应用</RouterLink>
     <RouterLink class={s.fake} to="/start">
       跳过
     </RouterLink>
