@@ -1,5 +1,5 @@
+import { NavBarLayout } from '@/Layouts/NavBarLayout'
 import { Icon } from '@/shared/Icon'
-import { NavBar } from '@/shared/NavBar'
 import { defineComponent, PropType } from 'vue'
 import s from './StartPage.module.scss'
 export const StartPage = defineComponent({
@@ -11,12 +11,13 @@ export const StartPage = defineComponent({
   setup: (props, context) => {
     return () => (
       <div class={s.wrapper}>
-        <NavBar>
+        <NavBarLayout>
           {{
             icon: () => <Icon name="menu" class={s.icon} />,
             title: () => <span class={s.title}>i 记账</span>,
+            default: () => <div>main</div>,
           }}
-        </NavBar>
+        </NavBarLayout>
       </div>
     )
   },
