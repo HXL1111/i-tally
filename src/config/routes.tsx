@@ -6,6 +6,7 @@ import { Second } from '@/components/welcome/Second'
 import { SecondActions } from '@/components/welcome/SecondActions'
 import { Third } from '@/components/welcome/Third'
 import { ThirdActions } from '@/components/welcome/ThirdAction'
+import { StartPage } from '@/views/StartPage'
 import { WelcomePage } from '@/views/WelcomePage'
 import { RouteRecordRaw } from 'vue-router'
 
@@ -38,4 +39,5 @@ export const routes: RouteRecordRaw[] = [
       },
     ],
   },
+  { path: '/start', component: StartPage },
 ]
