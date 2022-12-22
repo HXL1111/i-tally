@@ -4,7 +4,7 @@ import { Icon } from '@/shared/Icon'
 export const Fourth: FunctionalComponent = () => {
   return (
     <div class={s.card}>
-      <Icon name="clock" />
+      <Icon name="clock" class={s.icon} />
       <h2>
         云备份
         <br />

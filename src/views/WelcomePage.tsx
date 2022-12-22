@@ -12,11 +12,26 @@ export const WelcomePage = defineComponent({
           <h1>山竹记账</h1>
         </header>
         <main>
-          <RouterView name="main" />
+          <RouterView name="main">
+            {({
+              Component: X,
+              route: R,
+            }: {
+              Component: VNode
+              route: RouteLocationNormalizedLoaded
+            }) => (
+              <Transition
+                enterFromClass={s.slide_fade_enter_from}
+                enterActiveClass={s.slide_fade_enter_active}
+                leaveToClass={s.slide_fade_leave_to}
+                leaveActiveClass={s.slide_fade_leave_active}
+              >
+                {X}
+              </Transition>
+            )}
+          </RouterView>
         </main>
-        <footer>
-          <RouterView name="footer" />
-        </footer>
+        <RouterView name="footer" />
       </div>
     )
   },

@@ -4,7 +4,7 @@ import { Icon } from '@/shared/Icon'
 export const Third: FunctionalComponent = () => {
   return (
     <div class={s.card}>
-      <Icon name="statistics" />
+      <Icon name="statistics" class={s.icon} />
       <h2>
         数据可视化
         <br />

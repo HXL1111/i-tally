@@ -9,17 +9,16 @@
   justify-content: center;
   align-items: center;
   text-align: center;
+  > .icon {
+    width: 128px;
+    height: 128px;
+  }
   > h2 {
     margin-top: 40px;
   }
 }
 
 .actions {
-  position: fixed;
-  z-index: var(--z-index-bottom-nav);
-  background: var(--welcome-bg-end);
-  left: 0;
-  bottom: 0;
   width: 100%;
   display: flex;
   justify-content: space-between;

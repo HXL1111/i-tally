@@ -1,5 +1,5 @@
 .wrapper {
-  height: calc(100vh - var(--welcome-nav-height));
+  height: 100vh;
   display: flex;
   flex-direction: column;
   background-image: linear-gradient(
@@ -7,7 +7,7 @@
     var(--welcome-bg-start) 0%,
     var(--welcome-bg-end) 100%
   );
-  margin-bottom: var(--welcome-nav-height);
+  overflow: hidden;
   > header {
     flex-shrink: 0;
     display: flex;
@@ -26,10 +26,7 @@
     display: flex;
     flex-direction: column;
     position: relative;
-    margin: 16px 16px var(--welcome-nav-gap);
-  }
-  > footer {
-    flex-shrink: 0;
+    margin: 16px;
   }
 }
 
