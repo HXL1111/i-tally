@@ -11,12 +11,8 @@ export const StartPage = defineComponent({
   setup: (props, context) => {
     return () => (
       <div class={s.wrapper}>
-        <NavBarLayout>
-          {{
-            icon: () => <Icon name="menu" class={s.icon} />,
-            title: () => <span class={s.title}>i 记账</span>,
-            default: () => <div>main</div>,
-          }}
+        <NavBarLayout iconName="menu" title="i 记账">
+          {{ default: () => <div>main</div> }}
         </NavBarLayout>
       </div>
     )
