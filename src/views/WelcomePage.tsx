@@ -1,6 +1,6 @@
 import { Icon } from '@/shared/Icon'
-import { defineComponent } from 'vue'
-import { RouterView } from 'vue-router'
+import { defineComponent, Transition, VNode } from 'vue'
+import { RouteLocationNormalizedLoaded, RouterView } from 'vue-router'
 import s from './WelcomePage.module.scss'
 
 export const WelcomePage = defineComponent({
@@ -12,8 +12,11 @@ export const WelcomePage = defineComponent({
           <h1>山竹记账</h1>
         </header>
         <main>
-          <RouterView />
+          <RouterView name="main" />
         </main>
+        <footer>
+          <RouterView name="footer" />
+        </footer>
       </div>
     )
   },
