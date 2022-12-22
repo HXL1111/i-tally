@@ -1,0 +1,11 @@
+.wrapper {
+  margin: 0 16px;
+  > button {
+    width: 100%;
+    height: var(--button-height);
+    border: none;
+    background: var(--button-bg);
+    color: var(--button-text-color);
+    border-radius: var(--button-radius);
+  }
+}

@@ -1,4 +1,5 @@
 import { NavBarLayout } from '@/layouts/NavBarLayout'
+import { Button } from '@/shared/Button'
 import { Tabs, Tab } from '@/shared/Tabs'
 import { defineComponent, PropType, ref } from 'vue'
 import s from './StartPage.module.scss'
@@ -17,11 +18,12 @@ export const StartPage = defineComponent({
             default: () => (
               <>
                 <Tabs v-model:selected={refKind.value}>
-                  <Tab name="本月">列表1</Tab>
-                  <Tab name="上个月">列表2</Tab>
-                  <Tab name="今年">列表3</Tab>
-                  <Tab name="自定义时间">列表4</Tab>
+                  <Tab name="本月"></Tab>
+                  <Tab name="上个月"></Tab>
+                  <Tab name="今年"></Tab>
+                  <Tab name="自定义时间"></Tab>
                 </Tabs>
+                <Button>开始记账</Button>
               </>
             ),
           }}
