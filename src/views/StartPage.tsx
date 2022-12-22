@@ -1,5 +1,6 @@
 import { NavBarLayout } from '@/layouts/NavBarLayout'
 import { Button } from '@/shared/Button'
+import { FloatButton } from '@/shared/FloatButton'
 import { Tabs, Tab } from '@/shared/Tabs'
 import { defineComponent, PropType, ref } from 'vue'
 import s from './StartPage.module.scss'
@@ -28,6 +29,7 @@ export const StartPage = defineComponent({
             ),
           }}
         </NavBarLayout>
+        <FloatButton />
       </div>
     )
   },
