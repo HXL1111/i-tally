@@ -7,7 +7,7 @@
     color: var(--tabs-text-color);
     background: #438883;
     > li {
-      padding: 0 16px 10px;
+      padding: 1px 16px 10px;
       &.selected {
         position: relative;
         &::after {

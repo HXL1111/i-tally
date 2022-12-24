@@ -11,6 +11,9 @@ export const NavBarLayout = defineComponent({
     title: {
       type: String as PropType<string>,
     },
+    onClick: {
+      type: Function as PropType<(e: MouseEvent) => void>,
+    },
   },
   setup: (props, context) => {
     const { slots } = context
@@ -18,7 +21,12 @@ export const NavBarLayout = defineComponent({
       <div class={s.wrapper}>
         <NavBar>
           {{
-            icon: () => <Icon name={props.iconName} class={s.icon} />,
+            icon: () => (
+              <Icon onClick={props.onClick}
+                name={props.iconName}
+                class={s.icon}
+              />
+            ),
             title: () => <span class={s.title}>{props.title}</span>,
           }}
         </NavBar>

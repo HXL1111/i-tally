@@ -1,0 +1,60 @@
+.mask {
+  position: fixed;
+  left: 0;
+  top: 0;
+  background: var(--overlay-mask-bg);
+  width: 100%;
+  height: 100%;
+  z-index: var(--overlay-mask-index);
+}
+.overlay {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 16em;
+  height: 100%;
+  z-index: var(--overlay-index);
+  background-image: linear-gradient(
+    to bottom,
+    var(--overlay-bg-start) 0%,
+    var(--overlay-bg-end) 100%
+  );
+  display: flex;
+  flex-direction: column;
+  > section {
+    padding: 32px 16px;
+    > h2 {
+      color: var(--overlay-h2-text-color);
+    }
+    > span {
+      color: var(--overlay-span-text-color);
+    }
+  }
+  > ol {
+    background: var(--overlay-ol-bg);
+    flex-grow: 1;
+    > li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 16px 0;
+      font-size: 20px;
+      > .left {
+        display: flex;
+        align-items: center;
+        > .logo {
+          width: 28px;
+          height: 28px;
+        }
+        > span {
+          padding-left: 10px;
+        }
+      }
+      > .right {
+        fill: #999999;
+        width: 28px;
+        height: 28px;
+      }
+    }
+  }
+}

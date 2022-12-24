@@ -2,6 +2,7 @@ import { NavBarLayout } from '@/layouts/NavBarLayout'
 import { Button } from '@/shared/Button'
 import { FloatButton } from '@/shared/FloatButton'
 import { Icon } from '@/shared/Icon'
+import { Overlay } from '@/shared/Overlay'
 import { Tabs, Tab } from '@/shared/Tabs'
 import { defineComponent, PropType, ref } from 'vue'
 import s from './StartPage.module.scss'
@@ -13,10 +14,15 @@ export const StartPage = defineComponent({
   },
   setup: (props, context) => {
     const refKind = ref('本月')
-    const onClick = () => {}
+    const overlayVisible = ref(false)
+    const buttonOnClick = () => {}
+    const overlayOnClick = () => {
+      overlayVisible.value = !overlayVisible.value
+      console.log(overlayVisible.value)
+    }
     return () => (
       <div class={s.wrapper}>
-        <NavBarLayout iconName="menu" title="i 记账">
+        <NavBarLayout iconName="menu" title="i 记账" onClick={overlayOnClick}>
           {{
             default: () => (
               <>
@@ -30,8 +36,9 @@ export const StartPage = defineComponent({
                   <Icon name="bill" class={s.icon} />
                   <span>暂无数据</span>
                 </div>
-                <Button onClick={onClick}>开始记账</Button>
+                <Button onClick={buttonOnClick}>开始记账</Button>
                 <FloatButton />
+                {overlayVisible.value && <Overlay />}
               </>
             ),
           }}
