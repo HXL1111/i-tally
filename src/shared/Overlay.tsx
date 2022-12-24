@@ -2,10 +2,15 @@ import { defineComponent, PropType } from 'vue'
 import { Icon } from './Icon'
 import s from './Overlay.module.scss'
 export const Overlay = defineComponent({
+  props:{
+    onClose:{
+      type:Function as PropType<(e:MouseEvent)=>void>
+    }
+  },
   setup: (props, context) => {
     return () => (
       <>
-        <div class={s.mask}></div>
+        <div class={s.mask} onClick={props.onClose}></div>
         <div class={s.overlay}>
           <section>
             <h2>未登录用户</h2>

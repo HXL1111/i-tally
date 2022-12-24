@@ -38,7 +38,13 @@ export const StartPage = defineComponent({
                 </div>
                 <Button onClick={buttonOnClick}>开始记账</Button>
                 <FloatButton />
-                {overlayVisible.value && <Overlay />}
+                {overlayVisible.value && (
+                  <Overlay
+                    onClose={() => {
+                      overlayVisible.value = false
+                    }}
+                  />
+                )}
               </>
             ),
           }}
