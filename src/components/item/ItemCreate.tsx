@@ -17,47 +17,49 @@ export const ItemCreate = defineComponent({
         <NavBarLayout iconName="left" title="记一笔">
           {{
             default: () => (
-              <>
-                <Tabs v-model:selected={refKind.value}>
-                  <Tab name="支出"></Tab>
+              <div class={s.wrapper}>
+                <Tabs v-model:selected={refKind.value} class={s.tabs}>
+                  <Tab name="支出">
+                    <ol>
+                      <li>
+                        <Icon name="add" />
+                        <span>新增</span>
+                      </li>
+                      <li>
+                        <Icon name="add" />
+                        <span>新增</span>
+                      </li>
+                      <li>
+                        <Icon name="add" />
+                        <span>新增</span>
+                      </li>
+                      <li>
+                        <Icon name="add" />
+                        <span>新增</span>
+                      </li>
+                      <li>
+                        <Icon name="add" />
+                        <span>新增</span>
+                      </li>
+                      <li>
+                        <Icon name="add" />
+                        <span>新增</span>
+                      </li>
+                      <li>
+                        <Icon name="add" />
+                        <span>新增</span>
+                      </li>
+                      <li>
+                        <Icon name="add" />
+                        <span>新增</span>
+                      </li>
+                    </ol>
+                  </Tab>
                   <Tab name="收入"></Tab>
                 </Tabs>
-                <ol>
-                  <li>
-                    <Icon name="add" />
-                    <span>新增</span>
-                  </li>
-                  <li>
-                    <Icon name="add" />
-                    <span>新增</span>
-                  </li>
-                  <li>
-                    <Icon name="add" />
-                    <span>新增</span>
-                  </li>
-                  <li>
-                    <Icon name="add" />
-                    <span>新增</span>
-                  </li>
-                  <li>
-                    <Icon name="add" />
-                    <span>新增</span>
-                  </li>
-                  <li>
-                    <Icon name="add" />
-                    <span>新增</span>
-                  </li>
-                  <li>
-                    <Icon name="add" />
-                    <span>新增</span>
-                  </li>
-                  <li>
-                    <Icon name="add" />
-                    <span>新增</span>
-                  </li>
-                </ol>
+
                 <InputPad />
-              </>
+              </div>
             ),
           }}
         </NavBarLayout>

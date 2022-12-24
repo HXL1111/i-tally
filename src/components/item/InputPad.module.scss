@@ -1,0 +1,103 @@
+.inputPad {
+  background: var(--inputPad-bg);
+  padding: 12px;
+  > .amountDateAndNotes {
+    background: var(--inputPad-content-bg);
+    border-radius: var(--inputPad-content-radius);
+    padding: 0 12px;
+    .amount {
+      font-size: 36px;
+    }
+    .dateAndNotes {
+      display: flex;
+      align-items: center;
+      padding: 6px 0;
+      border-top: 1px solid #d8d8d8;
+      color: #999999;
+      font-size: 12px;
+      > .date {
+        display: flex;
+        align-items: center;
+        > .icon {
+          width: 24px;
+          height: 24px;
+          padding-right: 6px;
+        }
+      }
+      > .notes {
+        margin-top: -2px;
+        padding-left: 16px;
+      }
+    }
+  }
+  .numberPad {
+    display: grid;
+    grid-template-areas:
+      'n1 n2 n3 d1'
+      'n4 n5 n6 da'
+      'n7 n8 n9 s'
+      'n0 n0 nd s';
+    grid-auto-rows: 48px;
+    grid-auto-columns: 1fr;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding-top: 12px;
+    > button {
+      border: none;
+      background: var(--inputPad-content-bg);
+      border-radius: var(--inputPad-content-radius);
+      font-size: 24px;
+      color: var(--number-button-color);
+      &:nth-child(1) {
+        grid-area: n1;
+      }
+      &:nth-child(2) {
+        grid-area: n2;
+      }
+      &:nth-child(3) {
+        grid-area: n3;
+      }
+      &:nth-child(4) {
+        grid-area: d1;
+      }
+      &:nth-child(5) {
+        grid-area: n4;
+      }
+      &:nth-child(6) {
+        grid-area: n5;
+      }
+      &:nth-child(7) {
+        grid-area: n6;
+      }
+      &:nth-child(8) {
+        grid-area: da;
+      }
+      &:nth-child(9) {
+        grid-area: n7;
+      }
+      &:nth-child(10) {
+        grid-area: n8;
+      }
+      &:nth-child(11) {
+        grid-area: n9;
+      }
+      &:nth-child(12) {
+        grid-area: s;
+        background: var(--button-bg);
+        color: var(--number-save-button-color);
+      }
+      &:nth-child(13) {
+        grid-area: n0;
+      }
+      &:nth-child(14) {
+        grid-area: nd;
+      }
+    }
+  }
+}
+
+.delete {
+  width: 36px;
+  height: 36px;
+  fill: var(--number-button-color);
+}
