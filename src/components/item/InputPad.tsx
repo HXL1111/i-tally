@@ -4,6 +4,7 @@ import s from './InputPad.module.scss'
 import { DatePicker, Popup } from 'vant'
 import 'vant/es/picker/style'
 import 'vant/es/popup/style'
+import { time } from '@/shared/time'
 export const InputPad = defineComponent({
   props: {
     name: {
@@ -29,7 +30,11 @@ export const InputPad = defineComponent({
     ]
     const notes = ref('')
     const now = new Date()
-    const currentDate = ref(['2021', '01', '01'])
+    const currentDate = ref([
+      time(now).format('YYYY'),
+      time(now).format('MM'),
+      time(now).format('DD'),
+    ])
     const datePickerVisible = ref(false)
     return () => (
       <div class={s.inputPad}>
@@ -41,7 +46,7 @@ export const InputPad = defineComponent({
               onClick={() => (datePickerVisible.value = true)}
             >
               <Icon name="date" class={s.icon} />
-              <span>{currentDate.value}</span>
+              <span>{time(now).format()}</span>
             </div>
             <Popup v-model:show={datePickerVisible.value} position="bottom">
               <DatePicker modelValue={currentDate.value} title="选择日期" />
