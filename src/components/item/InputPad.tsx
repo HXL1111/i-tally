@@ -1,6 +1,9 @@
 import { Icon } from '@/shared/Icon'
 import { defineComponent, PropType, ref } from 'vue'
 import s from './InputPad.module.scss'
+import { DatePicker, Popup } from 'vant'
+import 'vant/es/picker/style'
+import 'vant/es/popup/style'
 export const InputPad = defineComponent({
   props: {
     name: {
@@ -25,15 +28,24 @@ export const InputPad = defineComponent({
       { text: '.', onClick: () => {} },
     ]
     const notes = ref('')
+    const now = new Date()
+    const currentDate = ref(['2021', '01', '01'])
+    const datePickerVisible = ref(false)
     return () => (
       <div class={s.inputPad}>
         <div class={s.amountDateAndNotes}>
           <div class={s.amount}>￥ 100</div>
           <div class={s.dateAndNotes}>
-            <div class={s.date}>
+            <div
+              class={s.date}
+              onClick={() => (datePickerVisible.value = true)}
+            >
               <Icon name="date" class={s.icon} />
-              <span>2022-11-30</span>
+              <span>{currentDate.value}</span>
             </div>
+            <Popup v-model:show={datePickerVisible.value} position="bottom">
+              <DatePicker modelValue={currentDate.value} title="选择日期" />
+            </Popup>
             <form class={s.notes}>
               <input
                 type="text"
