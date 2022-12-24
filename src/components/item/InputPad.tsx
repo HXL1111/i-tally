@@ -35,11 +35,13 @@ export const InputPad = defineComponent({
       time(now).format('MM'),
       time(now).format('DD'),
     ])
+
     const datePickerVisible = ref(false)
+
     return () => (
       <div class={s.inputPad}>
         <div class={s.amountDateAndNotes}>
-          <div class={s.amount}>￥ 100</div>
+          <div class={s.amount}>￥100</div>
           <div class={s.dateAndNotes}>
             <div
               class={s.date}
@@ -49,7 +51,7 @@ export const InputPad = defineComponent({
               <span>{time(now).format()}</span>
             </div>
             <Popup v-model:show={datePickerVisible.value} position="bottom">
-              <DatePicker modelValue={currentDate.value} title="选择日期" />
+              <DatePicker modelValue={['2000', '11', '11']} title="选择日期" />
             </Popup>
             <form class={s.notes}>
               <input
