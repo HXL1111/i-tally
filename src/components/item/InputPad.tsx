@@ -1,5 +1,5 @@
 import { Icon } from '@/shared/Icon'
-import { defineComponent, PropType } from 'vue'
+import { defineComponent, PropType, ref } from 'vue'
 import s from './InputPad.module.scss'
 export const InputPad = defineComponent({
   props: {
@@ -12,7 +12,7 @@ export const InputPad = defineComponent({
       { text: '1', onClick: () => {} },
       { text: '2', onClick: () => {} },
       { text: '3', onClick: () => {} },
-      { text: <Icon name="delete" />, onClick: () => {} },
+      { text: <Icon name="delete" class={s.delete} />, onClick: () => {} },
       { text: '4', onClick: () => {} },
       { text: '5', onClick: () => {} },
       { text: '6', onClick: () => {} },
@@ -24,6 +24,7 @@ export const InputPad = defineComponent({
       { text: '0', onClick: () => {} },
       { text: '.', onClick: () => {} },
     ]
+    const notes = ref('')
     return () => (
       <div class={s.inputPad}>
         <div class={s.amountDateAndNotes}>
@@ -33,7 +34,13 @@ export const InputPad = defineComponent({
               <Icon name="date" class={s.icon} />
               <span>2022-11-30</span>
             </div>
-            <span class={s.notes}>点击填写备注</span>
+            <form class={s.notes}>
+              <input
+                type="text"
+                placeholder="点击填写备注"
+                v-model={notes.value}
+              />
+            </form>
           </div>
         </div>
         <div class={s.numberPad}>
