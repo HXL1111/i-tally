@@ -10,6 +10,7 @@ export const NavBarLayout = defineComponent({
     },
     title: {
       type: String as PropType<string>,
+      required: true,
     },
     onClick: {
       type: Function as PropType<(e: MouseEvent) => void>,
@@ -22,7 +23,8 @@ export const NavBarLayout = defineComponent({
         <NavBar>
           {{
             icon: () => (
-              <Icon onClick={props.onClick}
+              <Icon
+                onClick={props.onClick}
                 name={props.iconName}
                 class={s.icon}
               />

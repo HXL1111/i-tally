@@ -8,6 +8,8 @@
     background: #438883;
     > li {
       padding: 1px 16px 10px;
+      flex-grow: 1;
+      flex-shrink: 0;
       &.selected {
         position: relative;
         &::after {
