@@ -5,7 +5,7 @@ import { DatePicker, Popup } from 'vant'
 import 'vant/es/picker/style'
 import 'vant/es/popup/style'
 import { time } from '@/shared/time'
-import { join } from 'path'
+
 export const InputPad = defineComponent({
   props: {
     name: {
@@ -13,22 +13,107 @@ export const InputPad = defineComponent({
     },
   },
   setup: (props, context) => {
+    const appendText = (n: string) => {
+      if (refAmount.value.length >= 13) {
+        return
+      }
+      if (refAmount.value === '0' && n !== '.') {
+        refAmount.value = n
+      } else if (refAmount.value.indexOf('.') >= 0 && n === '.') {
+        return
+      } else {
+        refAmount.value += n
+      }
+    }
+    const remove = () => {
+      if (refAmount.value.length === 1) {
+        refAmount.value = '0'
+      } else {
+        refAmount.value = refAmount.value.slice(0, -1)
+      }
+    }
     const buttons = [
-      { text: '1', onClick: () => {} },
-      { text: '2', onClick: () => {} },
-      { text: '3', onClick: () => {} },
-      { text: <Icon name="delete" class={s.delete} />, onClick: () => {} },
-      { text: '4', onClick: () => {} },
-      { text: '5', onClick: () => {} },
-      { text: '6', onClick: () => {} },
-      { text: '清空', onClick: () => {} },
-      { text: '7', onClick: () => {} },
-      { text: '8', onClick: () => {} },
-      { text: '9', onClick: () => {} },
+      {
+        text: '1',
+        onClick: () => {
+          appendText('1')
+        },
+      },
+      {
+        text: '2',
+        onClick: () => {
+          appendText('2')
+        },
+      },
+      {
+        text: '3',
+        onClick: () => {
+          appendText('3')
+        },
+      },
+      {
+        text: <Icon name="delete" class={s.delete} />,
+        onClick: () => {
+          remove()
+        },
+      },
+      {
+        text: '4',
+        onClick: () => {
+          appendText('4')
+        },
+      },
+      {
+        text: '5',
+        onClick: () => {
+          appendText('5')
+        },
+      },
+      {
+        text: '6',
+        onClick: () => {
+          appendText('6')
+        },
+      },
+      {
+        text: '清空',
+        onClick: () => {
+          refAmount.value = '0'
+        },
+      },
+      {
+        text: '7',
+        onClick: () => {
+          appendText('7')
+        },
+      },
+      {
+        text: '8',
+        onClick: () => {
+          appendText('8')
+        },
+      },
+      {
+        text: '9',
+        onClick: () => {
+          appendText('9')
+        },
+      },
       { text: '完成', onClick: () => {} },
-      { text: '0', onClick: () => {} },
-      { text: '.', onClick: () => {} },
+      {
+        text: '0',
+        onClick: () => {
+          appendText('0')
+        },
+      },
+      {
+        text: '.',
+        onClick: () => {
+          appendText('.')
+        },
+      },
     ]
+    const refAmount = ref('0')
     const notes = ref('')
     let now = new Date()
     const refCurrentDate = ref([
@@ -46,7 +131,7 @@ export const InputPad = defineComponent({
     return () => (
       <div class={s.inputPad}>
         <div class={s.amountDateAndNotes}>
-          <div class={s.amount}>￥100</div>
+          <div class={s.amount}>￥{refAmount.value}</div>
           <div class={s.dateAndNotes}>
             <div
               class={s.date}
