@@ -36,7 +36,9 @@ export const StartPage = defineComponent({
                   <Icon name="bill" class={s.icon} />
                   <span>暂无数据</span>
                 </div>
-                <Button onClick={buttonOnClick}>开始记账</Button>
+                <div class={s.button_wrapper}>
+                  <Button onClick={buttonOnClick}>开始记账</Button>
+                </div>
                 <FloatButton />
                 {overlayVisible.value && (
                   <Overlay

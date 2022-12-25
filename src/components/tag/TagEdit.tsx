@@ -1,4 +1,7 @@
+import { Button } from '@/shared/Button'
 import { defineComponent, PropType } from 'vue'
+import { TagForm } from './TagForm'
+import s from './Tag.module.scss'
 export const TagEdit = defineComponent({
   props: {
     name: {
@@ -6,6 +9,10 @@ export const TagEdit = defineComponent({
     },
   },
   setup: (props, context) => {
-    return () => <div>TagEdit</div>
+    return () => (
+      <TagForm>
+        <Button class={[s.button, s.danger]}>删除标签</Button>
+      </TagForm>
+    )
   },
 })
