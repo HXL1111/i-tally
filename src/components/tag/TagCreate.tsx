@@ -1,5 +1,6 @@
 import { NavBarLayout } from '@/layouts/NavBarLayout'
 import { Button } from '@/shared/Button'
+import { Icon } from '@/shared/Icon'
 import { LogoSelect } from '@/shared/LogoSelect'
 import { defineComponent, PropType } from 'vue'
 import s from './TagCreate.module.scss'

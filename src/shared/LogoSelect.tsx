@@ -1,6 +1,7 @@
-import { defineComponent, PropType } from 'vue'
+import { computed, defineComponent, PropType, ref } from 'vue'
 import { Icon } from './Icon'
 import s from './LogoSelect.module.scss'
+import { tagLogoList } from './tagLogoList'
 export const LogoSelect = defineComponent({
   props: {
     name: {
@@ -8,263 +9,33 @@ export const LogoSelect = defineComponent({
     },
   },
   setup: (props, context) => {
+    const refSelected = ref('日常')
+    const logos = computed(() => {
+      return tagLogoList.find((item) => item.kind === refSelected.value)
+    })
+    console.log(logos.value)
     return () => (
       <div class={s.logoList}>
         <nav>
-          <span>财务</span>
-          <span>财务</span>
-          <span>财务</span>
-          <span>财务</span>
-          <span>财务</span>
-          <span>财务</span>
-          <span>财务</span>
-          <span>财务</span>
-          <span>财务</span>
-          <span>财务</span>
-          <span>财务</span>
-          <span>财务</span>
+          {tagLogoList.map((item) => (
+            <span
+              class={item.kind === refSelected.value ? s.selected : ''}
+              onClick={() => {
+                refSelected.value = item.kind
+              }}
+            >
+              {item.kind}
+            </span>
+          ))}
         </nav>
         <ol>
-          <li>
-            <div class={s.selectedLogo}>
-              <Icon name="add" class={s.icon} />
-            </div>
-          </li>
-          <li>
-            <div>
-              <Icon name="add" />
-            </div>
-          </li>
-          <li>
-            <div>
-              <Icon name="add" />
-            </div>
-          </li>
-          <li>
-            <div>
-              <Icon name="add" />
-            </div>
-          </li>
-          <li>
-            <div>
-              <Icon name="add" />
-            </div>
-          </li>
-          <li>
-            <div>
-              <Icon name="add" />
-            </div>
-          </li>
-          <li>
-            <div>
-              <Icon name="add" />
-            </div>
-          </li>
-          <li>
-            <div>
-              <Icon name="add" />
-            </div>
-          </li>
-          <li>
-            <div>
-              <Icon name="add" />
-            </div>
-          </li>
-          <li>
-            <div>
-              <Icon name="add" />
-            </div>
-          </li>
-          <li>
-            <div>
-              <Icon name="add" />
-            </div>
-          </li>
-          <li>
-            <div>
-              <Icon name="add" />
-            </div>
-          </li>
-          <li>
-            <div>
-              <Icon name="add" />
-            </div>
-          </li>
-          <li>
-            <div>
-              <Icon name="add" />
-            </div>
-          </li>
-          <li>
-            <div>
-              <Icon name="add" />
-            </div>
-          </li>
-          <li>
-            <div>
-              <Icon name="add" />
-            </div>
-          </li>
-          <li>
-            <div>
-              <Icon name="add" />
-            </div>
-          </li>
-          <li>
-            <div>
-              <Icon name="add" />
-            </div>
-          </li>
-          <li>
-            <div>
-              <Icon name="add" />
-            </div>
-          </li>
-          <li>
-            <div>
-              <Icon name="add" />
-            </div>
-          </li>
-          <li>
-            <div>
-              <Icon name="add" />
-            </div>
-          </li>
-          <li>
-            <div>
-              <Icon name="add" />
-            </div>
-          </li>
-          <li>
-            <div>
-              <Icon name="add" />
-            </div>
-          </li>
-          <li>
-            <div>
-              <Icon name="add" />
-            </div>
-          </li>
-          <li>
-            <div>
-              <Icon name="add" />
-            </div>
-          </li>
-          <li>
-            <div>
-              <Icon name="add" />
-            </div>
-          </li>
-          <li>
-            <div>
-              <Icon name="add" />
-            </div>
-          </li>
-          <li>
-            <div>
-              <Icon name="add" />
-            </div>
-          </li>
-          <li>
-            <div>
-              <Icon name="add" />
-            </div>
-          </li>
-          <li>
-            <div>
-              <Icon name="add" />
-            </div>
-          </li>
-          <li>
-            <div>
-              <Icon name="add" />
-            </div>
-          </li>
-          <li>
-            <div>
-              <Icon name="add" />
-            </div>
-          </li>
-          <li>
-            <div>
-              <Icon name="add" />
-            </div>
-          </li>
-          <li>
-            <div>
-              <Icon name="add" />
-            </div>
-          </li>
-          <li>
-            <div>
-              <Icon name="add" />
-            </div>
-          </li>
-          <li>
-            <div>
-              <Icon name="add" />
-            </div>
-          </li>
-          <li>
-            <div>
-              <Icon name="add" />
-            </div>
-          </li>
-          <li>
-            <div>
-              <Icon name="add" />
-            </div>
-          </li>
-          <li>
-            <div>
-              <Icon name="add" />
-            </div>
-          </li>
-          <li>
-            <div>
-              <Icon name="add" />
-            </div>
-          </li>
-          <li>
-            <div>
-              <Icon name="add" />
-            </div>
-          </li>
-          <li>
-            <div>
-              <Icon name="add" />
-            </div>
-          </li>
-          <li>
-            <div>
-              <Icon name="add" />
-            </div>
-          </li>
-          <li>
-            <div>
-              <Icon name="add" />
-            </div>
-          </li>
-          <li>
-            <div>
-              <Icon name="add" />
-            </div>
-          </li>
-          <li>
-            <div>
-              <Icon name="add" />
-            </div>
-          </li>
-          <li>
-            <div>
-              <Icon name="add" />
-            </div>
-          </li>
-          <li>
-            <div>
-              <Icon name="add" />
-            </div>
-          </li>
+          {logos.value?.iconName.map((name) => (
+            <li>
+              <div>
+                <Icon name={name} class={s.icon} />
+              </div>
+            </li>
+          ))}
         </ol>
       </div>
     )
