@@ -5,6 +5,7 @@ import { DatePicker, Popup } from 'vant'
 import 'vant/es/picker/style'
 import 'vant/es/popup/style'
 import { time } from '@/shared/time'
+import { join } from 'path'
 export const InputPad = defineComponent({
   props: {
     name: {
@@ -29,15 +30,19 @@ export const InputPad = defineComponent({
       { text: '.', onClick: () => {} },
     ]
     const notes = ref('')
-    const now = new Date()
-    const currentDate = ref([
+    let now = new Date()
+    const refCurrentDate = ref([
       time(now).format('YYYY'),
       time(now).format('MM'),
       time(now).format('DD'),
     ])
-
-    const datePickerVisible = ref(false)
-
+    const refDatePickerVisible = ref(false)
+    const showDatePicker = () => (refDatePickerVisible.value = true)
+    const hideDatePicker = () => (refDatePickerVisible.value = false)
+    const setDate = (date: any) => {
+      refCurrentDate.value = date.selectedValues
+      hideDatePicker()
+    }
     return () => (
       <div class={s.inputPad}>
         <div class={s.amountDateAndNotes}>
@@ -45,13 +50,22 @@ export const InputPad = defineComponent({
           <div class={s.dateAndNotes}>
             <div
               class={s.date}
-              onClick={() => (datePickerVisible.value = true)}
+              onClick={() => {
+                showDatePicker()
+              }}
             >
               <Icon name="date" class={s.icon} />
-              <span>{time(now).format()}</span>
+              <span>
+                {time(new Date(String(refCurrentDate.value))).format()}
+              </span>
             </div>
-            <Popup v-model:show={datePickerVisible.value} position="bottom">
-              <DatePicker modelValue={['2000', '11', '11']} title="选择日期" />
+            <Popup v-model:show={refDatePickerVisible.value} position="bottom">
+              <DatePicker
+                modelValue={refCurrentDate.value}
+                title="选择日期"
+                onConfirm={setDate}
+                onCancel={hideDatePicker}
+              />
             </Popup>
             <form class={s.notes}>
               <input
