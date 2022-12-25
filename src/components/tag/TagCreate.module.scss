@@ -1,0 +1,37 @@
+.form {
+  margin: 0 16px;
+  padding: 16px 0;
+  height: calc(100vh - 84px);
+  display: flex;
+  flex-direction: column;
+  > label {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 16px;
+    > span {
+      padding-bottom: 10px;
+    }
+    > input {
+      border: none;
+      background: var(--tagName-input-bg);
+      height: 56px;
+      border-radius: var(--border-radius);
+      font-size: 24px;
+      padding: 8px;
+    }
+  }
+  > p {
+    text-align: center;
+    padding-bottom: 16px;
+  }
+  > .buttons {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    > .button {
+      width: 100%;
+      margin: 0;
+    }
+  }
+}
