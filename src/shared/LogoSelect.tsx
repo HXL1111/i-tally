@@ -4,8 +4,8 @@ import s from './LogoSelect.module.scss'
 import { tagLogoList } from './tagLogoList'
 export const LogoSelect = defineComponent({
   props: {
-    name: {
-      type: String as PropType<string>,
+    modelValue: {
+      type: String,
     },
   },
   setup: (props, context) => {
@@ -13,7 +13,7 @@ export const LogoSelect = defineComponent({
     const logos = computed(() => {
       return tagLogoList.find((item) => item.kind === refSelected.value)
     })
-    console.log(logos.value)
+
     return () => (
       <div class={s.logoList}>
         <nav>
@@ -31,7 +31,10 @@ export const LogoSelect = defineComponent({
         <ol>
           {logos.value?.iconName.map((name) => (
             <li>
-              <div>
+              <div
+                onClick={() => context.emit('update:modelValue', name)}
+                class={name === props.modelValue ? s.selectedLogo : ''}
+              >
                 <Icon name={name} class={s.icon} />
               </div>
             </li>

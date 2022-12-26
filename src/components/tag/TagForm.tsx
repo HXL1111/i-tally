@@ -1,7 +1,7 @@
 import { NavBarLayout } from '@/layouts/NavBarLayout'
 import { Button } from '@/shared/Button'
 import { LogoSelect } from '@/shared/LogoSelect'
-import { defineComponent, PropType } from 'vue'
+import { defineComponent, PropType, reactive } from 'vue'
 import s from './Tag.module.scss'
 export const TagForm = defineComponent({
   props: {
@@ -10,6 +10,10 @@ export const TagForm = defineComponent({
     },
   },
   setup: (props, context) => {
+    const formDate = reactive({
+      name: '',
+      sign: '',
+    })
     return () => (
       <div class={s.wrapper}>
         <NavBarLayout iconName="left" title="新建标签">
@@ -20,7 +24,7 @@ export const TagForm = defineComponent({
             </label>
             <label>
               <span class={s.logo}>符号</span>
-              <LogoSelect />
+              <LogoSelect v-model={formDate.sign} />
             </label>
             <p>记账时长按标签，即可进行编辑</p>
             <div class={s.buttons}>
