@@ -4,7 +4,7 @@ import s from './InputPad.module.scss'
 import { DatePicker, Popup } from 'vant'
 import 'vant/es/picker/style'
 import 'vant/es/popup/style'
-import { time } from '@/shared/time'
+import { Time } from '@/shared/time'
 
 export const InputPad = defineComponent({
   props: {
@@ -117,9 +117,9 @@ export const InputPad = defineComponent({
     const notes = ref('')
     let now = new Date()
     const refCurrentDate = ref([
-      time(now).format('YYYY'),
-      time(now).format('MM'),
-      time(now).format('DD'),
+      new Time(now).format('YYYY'),
+      new Time(now).format('MM'),
+      new Time(now).format('DD'),
     ])
     const refDatePickerVisible = ref(false)
     const showDatePicker = () => (refDatePickerVisible.value = true)
@@ -141,7 +141,7 @@ export const InputPad = defineComponent({
             >
               <Icon name="date" class={s.icon} />
               <span>
-                {time(new Date(String(refCurrentDate.value))).format()}
+                {new Time(new Date(String(refCurrentDate.value))).format()}
               </span>
             </div>
             <Popup v-model:show={refDatePickerVisible.value} position="bottom">
