@@ -1,6 +1,7 @@
 import { NavBarLayout } from '@/layouts/NavBarLayout'
 import { Button } from '@/shared/Button'
 import { LogoSelect } from '@/shared/LogoSelect'
+import { Rules, validate } from '@/shared/validate'
 import { defineComponent, PropType, reactive } from 'vue'
 import s from './Tag.module.scss'
 export const TagForm = defineComponent({
@@ -10,21 +11,55 @@ export const TagForm = defineComponent({
     },
   },
   setup: (props, context) => {
-    const formDate = reactive({
+    const formData = reactive({
       name: '',
       sign: '',
     })
+    const errors = reactive<{ [k in keyof typeof formData]?: string[] }>({})
+    const onSubmit = (e: Event) => {
+      const rules: Rules<typeof formData> = [
+        { key: 'name', type: 'required', message: '必填' },
+        {
+          key: 'name',
+          type: 'pattern',
+          regex: /^.{1,4}$/,
+          message: '只能填 1 到 4 个字符',
+        },
+        {
+          key: 'sign',
+          type: 'required',
+          message: '必填',
+        },
+      ]
+      Object.assign(errors, {
+        name: undefined,
+        sign: undefined,
+      })
+      Object.assign(errors, validate(formData, rules))
+      e.preventDefault()
+      console.log(errors)
+    }
     return () => (
       <div class={s.wrapper}>
         <NavBarLayout iconName="left" title="新建标签">
-          <form class={s.form}>
+          <form class={s.form} onSubmit={onSubmit}>
             <label>
-              <span class={s.tagName}>标签名</span>
-              <input type="text" placeholder="标签名称(不超过4个字符)" />
+              <div class={s.text}>
+                <span>标签名</span>
+                <span class={s.error}>{errors.name}</span>
+              </div>
+              <input
+                type="text"
+                placeholder="标签名称(不超过4个字符)"
+                v-model={formData.name}
+              />
             </label>
             <label>
-              <span class={s.logo}>符号</span>
-              <LogoSelect v-model={formDate.sign} />
+              <div class={s.text}>
+                <span>符号</span>
+                <span class={s.error}>{errors.sign}</span>
+              </div>
+              <LogoSelect v-model={formData.sign} />
             </label>
             <p>记账时长按标签，即可进行编辑</p>
             <div class={s.buttons}>
