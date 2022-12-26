@@ -5,6 +5,7 @@ import { Icon } from '@/shared/Icon'
 import { Overlay } from '@/shared/Overlay'
 import { Tabs, Tab } from '@/shared/Tabs'
 import { defineComponent, PropType, ref } from 'vue'
+import { RouterLink } from 'vue-router'
 import s from './StartPage.module.scss'
 export const StartPage = defineComponent({
   props: {
@@ -15,7 +16,7 @@ export const StartPage = defineComponent({
   setup: (props, context) => {
     const refKind = ref('本月')
     const overlayVisible = ref(false)
-    const buttonOnClick = () => {}
+
     const overlayOnClick = () => {
       overlayVisible.value = !overlayVisible.value
       console.log(overlayVisible.value)
@@ -36,10 +37,14 @@ export const StartPage = defineComponent({
                   <Icon name="bill" class={s.icon} />
                   <span>暂无数据</span>
                 </div>
-                <div class={s.button_wrapper}>
-                  <Button onClick={buttonOnClick}>开始记账</Button>
-                </div>
-                <FloatButton />
+                <RouterLink to="/item/create">
+                  <div class={s.button_wrapper}>
+                    <Button>开始记账</Button>
+                  </div>
+                </RouterLink>
+                <RouterLink to="/item/create">
+                  <FloatButton />
+                </RouterLink>
                 {overlayVisible.value && (
                   <Overlay
                     onClose={() => {

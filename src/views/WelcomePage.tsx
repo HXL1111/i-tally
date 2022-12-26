@@ -34,7 +34,7 @@ export const WelcomePage = defineComponent({
       <div class={s.wrapper}>
         <header>
           <Icon name="wallet" class={s.icon} />
-          <h1>山竹记账</h1>
+          <h1>i 记账</h1>
         </header>
         <main ref={main}>
           <RouterView name="main">
