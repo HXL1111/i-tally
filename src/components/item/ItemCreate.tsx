@@ -2,6 +2,7 @@ import { NavBarLayout } from '@/layouts/NavBarLayout'
 import { Icon } from '@/shared/Icon'
 import { Tabs, Tab } from '@/shared/Tabs'
 import { defineComponent, PropType, ref } from 'vue'
+import { createRouter, useRouter } from 'vue-router'
 import { InputPad } from './InputPad'
 import s from './ItemCreate.module.scss'
 export const ItemCreate = defineComponent({
@@ -268,9 +269,14 @@ export const ItemCreate = defineComponent({
         category: 'income',
       },
     ])
+    const router = useRouter()
     return () => (
       <>
-        <NavBarLayout iconName="left" title="记一笔">
+        <NavBarLayout
+          iconName="left"
+          title="记一笔"
+          onClick={() => router.back()}
+        >
           {{
             default: () => (
               <div class={s.wrapper}>
