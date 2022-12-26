@@ -1,0 +1,87 @@
+.itemSummary {
+  margin: 16px;
+  > .total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--itemSummary-total-bg);
+    border-radius: var(--border-radius);
+    padding: 12px 32px;
+    > li {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      &.income {
+        color: var(--income-color);
+      }
+      &.expense {
+        color: var(--expense-color);
+      }
+
+      > span {
+        &:nth-child(2) {
+          padding-top: 1px;
+        }
+      }
+    }
+  }
+  > .recordList {
+    padding: 8px 0;
+    > li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 0 8px;
+      border-bottom: 1px solid var(--border-bottom-color);
+      > .left {
+        display: flex;
+        align-items: center;
+        > .logo {
+          background: var(--logo-bg);
+          border-radius: 50%;
+          width: 48px;
+          height: 48px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          > .icon {
+            width: 24px;
+            height: 24px;
+            fill: #333333;
+          }
+        }
+        > .nameDateAndNotes {
+          padding-left: 16px;
+          > .nameAndDate {
+            > .name {
+            }
+            > .date {
+              padding-left: 8px;
+              font-size: 12px;
+              color: var(--dateAndNotes-text-color);
+            }
+          }
+          > .notes {
+            font-size: 12px;
+            color: var(--dateAndNotes-text-color);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: calc(100vw - 146px);
+          }
+        }
+      }
+      > .right {
+        &.expense {
+          color: var(--expense-color);
+        }
+        &.income {
+          color: var(--income-color);
+        }
+      }
+    }
+  }
+}
+.more {
+  text-align: center;
+}

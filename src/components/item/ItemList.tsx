@@ -6,6 +6,7 @@ import { Overlay } from '@/shared/Overlay'
 import { Tabs, Tab } from '@/shared/Tabs'
 import { Time } from '@/shared/time'
 import { defineComponent, PropType, ref } from 'vue'
+import { RouterLink } from 'vue-router'
 import s from './ItemList.module.scss'
 import { ItemSummary } from './ItemSummary'
 const timeMap = [
@@ -54,8 +55,8 @@ export const ItemList = defineComponent({
           {{
             default: () => (
               <>
-                <Tabs v-model:selected={refKind.value}>
-                  <Tab name={timeMap[0].name}>
+                <Tabs v-model:selected={refKind.value} class={s.tabs}>
+                  <Tab name={timeMap[0].name} class={s.tab}>
                     <ItemSummary
                       startDate={timeMap[0].timeList.start}
                       endDate={timeMap[0].timeList.end}
@@ -88,10 +89,10 @@ export const ItemList = defineComponent({
                   <div class={s.button_wrapper}>
                     <Button>开始记账</Button>
                   </div>
-                </RouterLink>
+                </RouterLink> */}
                 <RouterLink to="/item/create">
                   <FloatButton />
-                </RouterLink> */}
+                </RouterLink>
                 {overlayVisible.value && (
                   <Overlay
                     onClose={() => {
