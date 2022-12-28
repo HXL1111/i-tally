@@ -2,7 +2,7 @@ import { NavBarLayout } from '@/layouts/NavBarLayout'
 import { Icon } from '@/shared/Icon'
 import { Tabs, Tab } from '@/shared/Tabs'
 import { defineComponent, PropType, ref } from 'vue'
-import { createRouter, useRouter } from 'vue-router'
+import { createRouter, RouterLink, useRouter } from 'vue-router'
 import { InputPad } from './InputPad'
 import s from './ItemCreate.module.scss'
 export const ItemCreate = defineComponent({
@@ -284,14 +284,14 @@ export const ItemCreate = defineComponent({
                   <Tab name="支出" class={s.tab}>
                     <ol>
                       <li>
-                        <div>
+                        <RouterLink to="/tag/create" class={s.icon_wrapper}>
                           <Icon name="add" class={s.icon} />
-                        </div>
+                        </RouterLink>
                         <span>新增</span>
                       </li>
                       {refExpensesTags.value.map((item) => (
                         <li>
-                          <div>{item.sign}</div>
+                          <div class={s.icon_wrapper}>{item.sign}</div>
                           <span>{item.name}</span>
                         </li>
                       ))}
@@ -300,14 +300,14 @@ export const ItemCreate = defineComponent({
                   <Tab name="收入" class={s.tab}>
                     <ol>
                       <li>
-                        <div>
+                        <RouterLink to="/tag/create" class={s.icon_wrapper}>
                           <Icon name="add" class={s.icon} />
-                        </div>
+                        </RouterLink>
                         <span>新增</span>
                       </li>
                       {refIncomeTags.value.map((item) => (
                         <li>
-                          <div>{item.sign}</div>
+                          <div class={s.icon_wrapper}>{item.sign}</div>
                           <span>{item.name}</span>
                         </li>
                       ))}
