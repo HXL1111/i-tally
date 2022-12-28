@@ -1,6 +1,6 @@
 import { NavBarLayout } from '@/layouts/NavBarLayout'
 import { Button } from '@/shared/Button'
-import { LogoSelect } from '@/shared/LogoSelect'
+import { Form, FormItem } from '@/shared/Form'
 import { Rules, validate } from '@/shared/validate'
 import { defineComponent, PropType, reactive } from 'vue'
 import s from './Tag.module.scss'
@@ -37,36 +37,30 @@ export const TagForm = defineComponent({
       })
       Object.assign(errors, validate(formData, rules))
       e.preventDefault()
-      console.log(errors)
     }
     return () => (
       <div class={s.wrapper}>
         <NavBarLayout iconName="left" title="新建标签">
-          <form class={s.form} onSubmit={onSubmit}>
-            <label>
-              <div class={s.text}>
-                <span>标签名</span>
-                <span class={s.error}>{errors.name}</span>
-              </div>
-              <input
-                type="text"
-                placeholder="标签名称(不超过4个字符)"
-                v-model={formData.name}
-              />
-            </label>
-            <label>
-              <div class={s.text}>
-                <span>符号</span>
-                <span class={s.error}>{errors.sign}</span>
-              </div>
-              <LogoSelect v-model={formData.sign} />
-            </label>
+          <Form onSubmit={onSubmit} class={s.form}>
+            <FormItem
+              label="标签名"
+              type="text"
+              placeholder="标签名称(不超过4个字符)"
+              v-model={formData.name}
+              error={errors.name?.[0]}
+            />
+            <FormItem
+              label="符号"
+              type="logoList"
+              v-model={formData.sign}
+              error={errors.sign?.[0]}
+            />
             <p>记账时长按标签，即可进行编辑</p>
             <div class={s.buttons}>
               <Button class={s.button}>确定</Button>
               {context.slots.default?.()}
             </div>
-          </form>
+          </Form>
         </NavBarLayout>
       </div>
     )

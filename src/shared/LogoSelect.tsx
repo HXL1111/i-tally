@@ -7,13 +7,22 @@ export const LogoSelect = defineComponent({
     modelValue: {
       type: String,
     },
+    onUpdateModelValue: {
+      type: Function as PropType<(value: string) => void>,
+    },
   },
   setup: (props, context) => {
     const refSelected = ref('日常')
     const logos = computed(() => {
       return tagLogoList.find((item) => item.kind === refSelected.value)
     })
-
+    const onClickLogo = (logo: string) => {
+      if (props.onUpdateModelValue) {
+        props.onUpdateModelValue(logo)
+      } else {
+        context.emit('update:modelValue', logo)
+      }
+    }
     return () => (
       <div class={s.logoList}>
         <nav>
@@ -32,7 +41,7 @@ export const LogoSelect = defineComponent({
           {logos.value?.iconName.map((name) => (
             <li>
               <div
-                onClick={() => context.emit('update:modelValue', name)}
+                onClick={() => onClickLogo(name)}
                 class={name === props.modelValue ? s.selectedLogo : ''}
               >
                 <Icon name={name} class={s.icon} />
