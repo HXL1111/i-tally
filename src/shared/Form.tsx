@@ -1,5 +1,8 @@
-import { defineComponent, PropType } from 'vue'
+import { DatePicker, Popup } from 'vant'
+import { computed, defineComponent, PropType, ref } from 'vue'
 import s from './Form.module.scss'
+import { LogoSelect } from './LogoSelect'
+import { Time } from './time'
 export const Form = defineComponent({
   props: {
     onSubmit: {
@@ -15,25 +18,89 @@ export const Form = defineComponent({
   },
 })
 
-// export const FormItem = defineComponent({
-//   props: {
-//     name: {
-//       type: String as PropType<string>,
-//     },
-//   },
-//   setup: (props, context) => {
-//     return () => (
-//       <label>
-//         <div class={s.text}>
-//           <span>标签名</span>
-//           <span class={s.error}>{errors.name}</span>
-//         </div>
-//         <input
-//           type="text"
-//           placeholder="标签名称(不超过4个字符)"
-//           v-model={formData.name}
-//         />
-//       </label>
-//     )
-//   },
-// })
+export const FormItem = defineComponent({
+  props: {
+    label: {
+      type: String,
+    },
+    type: {
+      type: String as PropType<'text' | 'logoList' | 'date'>,
+    },
+    placeholder: {
+      type: String,
+    },
+    modelValue: {
+      type: String,
+    },
+    dateModelValue: {
+      type: [] as PropType<string[]>,
+    },
+    error: {
+      type: String,
+    },
+  },
+  emits: ['update:modelValue', 'update:dateModelValue'],
+  setup: (props, context) => {
+    const refDateVisible = ref(false)
+    const content = computed(() => {
+      switch (props.type) {
+        case 'text':
+          return (
+            <input
+              type="text"
+              placeholder={props.placeholder}
+              value={props.modelValue}
+              onInput={(e: any) => {
+                context.emit('update:modelValue', e.target.value)
+              }}
+            />
+          )
+        case 'logoList':
+          return (
+            <LogoSelect
+              modelValue={props.modelValue}
+              onUpdateModelValue={(value) =>
+                context.emit('update:modelValue', value)
+              }
+            />
+          )
+        case 'date':
+          return (
+            <>
+              <input
+                readonly={true}
+                value={props.modelValue}
+                onClick={() => {
+                  refDateVisible.value = true
+                }}
+                class={[s.formItem, s.input]}
+              />
+              <Popup position="bottom" v-model:show={refDateVisible.value}>
+                <DatePicker
+                  modelValue={props.dateModelValue}
+                  title="选择年月日"
+                  onConfirm={(date: Date) => {
+                    context.emit(
+                      'update:dateModelValue',
+                      new Time(date).format()
+                    )
+                    refDateVisible.value = false
+                  }}
+                  onCancel={() => (refDateVisible.value = false)}
+                />
+              </Popup>
+            </>
+          )
+      }
+    })
+    return () => (
+      <label>
+        <div class={s.text}>
+          <span>{props.label}</span>
+          {props.error && <span class={s.error}>{props.error}</span>}
+        </div>
+        {content.value}
+      </label>
+    )
+  },
+})
