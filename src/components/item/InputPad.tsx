@@ -144,7 +144,11 @@ export const InputPad = defineComponent({
                 {new Time(new Date(String(refCurrentDate.value))).format()}
               </span>
             </div>
-            <Popup v-model:show={refDatePickerVisible.value} position="bottom">
+            <Popup
+              v-model:show={refDatePickerVisible.value}
+              position="bottom"
+              close-on-click-overlay={false}
+            >
               <DatePicker
                 modelValue={refCurrentDate.value}
                 title="选择日期"

@@ -17,8 +17,8 @@
   --button-height: 48px;
   --top-safe-area-height: 24px;
   --overlay-mask-bg: rgba(0, 0, 0, 0.5);
-  --overlay-mask-index: 8;
-  --overlay-index: 16;
+  --overlay-mask-index: 32;
+  --overlay-index: 48;
   --overlay-bg-start: #2f7e79;
   --overlay-bg-end: #438883;
   --overlay-ol-bg: white;
@@ -44,4 +44,6 @@
   --dateOverlay-title-bg: #438883;
   --dateOverlay-input-bg: white;
   --dateOverlay-input-text-color: #999999;
+  --dateOverlay-mask-index: 8;
+  --dateOverlay-index: 16;
 }

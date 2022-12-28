@@ -102,8 +102,22 @@ export const ItemList = defineComponent({
                           v-model={customTime.end}
                         />
                         <div class={s.actions}>
-                          <button type="button">取消</button>
-                          <button type="submit">确定</button>
+                          <button
+                            type="button"
+                            onClick={() =>
+                              (refDateOverlayVisible.value = false)
+                            }
+                          >
+                            取消
+                          </button>
+                          <button
+                            type="submit"
+                            onClick={() =>
+                              (refDateOverlayVisible.value = false)
+                            }
+                          >
+                            确定
+                          </button>
                         </div>
                       </Form>
                     </main>

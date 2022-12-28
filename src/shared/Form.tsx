@@ -74,7 +74,11 @@ export const FormItem = defineComponent({
                 }}
                 class={s.dateInput}
               />
-              <Popup position="bottom" v-model:show={refDateVisible.value}>
+              <Popup
+                position="bottom"
+                v-model:show={refDateVisible.value}
+                close-on-click-overlay={false}
+              >
                 <DatePicker
                   modelValue={props.modelValue?.split('-')}
                   title="选择年月日"
@@ -83,7 +87,6 @@ export const FormItem = defineComponent({
                       'update:modelValue',
                       new Time(new Date(date.selectedValues)).format()
                     )
-                    console.log(props.modelValue)
                     refDateVisible.value = false
                   }}
                   onCancel={() => (refDateVisible.value = false)}
