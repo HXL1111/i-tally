@@ -1,11 +1,11 @@
 import { defineComponent, PropType } from 'vue'
 import { Icon } from './Icon'
-import s from './Overlay.module.scss'
-export const Overlay = defineComponent({
-  props:{
-    onClose:{
-      type:Function as PropType<(e:MouseEvent)=>void>
-    }
+import s from './MenuOverlay.module.scss'
+export const MenuOverlay = defineComponent({
+  props: {
+    onClose: {
+      type: Function as PropType<(e: MouseEvent) => void>,
+    },
   },
   setup: (props, context) => {
     return () => (

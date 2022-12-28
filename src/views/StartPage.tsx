@@ -2,7 +2,7 @@ import { NavBarLayout } from '@/layouts/NavBarLayout'
 import { Button } from '@/shared/Button'
 import { FloatButton } from '@/shared/FloatButton'
 import { Icon } from '@/shared/Icon'
-import { Overlay } from '@/shared/Overlay'
+import { MenuOverlay } from '@/shared/MenuOverlay'
 import { Tabs, Tab } from '@/shared/Tabs'
 import { defineComponent, PropType, ref } from 'vue'
 import { RouterLink } from 'vue-router'
@@ -46,7 +46,7 @@ export const StartPage = defineComponent({
                   <FloatButton />
                 </RouterLink>
                 {overlayVisible.value && (
-                  <Overlay
+                  <MenuOverlay
                     onClose={() => {
                       overlayVisible.value = false
                     }}
