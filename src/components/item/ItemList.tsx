@@ -1,14 +1,14 @@
 import { NavBarLayout } from '@/layouts/NavBarLayout'
-import { Button } from '@/shared/Button'
 import { FloatButton } from '@/shared/FloatButton'
-import { Icon } from '@/shared/Icon'
-import { Overlay } from '@/shared/Overlay'
+import { MenuOverlay } from '@/shared/MenuOverlay'
+import { Form, Overlay } from 'vant'
 import { Tabs, Tab } from '@/shared/Tabs'
 import { Time } from '@/shared/time'
-import { defineComponent, PropType, ref } from 'vue'
+import { defineComponent, PropType, ref, watchEffect } from 'vue'
 import { RouterLink } from 'vue-router'
 import s from './ItemList.module.scss'
 import { ItemSummary } from './ItemSummary'
+import { FormItem } from '@/shared/Form'
 const timeMap = [
   {
     name: '本月',
@@ -44,11 +44,16 @@ export const ItemList = defineComponent({
   },
   setup: (props, context) => {
     const refKind = ref('本月')
-    const overlayVisible = ref(false)
+    const refMenuOverlayVisible = ref(false)
     const overlayOnClick = () => {
-      overlayVisible.value = !overlayVisible.value
+      refMenuOverlayVisible.value = !refMenuOverlayVisible.value
     }
-    console.log(new Time().firstDayOfMonth().format())
+    const refDateOverlayVisible = ref(false)
+    watchEffect(() => {
+      if (refKind.value === '自定义时间') {
+        refDateOverlayVisible.value = true
+      }
+    })
     return () => (
       <div class={s.wrapper}>
         <NavBarLayout iconName="menu" title="i 记账" onClick={overlayOnClick}>
@@ -81,6 +86,21 @@ export const ItemList = defineComponent({
                     />
                   </Tab>
                 </Tabs>
+                <Overlay show={refDateOverlayVisible.value} class={s.overlay}>
+                  <div class={s.overlay_inner}>
+                    <header>请选择时间</header>
+                    <main>
+                      <Form>
+                        <FormItem type="date" label="开始时间" />
+                        <FormItem type="date" label="结束时间" />
+                      </Form>
+                    </main>
+                    <footer>
+                      <span>取消</span>
+                      <span>确认</span>
+                    </footer>
+                  </div>
+                </Overlay>
                 {/* <div class={s.center}>
                   <Icon name="bill" class={s.icon} />
                   <span>暂无数据</span>
@@ -93,10 +113,10 @@ export const ItemList = defineComponent({
                 <RouterLink to="/item/create">
                   <FloatButton />
                 </RouterLink>
-                {overlayVisible.value && (
-                  <Overlay
+                {refMenuOverlayVisible.value && (
+                  <MenuOverlay
                     onClose={() => {
-                      overlayVisible.value = false
+                      refMenuOverlayVisible.value = false
                     }}
                   />
                 )}

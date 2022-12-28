@@ -53,6 +53,7 @@ export const FormItem = defineComponent({
               onInput={(e: any) => {
                 context.emit('update:modelValue', e.target.value)
               }}
+              class={s.textInput}
             />
           )
         case 'logoList':
@@ -73,7 +74,7 @@ export const FormItem = defineComponent({
                 onClick={() => {
                   refDateVisible.value = true
                 }}
-                class={[s.formItem, s.input]}
+                class={s.dateInput}
               />
               <Popup position="bottom" v-model:show={refDateVisible.value}>
                 <DatePicker

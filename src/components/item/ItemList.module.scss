@@ -16,3 +16,32 @@
 .button_wrapper {
   margin: 0 16px;
 }
+.overlay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &_inner {
+    background: var(--dateOverlay-bg);
+    border-radius: 8px;
+    width: 80vw;
+    > header {
+      background: var(--dateOverlay-title-bg);
+      border-radius: 8px 8px 0 0;
+      padding: 16px;
+      font-size: 18px;
+    }
+    > main {
+      padding: 16px;
+    }
+    > footer {
+      display: flex;
+      justify-content: end;
+      padding: 16px;
+      > span {
+        &:nth-child(1) {
+          padding-right: 32px;
+        }
+      }
+    }
+  }
+}
