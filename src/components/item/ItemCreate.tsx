@@ -314,7 +314,6 @@ export const ItemCreate = defineComponent({
                     </ol>
                   </Tab>
                 </Tabs>
-
                 <InputPad />
               </div>
             ),

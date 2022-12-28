@@ -3,6 +3,7 @@ import { computed, defineComponent, PropType, ref } from 'vue'
 import s from './Form.module.scss'
 import { LogoSelect } from './LogoSelect'
 import { Time } from './time'
+
 export const Form = defineComponent({
   props: {
     onSubmit: {
@@ -32,14 +33,11 @@ export const FormItem = defineComponent({
     modelValue: {
       type: String,
     },
-    dateModelValue: {
-      type: [] as PropType<string[]>,
-    },
     error: {
       type: String,
     },
   },
-  emits: ['update:modelValue', 'update:dateModelValue'],
+  emits: ['update:modelValue'],
   setup: (props, context) => {
     const refDateVisible = ref(false)
     const content = computed(() => {
@@ -78,13 +76,14 @@ export const FormItem = defineComponent({
               />
               <Popup position="bottom" v-model:show={refDateVisible.value}>
                 <DatePicker
-                  modelValue={props.dateModelValue}
+                  modelValue={props.modelValue?.split('-')}
                   title="选择年月日"
-                  onConfirm={(date: Date) => {
+                  onConfirm={(date: any) => {
                     context.emit(
-                      'update:dateModelValue',
-                      new Time(date).format()
+                      'update:modelValue',
+                      new Time(new Date(date.selectedValues)).format()
                     )
+                    console.log(props.modelValue)
                     refDateVisible.value = false
                   }}
                   onCancel={() => (refDateVisible.value = false)}
