@@ -4,7 +4,7 @@ import { MenuOverlay } from '@/shared/MenuOverlay'
 import { Form, Overlay } from 'vant'
 import { Tabs, Tab } from '@/shared/Tabs'
 import { Time } from '@/shared/time'
-import { defineComponent, PropType, reactive, ref, watchEffect } from 'vue'
+import { defineComponent, PropType, reactive, ref } from 'vue'
 import { RouterLink } from 'vue-router'
 import s from './ItemList.module.scss'
 import { ItemSummary } from './ItemSummary'
@@ -45,11 +45,11 @@ export const ItemList = defineComponent({
       refMenuOverlayVisible.value = !refMenuOverlayVisible.value
     }
     const refDateOverlayVisible = ref(false)
-    watchEffect(() => {
-      if (refKind.value === '自定义时间') {
+    const onSelectTime = (name: string) => {
+      if (name === '自定义时间') {
         refDateOverlayVisible.value = true
       }
-    })
+    }
     const customTime = reactive({
       start: new Time().format(),
       end: new Time().format(),
@@ -60,7 +60,11 @@ export const ItemList = defineComponent({
           {{
             default: () => (
               <>
-                <Tabs v-model:selected={refKind.value} class={s.tabs}>
+                <Tabs
+                  v-model:selected={refKind.value}
+                  class={s.tabs}
+                  onUpdate:selected={onSelectTime}
+                >
                   <Tab name={timeMap[0].name} class={s.tab}>
                     <ItemSummary
                       startDate={timeMap[0].timeList.start}
