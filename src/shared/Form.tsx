@@ -1,5 +1,6 @@
 import { DatePicker, Popup } from 'vant'
 import { computed, defineComponent, PropType, ref } from 'vue'
+import { Button } from './Button'
 import s from './Form.module.scss'
 import { LogoSelect } from './LogoSelect'
 import { Time } from './time'
@@ -25,7 +26,7 @@ export const FormItem = defineComponent({
       type: String,
     },
     type: {
-      type: String as PropType<'text' | 'logoList' | 'date'>,
+      type: String as PropType<'text' | 'logoList' | 'date' | 'validationCode'>,
     },
     placeholder: {
       type: String,
@@ -93,6 +94,13 @@ export const FormItem = defineComponent({
                 />
               </Popup>
             </>
+          )
+        case 'validationCode':
+          return (
+            <div class={s.signInput_wrapper}>
+              <input class={s.signInput} placeholder={props.placeholder} />
+              <Button class={s.button}>发送验证码</Button>
+            </div>
           )
       }
     })
