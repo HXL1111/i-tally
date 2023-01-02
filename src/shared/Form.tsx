@@ -26,7 +26,9 @@ export const FormItem = defineComponent({
       type: String,
     },
     type: {
-      type: String as PropType<'text' | 'logoList' | 'date' | 'validationCode'>,
+      type: String as PropType<
+        'text' | 'logoList' | 'date' | 'validationCode' | 'select'
+      >,
     },
     placeholder: {
       type: String,
@@ -36,6 +38,12 @@ export const FormItem = defineComponent({
     },
     error: {
       type: String,
+    },
+    options: {
+      type: Array as PropType<Array<{ value: string; text: string }>>,
+    },
+    direction: {
+      type: String as PropType<'row' | 'column'>,
     },
   },
   emits: ['update:modelValue'],
@@ -102,10 +110,26 @@ export const FormItem = defineComponent({
               <Button class={s.button}>发送验证码</Button>
             </div>
           )
+        case 'select':
+          return (
+            <select
+              class={s.select}
+              value={props.modelValue}
+              onChange={(e: any) => {
+                context.emit('update:modelValue', e.target.value)
+              }}
+            >
+              {props.options?.map((option) => (
+                <option value={option.value} class={s.option}>
+                  {option.text}
+                </option>
+              ))}
+            </select>
+          )
       }
     })
     return () => (
-      <label>
+      <label class={props.direction && s.row}>
         <div class={s.text}>
           <span>{props.label}</span>
           {props.error && <span class={s.error}>{props.error}</span>}

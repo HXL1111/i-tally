@@ -2,6 +2,13 @@ label {
   display: flex;
   flex-direction: column;
   padding-bottom: 16px;
+  &.row {
+    flex-direction: row;
+    align-items: center;
+    > .text {
+      padding-bottom: 1px;
+    }
+  }
   > .text {
     padding-bottom: 10px;
     display: flex;
@@ -47,5 +54,14 @@ label {
       width: 50%;
       margin-left: 16px;
     }
+  }
+  > .select {
+    border-radius: var(--border-radius);
+    height: 36px;
+    background: var(--statistics-select-bg);
+    border: none;
+    padding: 0 8px;
+    margin-left: 16px;
+    width: 6em;
   }
 }

@@ -1,4 +1,5 @@
-import { defineComponent, PropType } from 'vue'
+import { FormItem } from '@/shared/Form'
+import { defineComponent, PropType, ref } from 'vue'
 import s from './Charts.module.scss'
 export const Charts = defineComponent({
   props: {
@@ -12,6 +13,20 @@ export const Charts = defineComponent({
     },
   },
   setup: (props, context) => {
-    return () => <div class={s.wrapper}>图表</div>
+    const refKind = ref('expense')
+    return () => (
+      <div class={s.charts}>
+        <FormItem
+          label="类型"
+          type="select"
+          options={[
+            { value: 'expense', text: '支出' },
+            { value: 'income', text: '收入' },
+          ]}
+          v-model={refKind.value}
+          direction="row"
+        />
+      </div>
+    )
   },
 })
