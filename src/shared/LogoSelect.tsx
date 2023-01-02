@@ -42,7 +42,10 @@ export const LogoSelect = defineComponent({
             <li>
               <div
                 onClick={() => onClickLogo(name)}
-                class={name === props.modelValue ? s.selectedLogo : ''}
+                class={[
+                  name === props.modelValue ? s.selectedLogo : '',
+                  s.logo,
+                ]}
               >
                 <Icon name={name} class={s.icon} />
               </div>
