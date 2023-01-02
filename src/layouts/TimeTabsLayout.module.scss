@@ -1,0 +1,62 @@
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 140px 0;
+  > .icon {
+    width: 96px;
+    height: 96px;
+  }
+  > span {
+    font-size: 24px;
+    color: #d8d8d8;
+  }
+}
+.button_wrapper {
+  margin: 0 16px;
+}
+.overlay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &_wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  &_mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: var(--dateOverlay-mask-index);
+  }
+  &_inner {
+    background: var(--dateOverlay-bg);
+    border-radius: 8px;
+    width: 80vw;
+    z-index: var(--dateOverlay-index);
+    > header {
+      background: var(--dateOverlay-title-bg);
+      border-radius: 8px 8px 0 0;
+      padding: 16px;
+      font-size: 18px;
+    }
+    > main {
+      padding: 16px;
+      > .form {
+        > .actions {
+          display: flex;
+          justify-content: end;
+          > button {
+            border: none;
+            background: transparent;
+            padding: 8px 16px;
+          }
+        }
+      }
+    }
+  }
+}
