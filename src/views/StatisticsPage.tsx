@@ -1,6 +1,6 @@
-import { NavBarLayout } from '@/layouts/NavBarLayout'
+import { Charts } from '@/components/statistics/Charts'
+import { TimeTabsLayout } from '@/layouts/TimeTabsLayout'
 import { defineComponent, PropType } from 'vue'
-import s from './StatisticsPage.module.scss'
 export const StatisticsPage = defineComponent({
   props: {
     name: {
@@ -8,6 +8,8 @@ export const StatisticsPage = defineComponent({
     },
   },
   setup: (props, context) => {
-    return () => <NavBarLayout iconName="left" title="统计图表"></NavBarLayout>
+    return () => (
+      <TimeTabsLayout component={Charts} iconName="left" title="统计图表" />
+    )
   },
 })

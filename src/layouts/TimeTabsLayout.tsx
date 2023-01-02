@@ -49,13 +49,20 @@ export const TimeTabsLayout = defineComponent({
       type: Object as PropType<typeof demo>,
       required: true,
     },
+    title: {
+      type: String,
+      required: true,
+    },
+    iconName: {
+      type: String,
+      required: true,
+    },
+    iconOnClick: {
+      type: Function as PropType<(e: MouseEvent) => void>,
+    },
   },
   setup: (props, context) => {
     const refKind = ref('本月')
-    const refMenuOverlayVisible = ref(false)
-    const overlayOnClick = () => {
-      refMenuOverlayVisible.value = !refMenuOverlayVisible.value
-    }
     const refDateOverlayVisible = ref(false)
     const onSelectTime = (name: string) => {
       if (name === '自定义时间') {
@@ -68,7 +75,11 @@ export const TimeTabsLayout = defineComponent({
     })
     return () => (
       <div class={s.wrapper}>
-        <NavBarLayout iconName="menu" title="i 记账" onClick={overlayOnClick}>
+        <NavBarLayout
+          iconName={props.iconName}
+          title={props.title}
+          onClick={props.iconOnClick}
+        >
           {{
             default: () => (
               <>
@@ -148,16 +159,6 @@ export const TimeTabsLayout = defineComponent({
                     <Button>开始记账</Button>
                   </div>
                 </RouterLink> */}
-                <RouterLink to="/item/create">
-                  <FloatButton />
-                </RouterLink>
-                {refMenuOverlayVisible.value && (
-                  <MenuOverlay
-                    onClose={() => {
-                      refMenuOverlayVisible.value = false
-                    }}
-                  />
-                )}
               </>
             ),
           }}

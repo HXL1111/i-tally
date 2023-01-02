@@ -1,5 +1,8 @@
 import { TimeTabsLayout } from '@/layouts/TimeTabsLayout'
-import { defineComponent, PropType } from 'vue'
+import { FloatButton } from '@/shared/FloatButton'
+import { MenuOverlay } from '@/shared/MenuOverlay'
+import { defineComponent, PropType, ref } from 'vue'
+import { RouterLink } from 'vue-router'
 import { ItemSummary } from './ItemSummary'
 export const ItemList = defineComponent({
   props: {
@@ -8,6 +11,29 @@ export const ItemList = defineComponent({
     },
   },
   setup: (props, context) => {
-    return () => <TimeTabsLayout component={ItemSummary} />
+    const refMenuOverlayVisible = ref(false)
+    const overlayOnClick = () => {
+      refMenuOverlayVisible.value = !refMenuOverlayVisible.value
+    }
+    return () => (
+      <>
+        <TimeTabsLayout
+          component={ItemSummary}
+          iconName="menu"
+          title="i 记账"
+          iconOnClick={overlayOnClick}
+        />
+        {refMenuOverlayVisible.value && (
+          <MenuOverlay
+            onClose={() => {
+              refMenuOverlayVisible.value = false
+            }}
+          />
+        )}
+        <RouterLink to="/item/create">
+          <FloatButton />
+        </RouterLink>
+      </>
+    )
   },
 })
