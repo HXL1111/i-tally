@@ -1,6 +1,9 @@
 import { FormItem } from '@/shared/Form'
-import { defineComponent, PropType, ref } from 'vue'
+import { defineComponent, onMounted, PropType, ref } from 'vue'
+import { Bars } from './Bars'
 import s from './Charts.module.scss'
+import { LineChart } from './LineChart'
+
 export const Charts = defineComponent({
   props: {
     startDate: {
@@ -14,6 +17,7 @@ export const Charts = defineComponent({
   },
   setup: (props, context) => {
     const refKind = ref('expense')
+
     return () => (
       <div class={s.charts}>
         <FormItem
@@ -26,6 +30,8 @@ export const Charts = defineComponent({
           v-model={refKind.value}
           direction="row"
         />
+        <LineChart />
+        <Bars />
       </div>
     )
   },
