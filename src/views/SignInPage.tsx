@@ -3,6 +3,7 @@ import { Button } from '@/shared/Button'
 import { Form, FormItem } from '@/shared/Form'
 import { Icon } from '@/shared/Icon'
 import { validate } from '@/shared/validate'
+import axios from 'axios'
 import { defineComponent, PropType, reactive } from 'vue'
 import s from './SignInPage.module.scss'
 export const SignInPage = defineComponent({
@@ -14,7 +15,7 @@ export const SignInPage = defineComponent({
 
   setup: (props, context) => {
     const formData = reactive({
-      email: '',
+      email: '2521556749@qq.com',
       code: '',
     })
     const errors = reactive({
@@ -41,8 +42,11 @@ export const SignInPage = defineComponent({
         ])
       )
     }
-    const onClickSendValidationCode = () => {
-      console.log('1')
+    const onClickSendValidationCode = async () => {
+      const response = await axios.post('/api/v1/validation_codes', {
+        email: formData.email,
+      })
+      console.log(response)
     }
     return () => (
       <NavBarLayout iconName="left" title="登录">
@@ -56,6 +60,7 @@ export const SignInPage = defineComponent({
               label="邮箱地址"
               type="text"
               placeholder="请输入邮箱，然后点击发送验证码"
+              v-model={formData.email}
               error={errors.email?.[0]}
             />
             <FormItem
@@ -63,10 +68,13 @@ export const SignInPage = defineComponent({
               label="验证码"
               type="validationCode"
               placeholder="6 位数字"
+              v-model={formData.code}
               error={errors.code?.[0]}
             />
             <div class={s.button_wrapper}>
-              <Button class={s.button}>登录</Button>
+              <Button type="submit" class={s.button}>
+                登录
+              </Button>
             </div>
           </Form>
         </div>
