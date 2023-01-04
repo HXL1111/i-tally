@@ -10,7 +10,11 @@ export const SignInPage = defineComponent({
       type: String as PropType<string>,
     },
   },
+
   setup: (props, context) => {
+    const onClickSendValidationCode = () => {
+      console.log('1')
+    }
     return () => (
       <NavBarLayout iconName="left" title="登录">
         <div class={s.main}>
@@ -25,6 +29,7 @@ export const SignInPage = defineComponent({
               placeholder="请输入邮箱，然后点击发送验证码"
             />
             <FormItem
+              onClick={onClickSendValidationCode}
               label="验证码"
               type="validationCode"
               placeholder="6 位数字"

@@ -45,6 +45,9 @@ export const FormItem = defineComponent({
     direction: {
       type: String as PropType<'row' | 'column'>,
     },
+    onClick: {
+      type: Function as PropType<() => void>,
+    },
   },
   emits: ['update:modelValue'],
   setup: (props, context) => {
@@ -107,7 +110,9 @@ export const FormItem = defineComponent({
           return (
             <div class={s.signInput_wrapper}>
               <input class={s.signInput} placeholder={props.placeholder} />
-              <Button class={s.button}>发送验证码</Button>
+              <Button onClick={props.onClick} class={s.button}>
+                发送验证码
+              </Button>
             </div>
           )
         case 'select':
