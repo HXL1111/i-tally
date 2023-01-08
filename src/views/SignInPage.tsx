@@ -12,7 +12,6 @@ export const SignInPage = defineComponent({
       type: String as PropType<string>,
     },
   },
-
   setup: (props, context) => {
     const formData = reactive({
       email: '2521556749@qq.com',

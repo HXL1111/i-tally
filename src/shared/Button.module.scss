@@ -5,4 +5,8 @@
   background: var(--button-bg);
   color: var(--button-text-color);
   border-radius: var(--button-radius);
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
 }
