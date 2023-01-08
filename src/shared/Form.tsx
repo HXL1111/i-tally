@@ -59,8 +59,8 @@ export const FormItem = defineComponent({
     const timer = ref<number>()
     const count = ref<number>(props.countFrom)
     const isCounting = computed(() => !!timer.value)
-    const onClickSendValidationCode = () => {
-      props.onClick?.()
+
+    const startCount = () => {
       timer.value = window.setInterval(() => {
         count.value -= 1
         if (count.value === 0) {
@@ -70,6 +70,7 @@ export const FormItem = defineComponent({
         }
       }, 1000)
     }
+    context.expose({ startCount })
     const content = computed(() => {
       switch (props.type) {
         case 'text':
@@ -130,7 +131,7 @@ export const FormItem = defineComponent({
               <input class={s.signInput} placeholder={props.placeholder} />
               <Button
                 disabled={isCounting.value}
-                onClick={onClickSendValidationCode}
+                onClick={props.onClick}
                 class={s.button}
               >
                 {isCounting.value

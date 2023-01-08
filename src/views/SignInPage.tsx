@@ -4,7 +4,7 @@ import { Form, FormItem } from '@/shared/Form'
 import { Icon } from '@/shared/Icon'
 import { validate } from '@/shared/validate'
 import axios from 'axios'
-import { defineComponent, PropType, reactive } from 'vue'
+import { defineComponent, PropType, reactive, ref } from 'vue'
 import s from './SignInPage.module.scss'
 export const SignInPage = defineComponent({
   props: {
@@ -17,6 +17,7 @@ export const SignInPage = defineComponent({
       email: '2521556749@qq.com',
       code: '',
     })
+    const refValidationCode = ref<any>()
     const errors = reactive({
       email: [],
       code: [],
@@ -41,11 +42,18 @@ export const SignInPage = defineComponent({
         ])
       )
     }
+
     const onClickSendValidationCode = async () => {
-      const response = await axios.post('/api/v1/validation_codes', {
-        email: formData.email,
-      })
+      const response = await axios
+        .post('/api/v1/validation_codes', {
+          email: formData.email,
+        })
+        .catch(() => {
+          // 失败
+        })
+      // 成功
       console.log(response)
+      refValidationCode.value.startCount()
     }
     return () => (
       <NavBarLayout iconName="left" title="登录">
@@ -63,6 +71,7 @@ export const SignInPage = defineComponent({
               error={errors.email?.[0]}
             />
             <FormItem
+              ref={refValidationCode}
               onClick={onClickSendValidationCode}
               label="验证码"
               type="validationCode"
