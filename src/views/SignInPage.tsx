@@ -16,16 +16,11 @@ export const SignInPage = defineComponent({
   },
   setup: (props, context) => {
     const formData = reactive({
-      email: '2521556749@qq.com',
+      email: '',
       code: '',
     })
     const refValidationCode = ref<any>()
-    const {
-      ref: refDisabled,
-      toggle,
-      on: disabled,
-      off: enabled,
-    } = useBool(false)
+    const { ref: refDisabled, on: disabled, off: enabled } = useBool(false)
     const router = useRouter()
     const errors = reactive({
       email: [],
@@ -111,7 +106,6 @@ export const SignInPage = defineComponent({
               placeholder="6 位数字"
               v-model={formData.code}
               error={errors.code?.[0]}
-              countFrom={1}
             />
             <div class={s.button_wrapper}>
               <Button type="submit" class={s.button}>
