@@ -1,6 +1,7 @@
 import { NavBarLayout } from '@/layouts/NavBarLayout'
 import { Button } from '@/shared/Button'
 import { Form, FormItem } from '@/shared/Form'
+import { http } from '@/shared/Http'
 import { Icon } from '@/shared/Icon'
 import { validate } from '@/shared/validate'
 import axios from 'axios'
@@ -42,17 +43,19 @@ export const SignInPage = defineComponent({
         ])
       )
     }
-
+    const onError = (error: any) => {
+      if (error.response.status === 422) {
+        Object.assign(errors, error.response.data.errors)
+      }
+      throw error
+    }
     const onClickSendValidationCode = async () => {
-      const response = await axios
-        .post('/api/v1/validation_codes', {
+      const response = await http
+        .post('validation_codes', {
           email: formData.email,
         })
-        .catch(() => {
-          // 失败
-        })
+        .catch(onError)
       // 成功
-      console.log(response)
       refValidationCode.value.startCount()
     }
     return () => (
@@ -78,6 +81,7 @@ export const SignInPage = defineComponent({
               placeholder="6 位数字"
               v-model={formData.code}
               error={errors.code?.[0]}
+              countFrom={1}
             />
             <div class={s.button_wrapper}>
               <Button type="submit" class={s.button}>
