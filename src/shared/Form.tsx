@@ -2,6 +2,7 @@ import { DatePicker, Popup } from 'vant'
 import { computed, defineComponent, PropType, ref } from 'vue'
 import { Button } from './Button'
 import s from './Form.module.scss'
+import { getFriendlyError } from './getFriendiyError'
 import { LogoSelect } from './LogoSelect'
 import { Time } from './time'
 
@@ -173,7 +174,9 @@ export const FormItem = defineComponent({
       <label class={props.direction && s.row}>
         <div class={s.text}>
           <span>{props.label}</span>
-          {props.error && <span class={s.error}>{props.error}</span>}
+          {props.error && (
+            <span class={s.error}>{getFriendlyError(props.error)}</span>
+          )}
         </div>
         {content.value}
       </label>
