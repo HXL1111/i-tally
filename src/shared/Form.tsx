@@ -52,6 +52,9 @@ export const FormItem = defineComponent({
       type: Number,
       default: 60,
     },
+    disabled: {
+      type: Boolean,
+    },
   },
   emits: ['update:modelValue'],
   setup: (props, context) => {
@@ -130,9 +133,10 @@ export const FormItem = defineComponent({
             <div class={s.signInput_wrapper}>
               <input class={s.signInput} placeholder={props.placeholder} />
               <Button
-                disabled={isCounting.value}
+                disabled={isCounting.value || props.disabled}
                 onClick={props.onClick}
                 class={s.button}
+                autoSelfDisabled={true}
               >
                 {isCounting.value
                   ? `${count.value}秒后可重新发送`

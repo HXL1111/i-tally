@@ -1,10 +1,10 @@
+import { useBool } from '@/hooks/useBool'
 import { NavBarLayout } from '@/layouts/NavBarLayout'
 import { Button } from '@/shared/Button'
 import { Form, FormItem } from '@/shared/Form'
 import { http } from '@/shared/Http'
 import { Icon } from '@/shared/Icon'
 import { validate } from '@/shared/validate'
-import axios from 'axios'
 import { defineComponent, PropType, reactive, ref } from 'vue'
 import s from './SignInPage.module.scss'
 export const SignInPage = defineComponent({
@@ -19,6 +19,12 @@ export const SignInPage = defineComponent({
       code: '',
     })
     const refValidationCode = ref<any>()
+    const {
+      ref: refDisabled,
+      toggle,
+      on: disabled,
+      off: enabled,
+    } = useBool(false)
     const errors = reactive({
       email: [],
       code: [],
@@ -43,6 +49,7 @@ export const SignInPage = defineComponent({
         ])
       )
     }
+
     const onError = (error: any) => {
       if (error.response.status === 422) {
         Object.assign(errors, error.response.data.errors)
@@ -50,11 +57,13 @@ export const SignInPage = defineComponent({
       throw error
     }
     const onClickSendValidationCode = async () => {
+      disabled()
       const response = await http
         .post('validation_codes', {
           email: formData.email,
         })
         .catch(onError)
+        .finally(enabled)
       // 成功
       refValidationCode.value.startCount()
     }
