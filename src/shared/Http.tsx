@@ -1,4 +1,9 @@
-import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from 'axios'
+import axios, {
+  AxiosError,
+  AxiosHeaders,
+  AxiosInstance,
+  AxiosRequestConfig,
+} from 'axios'
 
 type JSONValue =
   | string
@@ -59,11 +64,10 @@ export class Http {
 }
 
 export const http = new Http('/api/v1')
-
 http.instance.interceptors.request.use((config) => {
   const jwt = localStorage.getItem('jwt')
   if (jwt) {
-    config.headers!.Authorization = `Bearer ${jwt}`
+    ;(config.headers as AxiosHeaders).set('Authorization', `Bearer ${jwt}`)
   }
   return config
 })

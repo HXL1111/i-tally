@@ -4,9 +4,10 @@ import { Button } from '@/shared/Button'
 import { Form, FormItem } from '@/shared/Form'
 import { http } from '@/shared/Http'
 import { Icon } from '@/shared/Icon'
+import { refreshMe } from '@/shared/me'
 import { hasError, validate } from '@/shared/validate'
 import { defineComponent, PropType, reactive, ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import s from './SignInPage.module.scss'
 export const SignInPage = defineComponent({
   props: {
@@ -22,6 +23,7 @@ export const SignInPage = defineComponent({
     const refValidationCode = ref<any>()
     const { ref: refDisabled, on: disabled, off: enabled } = useBool(false)
     const router = useRouter()
+    const route = useRoute()
     const errors = reactive({
       email: [],
       code: [],
@@ -51,8 +53,9 @@ export const SignInPage = defineComponent({
           .catch(onSubmitError)
         localStorage.setItem('jwt', response.data.jwt)
         // router.push('/sign_in?return_to='+ encodeURIComponent(route.fullPath))
-        // const returnTo = route.query.return_to?.toString()
-        const returnTo = localStorage.getItem('returnTo')
+        // const returnTo = localStorage.getItem('returnTo')
+        const returnTo = route.query.return_to?.toString()
+        refreshMe()
         router.push(returnTo || '/')
       }
     }

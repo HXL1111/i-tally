@@ -6,10 +6,23 @@ import { history } from './shared/history';
 import '@/assets/stylesheet/reset.scss'
 import '@/assets/stylesheet/vars.scss'
 import '@svgstore'
+import { fetchMe, mePromise } from './shared/me';
 
 const router = createRouter({
   history,
   routes,
+})
+
+fetchMe()
+
+router.beforeEach(async (to, from) => {
+  if (to.path === '/' || to.path.startsWith('/welcome') || to.path.startsWith('/sign_in') || to.path.startsWith('/start')) {
+    return true
+  } else {
+    return mePromise!.then(() => true, () => {
+      return 'sign_in?return_to=' + to.path
+    })
+  }
 })
 
 const app = createApp(App)
