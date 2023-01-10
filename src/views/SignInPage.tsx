@@ -6,6 +6,7 @@ import { http } from '@/shared/Http'
 import { Icon } from '@/shared/Icon'
 import { hasError, validate } from '@/shared/validate'
 import { defineComponent, PropType, reactive, ref } from 'vue'
+import { useRouter } from 'vue-router'
 import s from './SignInPage.module.scss'
 export const SignInPage = defineComponent({
   props: {
@@ -25,6 +26,7 @@ export const SignInPage = defineComponent({
       on: disabled,
       off: enabled,
     } = useBool(false)
+    const router = useRouter()
     const errors = reactive({
       email: [],
       code: [],
@@ -49,13 +51,29 @@ export const SignInPage = defineComponent({
         ])
       )
       if (!hasError(errors)) {
-        const response = await http.post<{ jwt: string }>('session', formData)
+        const response = await http
+          .post<{ jwt: string }>('session', formData)
+          .catch(onSubmitError)
+        localStorage.setItem('jwt', response.data.jwt)
+        // router.push('/sign_in?return_to='+ encodeURIComponent(route.fullPath))
+        // const returnTo = route.query.return_to?.toString()
+        const returnTo = localStorage.getItem('returnTo')
+        router.push(returnTo || '/')
       }
     }
 
     const onError = (error: any) => {
       if (error.response.status === 422) {
         Object.assign(errors, error.response.data.errors)
+      }
+      throw error
+    }
+    const onSubmitError = (error: any) => {
+      if (error.response.status === 422) {
+        Object.assign(errors, {
+          email: [],
+          code: error.response.data.errors.email,
+        })
       }
       throw error
     }
