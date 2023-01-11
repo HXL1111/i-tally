@@ -1,8 +1,9 @@
 import { NavBarLayout } from '@/layouts/NavBarLayout'
+import { http } from '@/shared/Http'
 import { Icon } from '@/shared/Icon'
 import { Tabs, Tab } from '@/shared/Tabs'
-import { defineComponent, PropType, ref } from 'vue'
-import { createRouter, RouterLink, useRouter } from 'vue-router'
+import { defineComponent, onMounted, PropType, ref } from 'vue'
+import { RouterLink, useRouter } from 'vue-router'
 import { InputPad } from './InputPad'
 import s from './ItemCreate.module.scss'
 export const ItemCreate = defineComponent({
@@ -13,262 +14,24 @@ export const ItemCreate = defineComponent({
   },
   setup: (props, context) => {
     const refKind = ref('支出')
-    const refExpensesTags = ref([
-      {
-        id: 1,
-        name: '餐费',
-        sign: <Icon name="caiWu1" class={s.icon} />,
-        category: 'expenses',
-      },
-      {
-        id: 2,
-        name: '打车',
-        sign: <Icon name="caiWu1" class={s.icon} />,
-        category: 'expenses',
-      },
-      {
-        id: 3,
-        name: '聚餐',
-        sign: <Icon name="caiWu1" class={s.icon} />,
-        category: 'expenses',
-      },
-      {
-        id: 4,
-        name: '打车',
-        sign: <Icon name="caiWu1" class={s.icon} />,
-        category: 'expenses',
-      },
-      {
-        id: 5,
-        name: '聚餐',
-        sign: <Icon name="caiWu1" class={s.icon} />,
-        category: 'expenses',
-      },
-      {
-        id: 6,
-        name: '打车',
-        sign: <Icon name="caiWu1" class={s.icon} />,
-        category: 'expenses',
-      },
-      {
-        id: 7,
-        name: '聚餐',
-        sign: <Icon name="caiWu1" class={s.icon} />,
-        category: 'expenses',
-      },
-    ])
-    const refIncomeTags = ref([
-      {
-        id: 4,
-        name: '工资',
-        sign: <Icon name="caiWu1" class={s.icon} />,
-        category: 'income',
-      },
-      {
-        id: 5,
-        name: '彩票',
-        sign: <Icon name="caiWu1" class={s.icon} />,
-        category: 'income',
-      },
-      {
-        id: 6,
-        name: '滴滴',
-        sign: <Icon name="caiWu1" class={s.icon} />,
-        category: 'income',
-      },
-      {
-        id: 11,
-        name: '彩票',
-        sign: <Icon name="caiWu1" class={s.icon} />,
-        category: 'income',
-      },
-      {
-        id: 18,
-        name: '滴滴',
-        sign: <Icon name="caiWu1" class={s.icon} />,
-        category: 'income',
-      },
-      {
-        id: 17,
-        name: '彩票',
-        sign: <Icon name="caiWu1" class={s.icon} />,
-        category: 'income',
-      },
-      {
-        id: 19,
-        name: '滴滴',
-        sign: <Icon name="caiWu1" class={s.icon} />,
-        category: 'income',
-      },
-      {
-        id: 4,
-        name: '工资',
-        sign: <Icon name="caiWu1" class={s.icon} />,
-        category: 'income',
-      },
-      {
-        id: 5,
-        name: '彩票',
-        sign: <Icon name="caiWu1" class={s.icon} />,
-        category: 'income',
-      },
-      {
-        id: 6,
-        name: '滴滴',
-        sign: <Icon name="caiWu1" class={s.icon} />,
-        category: 'income',
-      },
-      {
-        id: 11,
-        name: '彩票',
-        sign: <Icon name="caiWu1" class={s.icon} />,
-        category: 'income',
-      },
-      {
-        id: 18,
-        name: '滴滴',
-        sign: <Icon name="caiWu1" class={s.icon} />,
-        category: 'income',
-      },
-      {
-        id: 17,
-        name: '彩票',
-        sign: <Icon name="caiWu1" class={s.icon} />,
-        category: 'income',
-      },
-      {
-        id: 19,
-        name: '滴滴',
-        sign: <Icon name="caiWu1" class={s.icon} />,
-        category: 'income',
-      },
-      {
-        id: 4,
-        name: '工资',
-        sign: <Icon name="caiWu1" class={s.icon} />,
-        category: 'income',
-      },
-      {
-        id: 5,
-        name: '彩票',
-        sign: <Icon name="caiWu1" class={s.icon} />,
-        category: 'income',
-      },
-      {
-        id: 6,
-        name: '滴滴',
-        sign: <Icon name="caiWu1" class={s.icon} />,
-        category: 'income',
-      },
-      {
-        id: 11,
-        name: '彩票',
-        sign: <Icon name="caiWu1" class={s.icon} />,
-        category: 'income',
-      },
-      {
-        id: 18,
-        name: '滴滴',
-        sign: <Icon name="caiWu1" class={s.icon} />,
-        category: 'income',
-      },
-      {
-        id: 17,
-        name: '彩票',
-        sign: <Icon name="caiWu1" class={s.icon} />,
-        category: 'income',
-      },
-      {
-        id: 19,
-        name: '滴滴',
-        sign: <Icon name="caiWu1" class={s.icon} />,
-        category: 'income',
-      },
-      {
-        id: 4,
-        name: '工资',
-        sign: <Icon name="caiWu1" class={s.icon} />,
-        category: 'income',
-      },
-      {
-        id: 5,
-        name: '彩票',
-        sign: <Icon name="caiWu1" class={s.icon} />,
-        category: 'income',
-      },
-      {
-        id: 6,
-        name: '滴滴',
-        sign: <Icon name="caiWu1" class={s.icon} />,
-        category: 'income',
-      },
-      {
-        id: 11,
-        name: '彩票',
-        sign: <Icon name="caiWu1" class={s.icon} />,
-        category: 'income',
-      },
-      {
-        id: 18,
-        name: '滴滴',
-        sign: <Icon name="caiWu1" class={s.icon} />,
-        category: 'income',
-      },
-      {
-        id: 17,
-        name: '彩票',
-        sign: <Icon name="caiWu1" class={s.icon} />,
-        category: 'income',
-      },
-      {
-        id: 19,
-        name: '滴滴',
-        sign: <Icon name="caiWu1" class={s.icon} />,
-        category: 'income',
-      },
-      {
-        id: 4,
-        name: '工资',
-        sign: <Icon name="caiWu1" class={s.icon} />,
-        category: 'income',
-      },
-      {
-        id: 5,
-        name: '彩票',
-        sign: <Icon name="caiWu1" class={s.icon} />,
-        category: 'income',
-      },
-      {
-        id: 6,
-        name: '滴滴',
-        sign: <Icon name="caiWu1" class={s.icon} />,
-        category: 'income',
-      },
-      {
-        id: 11,
-        name: '彩票',
-        sign: <Icon name="caiWu1" class={s.icon} />,
-        category: 'income',
-      },
-      {
-        id: 18,
-        name: '滴滴',
-        sign: <Icon name="caiWu1" class={s.icon} />,
-        category: 'income',
-      },
-      {
-        id: 17,
-        name: '彩票',
-        sign: <Icon name="caiWu1" class={s.icon} />,
-        category: 'income',
-      },
-      {
-        id: 19,
-        name: '滴滴',
-        sign: <Icon name="caiWu1" class={s.icon} />,
-        category: 'income',
-      },
-    ])
+    onMounted(async () => {
+      const response = await http.get<{ resources: Tag[] }>('/tags', {
+        kind: 'expense',
+        _mock: 'tagIndex',
+      })
+      refExpenseTags.value = response.data.resources
+      console.log(refExpenseTags.value)
+    })
+    const refExpenseTags = ref<Tag[]>([])
+    onMounted(async () => {
+      const response = await http.get<{ resources: Tag[] }>('/tags', {
+        kind: 'income',
+        _mock: 'tagIndex',
+      })
+      refIncomeTags.value = response.data.resources
+      console.log(refIncomeTags.value)
+    })
+    const refIncomeTags = ref<Tag[]>([])
     const router = useRouter()
     return () => (
       <>
@@ -289,9 +52,11 @@ export const ItemCreate = defineComponent({
                         </RouterLink>
                         <span>新增</span>
                       </li>
-                      {refExpensesTags.value.map((item) => (
+                      {refExpenseTags.value.map((item) => (
                         <li>
-                          <div class={s.icon_wrapper}>{item.sign}</div>
+                          <div class={s.icon_wrapper}>
+                            <Icon name={item.sign} class={s.icon} />
+                          </div>
                           <span>{item.name}</span>
                         </li>
                       ))}
@@ -307,7 +72,9 @@ export const ItemCreate = defineComponent({
                       </li>
                       {refIncomeTags.value.map((item) => (
                         <li>
-                          <div class={s.icon_wrapper}>{item.sign}</div>
+                          <div class={s.icon_wrapper}>
+                            <Icon name={item.sign} class={s.icon} />
+                          </div>
                           <span>{item.name}</span>
                         </li>
                       ))}

@@ -11,7 +11,13 @@ type GetConfig = Omit<AxiosRequestConfig, 'params' | 'url' | 'method'>
 type PostConfig = Omit<AxiosRequestConfig, 'url' | 'data' | 'method'>
 type PatchConfig = Omit<AxiosRequestConfig, 'url' | 'data'>
 type DeleteConfig = Omit<AxiosRequestConfig, 'params'>
-type JSONValue = string | number | null | boolean | JSONValue[] | { [key: string]: JSONValue };
+type JSONValue =
+  | string
+  | number
+  | null
+  | boolean
+  | JSONValue[]
+  | { [key: string]: JSONValue }
 
 export class Http {
   instance: AxiosInstance
@@ -69,9 +75,9 @@ const mock = (response: AxiosResponse) => {
     return false
   }
   switch (response.config?.params?._mock) {
-    // case 'tagIndex':
-    //   ;[response.status, response.data] = mockTagIndex(response.config)
-    //   return true
+    case 'tagIndex':
+      ;[response.status, response.data] = mockTagIndex(response.config)
+      return true
     // case 'itemCreate':
     //   ;[response.status, response.data] = mockItemCreate(response.config)
     //   return true

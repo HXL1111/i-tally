@@ -21,14 +21,14 @@ export const mockTagIndex: Mock = (config) => {
     Array.from({ length: n }).map(() => ({
       id: createId(),
       name: faker.lorem.word(),
-      sign: faker.internet.emoji(),
+      sign: 'caiWu1',
       kind: config.params.kind,
       ...attrs,
     }))
 
-  if (config.params.kind === 'expenses') {
+  if (config.params.kind === 'expense') {
     return [200, { resources: createTag(7) }]
   } else {
-    return [200, { resources: createTag(20) }]
+    return [200, { resources: createTag(30) }]
   }
 }
