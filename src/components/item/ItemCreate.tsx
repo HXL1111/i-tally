@@ -1,9 +1,7 @@
 import { NavBarLayout } from '@/layouts/NavBarLayout'
-import { http } from '@/shared/Http'
-import { Icon } from '@/shared/Icon'
 import { Tabs, Tab } from '@/shared/Tabs'
-import { defineComponent, onMounted, PropType, ref } from 'vue'
-import { RouterLink, useRouter } from 'vue-router'
+import { defineComponent, PropType, reactive } from 'vue'
+import { useRouter } from 'vue-router'
 import { InputPad } from './InputPad'
 import s from './ItemCreate.module.scss'
 import { Tags } from './Tags'
@@ -14,8 +12,12 @@ export const ItemCreate = defineComponent({
     },
   },
   setup: (props, context) => {
-    const refKind = ref('支出')
-    const refTagId = ref<number>(0)
+    const formData = reactive({
+      kind: '支出',
+      tags_id: [],
+      amount: 0,
+      happen_at: new Date().toISOString(),
+    })
     const router = useRouter()
     return () => (
       <>
@@ -27,15 +29,24 @@ export const ItemCreate = defineComponent({
           {{
             default: () => (
               <div class={s.wrapper}>
-                <Tabs v-model:selected={refKind.value} class={s.tabs}>
+                <Tabs v-model:selected={formData.kind} class={s.tabs}>
                   <Tab name="支出" class={s.tab}>
-                    <Tags kind="expense" v-model:selected={refTagId.value} />
+                    <Tags
+                      kind="expense"
+                      v-model:selected={formData.tags_id[0]}
+                    />
                   </Tab>
                   <Tab name="收入" class={s.tab}>
-                    <Tags kind="income" v-model:selected={refTagId.value} />
+                    <Tags
+                      kind="income"
+                      v-model:selected={formData.tags_id[0]}
+                    />
                   </Tab>
                 </Tabs>
-                <InputPad />
+                <InputPad
+                  v-model:amount={formData.amount}
+                  v-model:happenAt={formData.happen_at}
+                />
               </div>
             ),
           }}

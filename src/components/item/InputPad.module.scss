@@ -1,18 +1,20 @@
 .inputPad {
   background: var(--inputPad-bg);
   padding: 12px;
-  > .amountDateAndNotes {
+  > .amountAndDate {
     background: var(--inputPad-content-bg);
     border-radius: var(--inputPad-content-radius);
     padding: 0 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     .amount {
-      font-size: 36px;
+      font-size: 28px;
     }
-    .dateAndNotes {
+    .date {
       display: flex;
       align-items: center;
       padding: 6px 0;
-      border-top: 1px solid #d8d8d8;
       color: #999999;
       font-size: 12px;
       > .date {
@@ -22,13 +24,6 @@
           width: 24px;
           height: 24px;
           padding-right: 6px;
-        }
-      }
-      > .notes {
-        flex-grow: 1;
-        padding-left: 12px;
-        > input {
-          border: none;
         }
       }
     }

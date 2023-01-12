@@ -8,10 +8,13 @@ import { Time } from '@/shared/time'
 
 export const InputPad = defineComponent({
   props: {
-    name: {
+    happenAt: {
       type: String as PropType<string>,
     },
+    amount: Number,
+    notes: String,
   },
+  emits: ['update:amount', 'update:happenAt'],
   setup: (props, context) => {
     const appendText = (n: string) => {
       if (refAmount.value.length >= 13) {
@@ -99,7 +102,13 @@ export const InputPad = defineComponent({
           appendText('9')
         },
       },
-      { text: '完成', onClick: () => {} },
+      {
+        text: '完成',
+        onClick: () => {
+          context.emit('update:amount', parseFloat(refAmount.value) * 100)
+          refAmount.value = '0'
+        },
+      },
       {
         text: '0',
         onClick: () => {
@@ -113,9 +122,8 @@ export const InputPad = defineComponent({
         },
       },
     ]
-    const refAmount = ref('0')
-    const notes = ref('')
-    let now = new Date()
+    const refAmount = ref(props.amount ? (props.amount / 100).toString() : '0')
+    let now = props.happenAt
     const refCurrentDate = ref([
       new Time(now).format('YYYY'),
       new Time(now).format('MM'),
@@ -126,13 +134,17 @@ export const InputPad = defineComponent({
     const hideDatePicker = () => (refDatePickerVisible.value = false)
     const setDate = (date: any) => {
       refCurrentDate.value = date.selectedValues
+      console.log(new Date(String(refCurrentDate.value)))
+      context.emit(
+        'update:happenAt',
+        new Date(String(refCurrentDate.value)).toISOString()
+      )
       hideDatePicker()
     }
     return () => (
       <div class={s.inputPad}>
-        <div class={s.amountDateAndNotes}>
-          <div class={s.amount}>￥{refAmount.value}</div>
-          <div class={s.dateAndNotes}>
+        <div class={s.amountAndDate}>
+          <div class={s.date}>
             <div
               class={s.date}
               onClick={() => {
@@ -156,14 +168,8 @@ export const InputPad = defineComponent({
                 onCancel={hideDatePicker}
               />
             </Popup>
-            <form class={s.notes}>
-              <input
-                type="text"
-                placeholder="点击填写备注"
-                v-model={notes.value}
-              />
-            </form>
           </div>
+          <div class={s.amount}>￥{refAmount.value}</div>
         </div>
         <div class={s.numberPad}>
           {buttons.map((button) => (
