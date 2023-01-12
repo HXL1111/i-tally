@@ -5,19 +5,17 @@ import axios, {
   AxiosRequestConfig,
   AxiosResponse,
 } from 'axios'
-import { mockItemCreate, mockSession, mockTagIndex } from '../mock/mock'
+import {
+  mockItemCreate,
+  mockSession,
+  mockTagCreate,
+  mockTagIndex,
+} from '../mock/mock'
 
 type GetConfig = Omit<AxiosRequestConfig, 'params' | 'url' | 'method'>
 type PostConfig = Omit<AxiosRequestConfig, 'url' | 'data' | 'method'>
 type PatchConfig = Omit<AxiosRequestConfig, 'url' | 'data'>
 type DeleteConfig = Omit<AxiosRequestConfig, 'params'>
-type JSONValue =
-  | string
-  | number
-  | null
-  | boolean
-  | JSONValue[]
-  | { [key: string]: JSONValue }
 
 export class Http {
   instance: AxiosInstance
@@ -84,8 +82,8 @@ const mock = (response: AxiosResponse) => {
     // case 'itemIndex':
     //   ;[response.status, response.data] = mockItemIndex(response.config)
     //   return true
-    // case 'tagCreate':
-    //   ;[response.status, response.data] = mockTagCreate(response.config)
+    case 'tagCreate':
+      ;[response.status, response.data] = mockTagCreate(response.config)
     case 'session':
       ;[response.status, response.data] = mockSession(response.config)
       return true
@@ -106,17 +104,17 @@ http.instance.interceptors.request.use((config) => {
 http.instance.interceptors.response.use(
   (response) => {
     mock(response)
-    if(response.status >= 400){
-      throw {response}
-    }else{
+    if (response.status >= 400) {
+      throw { response }
+    } else {
       return response
     }
   },
   (error) => {
-    mock(error.response) 
-    if(error.response.status>=400){
+    mock(error.response)
+    if (error.response.status >= 400) {
       throw error
-    }else{
+    } else {
       return error.response
     }
   }

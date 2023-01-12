@@ -10,6 +10,23 @@ export const mockSession: Mock = (config) => {
     },
   ]
 }
+export const mockTagCreate: Mock = (config) => {
+  return [
+    200,
+    {
+      resource: {
+        id: 27775,
+        user_id: 10262,
+        name: 'x',
+        sign: 'caiWu2',
+        deleted_at: null,
+        created_at: '2022-11-24T18:04:35.542+08:00',
+        updated_at: '2022-11-24T18:04:35.542+08:00',
+        kind: 'income',
+      },
+    },
+  ]
+}
 let id = 0
 const createId = () => {
   id += 1

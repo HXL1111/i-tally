@@ -27,7 +27,10 @@ export const Tags = defineComponent({
     return () => (
       <ol class={s.tags}>
         <li>
-          <RouterLink to="/tag/create" class={s.icon_wrapper}>
+          <RouterLink
+            to={`/tag/create?kind=${props.kind}`}
+            class={s.icon_wrapper}
+          >
             <Icon name="add" class={s.icon} />
           </RouterLink>
           <span>新增</span>
