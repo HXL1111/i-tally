@@ -16,7 +16,6 @@ export const StartPage = defineComponent({
   setup: (props, context) => {
     const refKind = ref('本月')
     const overlayVisible = ref(false)
-
     const overlayOnClick = () => {
       overlayVisible.value = !overlayVisible.value
       console.log(overlayVisible.value)

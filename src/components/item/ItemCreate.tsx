@@ -3,9 +3,7 @@ import { http } from '@/shared/Http'
 import { Tabs, Tab } from '@/shared/Tabs'
 import { AxiosError } from 'axios'
 import { showDialog } from 'vant'
-
 import { defineComponent, PropType, reactive } from 'vue'
-
 import { useRouter } from 'vue-router'
 import { InputPad } from './InputPad'
 import s from './ItemCreate.module.scss'
@@ -32,6 +30,7 @@ export const ItemCreate = defineComponent({
       }
       throw error
     }
+    const router = useRouter()
     const onSubmit = async () => {
       const response = await http
         .post<Resource<Item>>('/items', formData, {
@@ -40,14 +39,9 @@ export const ItemCreate = defineComponent({
         .catch(onError)
       router.push('/item')
     }
-    const router = useRouter()
     return () => (
       <>
-        <NavBarLayout
-          iconName="left"
-          title="记一笔"
-          onClick={() => router.back()}
-        >
+        <NavBarLayout iconName="left" title="记一笔">
           {{
             default: () => (
               <div class={s.wrapper}>
