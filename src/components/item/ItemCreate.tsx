@@ -45,7 +45,6 @@ export const ItemCreate = defineComponent({
           {{
             default: () => (
               <div class={s.wrapper}>
-                {JSON.stringify(formData)}
                 <Tabs v-model:selected={formData.kind} class={s.tabs}>
                   <Tab name="支出" class={s.tab}>
                     <Tags
