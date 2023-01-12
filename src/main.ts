@@ -6,6 +6,7 @@ import { history } from './shared/history';
 import '@/assets/stylesheet/reset.scss'
 import '@/assets/stylesheet/vars.scss'
 import '@svgstore'
+import 'vant/lib/index.css';
 import { fetchMe, mePromise } from './shared/me';
 
 const router = createRouter({

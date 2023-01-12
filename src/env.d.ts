@@ -9,6 +9,15 @@ declare module '*.vue' {
 
 type JSONValue = string | number | null | boolean | JSONValue[] | { [key: string]: JSONValue };
 
+type Item = {
+  id: number,
+  user_id: number,
+  amount: number,
+  tag_ids: number[],
+  happen_at: string,
+  kind: 'expenses' | 'income',
+}
+
 type Tag = {
   id: number,
   user_id: number,
@@ -23,4 +32,10 @@ type Resources<T = any> = {
     per_page: number,
     count: number
   }
+}
+type Resource<T> = {
+  resource: T
+}
+type ResourceError = {
+  error: Record<string, string[]>
 }
