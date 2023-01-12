@@ -1,6 +1,6 @@
 import { http } from '@/shared/Http'
 import { Icon } from '@/shared/Icon'
-import { defineComponent, onMounted, onUpdated, PropType, ref } from 'vue'
+import { defineComponent, onMounted, PropType, ref } from 'vue'
 import { RouterLink } from 'vue-router'
 import s from './Tags.module.scss'
 export const Tags = defineComponent({
@@ -9,7 +9,9 @@ export const Tags = defineComponent({
       type: String as PropType<string>,
       required: true,
     },
+    selected: Number,
   },
+  emits: ['update:selected'],
   setup: (props, context) => {
     onMounted(async () => {
       const response = await http.get<Resources<Tag>>('/tags', {
@@ -19,7 +21,9 @@ export const Tags = defineComponent({
       refTags.value = response.data.resources
     })
     const refTags = ref<Tag[]>([])
-
+    const onSelect = (tag: Tag) => {
+      context.emit('update:selected', tag.id)
+    }
     return () => (
       <ol class={s.tags}>
         <li>
@@ -28,12 +32,18 @@ export const Tags = defineComponent({
           </RouterLink>
           <span>新增</span>
         </li>
-        {refTags.value.map((item) => (
+        {refTags.value.map((tag) => (
           <li>
-            <div class={s.icon_wrapper}>
-              <Icon name={item.sign} class={s.icon} />
+            <div
+              class={[
+                s.icon_wrapper,
+                props.selected === tag.id ? s.selectedLogo : '',
+              ]}
+              onClick={() => onSelect(tag)}
+            >
+              <Icon name={tag.sign} class={s.icon} />
             </div>
-            <span>{item.name}</span>
+            <span>{tag.name}</span>
           </li>
         ))}
       </ol>

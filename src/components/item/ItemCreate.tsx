@@ -15,6 +15,7 @@ export const ItemCreate = defineComponent({
   },
   setup: (props, context) => {
     const refKind = ref('支出')
+    const refTagId = ref<number>(0)
     const router = useRouter()
     return () => (
       <>
@@ -28,10 +29,10 @@ export const ItemCreate = defineComponent({
               <div class={s.wrapper}>
                 <Tabs v-model:selected={refKind.value} class={s.tabs}>
                   <Tab name="支出" class={s.tab}>
-                    <Tags kind="expense" />
+                    <Tags kind="expense" v-model:selected={refTagId.value} />
                   </Tab>
                   <Tab name="收入" class={s.tab}>
-                    <Tags kind="income" />
+                    <Tags kind="income" v-model:selected={refTagId.value} />
                   </Tab>
                 </Tabs>
                 <InputPad />
