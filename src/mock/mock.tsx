@@ -10,6 +10,16 @@ export const mockSession: Mock = (config) => {
     },
   ]
 }
+export const mockTagShow: Mock = (config) => {
+  const createTag = (attrs?: any) => ({
+    id: createId(),
+    name: faker.lorem.word(),
+    sign: 'caiWu4',
+    kind: 'expense',
+    ...attrs,
+  })
+  return [200, { resource: createTag() }]
+}
 export const mockTagCreate: Mock = (config) => {
   return [
     200,

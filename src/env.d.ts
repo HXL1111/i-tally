@@ -23,7 +23,7 @@ type Tag = {
   user_id: number,
   name: string,
   sign: string,
-  kind: 'expenses' | 'income'
+  kind: string
 }
 type Resources<T = any> = {
   resources: T[],
