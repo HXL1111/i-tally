@@ -1,11 +1,8 @@
 import { NavBarLayout } from '@/layouts/NavBarLayout'
-import { FloatButton } from '@/shared/FloatButton'
-import { MenuOverlay } from '@/shared/MenuOverlay'
 import { Overlay } from 'vant'
 import { Tabs, Tab } from '@/shared/Tabs'
 import { Time } from '@/shared/time'
 import { defineComponent, PropType, reactive, ref } from 'vue'
-import { RouterLink } from 'vue-router'
 import s from './TimeTabsLayout.module.scss'
 import { Form, FormItem } from '@/shared/Form'
 const demo = defineComponent({
@@ -150,15 +147,6 @@ export const TimeTabsLayout = defineComponent({
                     </main>
                   </div>
                 </Overlay>
-                {/* <div class={s.center}>
-                  <Icon name="bill" class={s.icon} />
-                  <span>暂无数据</span>
-                </div>
-                <RouterLink to="/item/create">
-                  <div class={s.button_wrapper}>
-                    <Button>开始记账</Button>
-                  </div>
-                </RouterLink> */}
               </>
             ),
           }}
