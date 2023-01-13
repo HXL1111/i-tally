@@ -9,6 +9,7 @@ import {
   mockItemCreate,
   mockSession,
   mockTagCreate,
+  mockTagEdit,
   mockTagIndex,
   mockTagShow,
 } from '../mock/mock'
@@ -74,15 +75,18 @@ const mock = (response: AxiosResponse) => {
     return false
   }
   switch (response.config?.params?._mock) {
-    case 'tagIndex':
-      ;[response.status, response.data] = mockTagIndex(response.config)
-      return true
     case 'itemCreate':
       ;[response.status, response.data] = mockItemCreate(response.config)
       return true
     // case 'itemIndex':
     //   ;[response.status, response.data] = mockItemIndex(response.config)
     //   return true
+    case 'tagIndex':
+      ;[response.status, response.data] = mockTagIndex(response.config)
+      return true
+    case 'tagEdit':
+      ;[response.status, response.data] = mockTagEdit(response.config)
+      return true
     case 'tagShow':
       ;[response.status, response.data] = mockTagShow(response.config)
       return true
