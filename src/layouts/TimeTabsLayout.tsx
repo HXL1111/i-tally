@@ -9,11 +9,9 @@ const demo = defineComponent({
   props: {
     startDate: {
       type: String as PropType<string>,
-      required: true,
     },
     endDate: {
       type: String as PropType<string>,
-      required: true,
     },
   },
 })
@@ -66,10 +64,7 @@ export const TimeTabsLayout = defineComponent({
         refDateOverlayVisible.value = true
       }
     }
-    const customTime = reactive({
-      start: new Time().format(),
-      end: new Time().format(),
-    })
+    const customTime = reactive<{ start?: string; end?: string }>({})
     return () => (
       <div class={s.wrapper}>
         <NavBarLayout

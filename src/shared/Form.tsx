@@ -103,7 +103,7 @@ export const FormItem = defineComponent({
             <>
               <input
                 readonly={true}
-                value={props.modelValue}
+                value={props.modelValue || new Time().format()}
                 onClick={() => {
                   refDateVisible.value = true
                 }}
@@ -115,7 +115,10 @@ export const FormItem = defineComponent({
                 close-on-click-overlay={false}
               >
                 <DatePicker
-                  modelValue={props.modelValue?.split('-')}
+                  modelValue={
+                    props.modelValue?.split('-') ||
+                    new Time().format().split('-')
+                  }
                   title="选择年月日"
                   onConfirm={(date: any) => {
                     context.emit(
