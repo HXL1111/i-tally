@@ -50,24 +50,12 @@
             fill: #333333;
           }
         }
-        > .nameDateAndNotes {
+        > .nameAndDate {
           padding-left: 16px;
-          > .nameAndDate {
-            > .name {
-            }
-            > .date {
-              padding-left: 8px;
-              font-size: 12px;
-              color: var(--dateAndNotes-text-color);
-            }
-          }
-          > .notes {
+          > .date {
+            padding-top: 4px;
             font-size: 12px;
-            color: var(--dateAndNotes-text-color);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            width: calc(100vw - 146px);
+            color: var(--date-text-color);
           }
         }
       }
