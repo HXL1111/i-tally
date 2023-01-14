@@ -83,10 +83,10 @@ export const ItemSummary = defineComponent({
                 <li>
                   <div class={s.left}>
                     <div class={s.logo}>
-                      <Icon name="caiWu2" class={s.icon} />
+                      <Icon name={item.tags![0].sign} class={s.icon} />
                     </div>
                     <div class={s.nameAndDate}>
-                      <div>{item.id}</div>
+                      <div>{item.tags?.[0].name}</div>
                       <div class={s.date}>
                         <DateTime value={item.happen_at} />
                       </div>
