@@ -1,4 +1,5 @@
 import { Button } from '@/shared/Button'
+import { DateTime } from '@/shared/DateTime'
 import { http } from '@/shared/Http'
 import { Icon } from '@/shared/Icon'
 import { Money } from '@/shared/Money'
@@ -63,7 +64,9 @@ export const ItemSummary = defineComponent({
                     </div>
                     <div class={s.nameAndDate}>
                       <div>{item.id}</div>
-                      <div class={s.date}>{item.happen_at}</div>
+                      <div class={s.date}>
+                        <DateTime value={item.happen_at} />
+                      </div>
                     </div>
                   </div>
                   <div class={[s.right, s.expense]}>
