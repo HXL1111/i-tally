@@ -1,6 +1,7 @@
 import { Button } from '@/shared/Button'
 import { http } from '@/shared/Http'
 import { Icon } from '@/shared/Icon'
+import { Money } from '@/shared/Money'
 import { defineComponent, onMounted, PropType, ref } from 'vue'
 import s from './ItemSummary.module.scss'
 export const ItemSummary = defineComponent({
@@ -65,7 +66,9 @@ export const ItemSummary = defineComponent({
                       <div class={s.date}>{item.happen_at}</div>
                     </div>
                   </div>
-                  <div class={[s.right, s.expense]}>￥{item.amount}</div>
+                  <div class={[s.right, s.expense]}>
+                    ￥<Money value={item.amount} />
+                  </div>
                 </li>
               ))}
             </ol>
