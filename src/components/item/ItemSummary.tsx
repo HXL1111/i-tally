@@ -3,7 +3,7 @@ import { DateTime } from '@/shared/DateTime'
 import { http } from '@/shared/Http'
 import { Icon } from '@/shared/Icon'
 import { Money } from '@/shared/Money'
-import { defineComponent, onMounted, PropType, ref } from 'vue'
+import { defineComponent, onMounted, PropType, reactive, ref } from 'vue'
 import s from './ItemSummary.module.scss'
 export const ItemSummary = defineComponent({
   props: {
@@ -37,6 +37,23 @@ export const ItemSummary = defineComponent({
     onMounted(() => {
       fetchItems()
     })
+    const itemsBalance = reactive({
+      expense: 0,
+      income: 0,
+      balance: 0,
+    })
+    onMounted(async () => {
+      if (!props.startDate || !props.endDate) {
+        return
+      }
+      const response = await http.get('/item/balance', {
+        happen_after: props.startDate,
+        happen_before: props.endDate,
+        page: page.value + 1,
+        _mock: 'itemIndexBalance',
+      })
+      Object.assign(itemsBalance, response.data)
+    })
     return () => (
       <div class={s.itemSummary}>
         {items.value ? (
@@ -44,15 +61,21 @@ export const ItemSummary = defineComponent({
             <ol class={s.total}>
               <li class={s.expense}>
                 <span>支出</span>
-                <span>128</span>
+                <span>
+                  <Money value={itemsBalance.expense} />
+                </span>
               </li>
               <li class={s.income}>
                 <span>收入</span>
-                <span>100</span>
+                <span>
+                  <Money value={itemsBalance.income} />
+                </span>
               </li>
               <li>
                 <span class={s.netIncome}>结余</span>
-                <span>-28</span>
+                <span>
+                  <Money value={itemsBalance.balance} />
+                </span>
               </li>
             </ol>
             <ol class={s.recordList}>
