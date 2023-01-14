@@ -26,6 +26,10 @@ type Tag = {
   sign: string,
   kind: string
 }
+type User = {
+  id: number,
+  email: string
+}
 type Resources<T = any> = {
   resources: T[],
   pager: {
