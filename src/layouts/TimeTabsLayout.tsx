@@ -64,6 +64,15 @@ export const TimeTabsLayout = defineComponent({
         refDateOverlayVisible.value = true
       }
     }
+    const tempTime = reactive({
+      start: new Time().format(),
+      end: new Time().format(),
+    })
+    const onSubmitCustomTime = (e: Event) => {
+      e.preventDefault()
+      refDateOverlayVisible.value = false
+      Object.assign(customTime, tempTime)
+    }
     const customTime = reactive<{ start?: string; end?: string }>({})
     return () => (
       <div class={s.wrapper}>
@@ -109,16 +118,16 @@ export const TimeTabsLayout = defineComponent({
                   <div class={s.overlay_inner}>
                     <header>请选择时间</header>
                     <main>
-                      <Form class={s.form}>
+                      <Form class={s.form} onSubmit={onSubmitCustomTime}>
                         <FormItem
                           type="date"
                           label="开始时间"
-                          v-model={customTime.start}
+                          v-model={tempTime.start}
                         />
                         <FormItem
                           type="date"
                           label="结束时间"
-                          v-model={customTime.end}
+                          v-model={tempTime.end}
                         />
                         <div class={s.actions}>
                           <button
@@ -129,14 +138,7 @@ export const TimeTabsLayout = defineComponent({
                           >
                             取消
                           </button>
-                          <button
-                            type="submit"
-                            onClick={() =>
-                              (refDateOverlayVisible.value = false)
-                            }
-                          >
-                            确定
-                          </button>
+                          <button type="submit">确定</button>
                         </div>
                       </Form>
                     </main>

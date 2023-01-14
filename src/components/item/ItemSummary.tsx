@@ -3,7 +3,7 @@ import { DateTime } from '@/shared/DateTime'
 import { http } from '@/shared/Http'
 import { Icon } from '@/shared/Icon'
 import { Money } from '@/shared/Money'
-import { defineComponent, onMounted, PropType, reactive, ref } from 'vue'
+import { defineComponent, onMounted, PropType, reactive, ref, watch } from 'vue'
 import s from './ItemSummary.module.scss'
 export const ItemSummary = defineComponent({
   props: {
@@ -34,6 +34,15 @@ export const ItemSummary = defineComponent({
         (pager.page - 1) * pager.per_page + resources.length < pager.count
       page.value += 1
     }
+    watch(
+      () => [props.startDate, props.endDate],
+      () => {
+        items.value = []
+        hasMore.value = false
+        page.value = 0
+        fetchItems()
+      }
+    )
     onMounted(() => {
       fetchItems()
     })
@@ -42,7 +51,7 @@ export const ItemSummary = defineComponent({
       income: 0,
       balance: 0,
     })
-    onMounted(async () => {
+    const fetchItemsBalance = async () => {
       if (!props.startDate || !props.endDate) {
         return
       }
@@ -53,7 +62,19 @@ export const ItemSummary = defineComponent({
         _mock: 'itemIndexBalance',
       })
       Object.assign(itemsBalance, response.data)
-    })
+    }
+    onMounted(fetchItemsBalance)
+    watch(
+      () => [props.endDate, props.startDate],
+      () => {
+        Object.assign(itemsBalance, {
+          expense: 0,
+          income: 0,
+          balance: 0,
+        })
+        fetchItemsBalance()
+      }
+    )
     return () => (
       <div class={s.itemSummary}>
         {items.value ? (
