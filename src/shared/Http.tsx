@@ -1,14 +1,9 @@
-import axios, {
-  AxiosError,
-  AxiosHeaders,
-  AxiosInstance,
-  AxiosRequestConfig,
-  AxiosResponse,
-} from 'axios'
+import axios, { AxiosError, AxiosHeaders, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
 import {
   mockItemCreate,
   mockItemIndex,
   mockItemIndexBalance,
+  mockItemSummary,
   mockSession,
   mockTagCreate,
   mockTagEdit,
@@ -28,11 +23,7 @@ export class Http {
       baseURL,
     })
   }
-  get<R = unknown>(
-    url: string,
-    query?: Record<string, JSONValue>,
-    config?: GetConfig
-  ) {
+  get<R = unknown>(url: string, query?: Record<string, JSONValue>, config?: GetConfig) {
     return this.instance.request<R>({
       ...config,
       url: url,
@@ -40,25 +31,13 @@ export class Http {
       method: 'get',
     })
   }
-  post<R = unknown>(
-    url: string,
-    data?: Record<string, JSONValue>,
-    config?: PostConfig
-  ) {
+  post<R = unknown>(url: string, data?: Record<string, JSONValue>, config?: PostConfig) {
     return this.instance.request<R>({ ...config, url, data, method: 'post' })
   }
-  patch<R = unknown>(
-    url: string,
-    data?: Record<string, JSONValue>,
-    config?: PatchConfig
-  ) {
+  patch<R = unknown>(url: string, data?: Record<string, JSONValue>, config?: PatchConfig) {
     return this.instance.request<R>({ ...config, url, data, method: 'patch' })
   }
-  delete<R = unknown>(
-    url: string,
-    query?: Record<string, string>,
-    config?: DeleteConfig
-  ) {
+  delete<R = unknown>(url: string, query?: Record<string, string>, config?: DeleteConfig) {
     return this.instance.request<R>({
       ...config,
       url: url,
@@ -69,11 +48,7 @@ export class Http {
 }
 
 const mock = (response: AxiosResponse) => {
-  if (
-    location.hostname !== 'localhost' &&
-    location.hostname !== '127.0.0.1' &&
-    location.hostname !== '192.168.1.7'
-  ) {
+  if (location.hostname !== 'localhost' && location.hostname !== '127.0.0.1' && location.hostname !== '192.168.1.7') {
     return false
   }
   switch (response.config?.params?._mock) {
@@ -85,6 +60,9 @@ const mock = (response: AxiosResponse) => {
       return true
     case 'itemIndexBalance':
       ;[response.status, response.data] = mockItemIndexBalance(response.config)
+      return true
+    case 'itemSummary':
+      ;[response.status, response.data] = mockItemSummary(response.config)
       return true
     case 'tagIndex':
       ;[response.status, response.data] = mockTagIndex(response.config)
