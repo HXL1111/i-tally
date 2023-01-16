@@ -48,11 +48,11 @@ export const LineChart = defineComponent({
   },
   setup: (props, context) => {
     const refDiv = ref<HTMLDivElement>()
-    const refChart = ref<echarts.ECharts>()
+    let chart: echarts.ECharts | undefined = undefined
     watch(
       () => props.data,
       () => {
-        refChart.value?.setOption({
+        chart?.setOption({
           series: [
             {
               data: props.data,
@@ -66,9 +66,9 @@ export const LineChart = defineComponent({
         return
       }
       // 基于准备好的dom，初始化echarts实例
-      refChart.value = echarts.init(refDiv.value)
+      chart = echarts.init(refDiv.value)
       // 绘制图表
-      refChart.value.setOption({
+      chart.setOption({
         ...echartsOption,
         series: [
           {
