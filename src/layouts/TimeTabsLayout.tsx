@@ -55,6 +55,10 @@ export const TimeTabsLayout = defineComponent({
     iconOnClick: {
       type: Function as PropType<(e: MouseEvent) => void>,
     },
+    rerenderOnSwitchTab: {
+      type: Boolean,
+      default: false,
+    },
   },
   setup: (props, context) => {
     const refKind = ref('本月')
@@ -76,11 +80,7 @@ export const TimeTabsLayout = defineComponent({
     const customTime = reactive<{ start?: string; end?: string }>({})
     return () => (
       <div class={s.wrapper}>
-        <NavBarLayout
-          iconName={props.iconName}
-          title={props.title}
-          onClick={props.iconOnClick}
-        >
+        <NavBarLayout iconName={props.iconName} title={props.title} onClick={props.iconOnClick}>
           {{
             default: () => (
               <>
@@ -88,30 +88,19 @@ export const TimeTabsLayout = defineComponent({
                   v-model:selected={refKind.value}
                   class={s.tabs}
                   onUpdate:selected={onSelectTime}
+                  rerenderOnSelect={props.rerenderOnSwitchTab}
                 >
                   <Tab name={timeMap[0].name} class={s.tab}>
-                    <props.component
-                      startDate={timeMap[0].timeList.start}
-                      endDate={timeMap[0].timeList.end}
-                    />
+                    <props.component startDate={timeMap[0].timeList.start} endDate={timeMap[0].timeList.end} />
                   </Tab>
                   <Tab name={timeMap[1].name}>
-                    <props.component
-                      startDate={timeMap[1].timeList.start}
-                      endDate={timeMap[1].timeList.end}
-                    />
+                    <props.component startDate={timeMap[1].timeList.start} endDate={timeMap[1].timeList.end} />
                   </Tab>
                   <Tab name={timeMap[2].name}>
-                    <props.component
-                      startDate={timeMap[2].timeList.start}
-                      endDate={timeMap[2].timeList.end}
-                    />
+                    <props.component startDate={timeMap[2].timeList.start} endDate={timeMap[2].timeList.end} />
                   </Tab>
                   <Tab name="自定义时间">
-                    <props.component
-                      startDate={customTime.start}
-                      endDate={customTime.end}
-                    />
+                    <props.component startDate={customTime.start} endDate={customTime.end} />
                   </Tab>
                 </Tabs>
                 <Overlay show={refDateOverlayVisible.value} class={s.overlay}>
@@ -119,23 +108,10 @@ export const TimeTabsLayout = defineComponent({
                     <header>请选择时间</header>
                     <main>
                       <Form class={s.form} onSubmit={onSubmitCustomTime}>
-                        <FormItem
-                          type="date"
-                          label="开始时间"
-                          v-model={tempTime.start}
-                        />
-                        <FormItem
-                          type="date"
-                          label="结束时间"
-                          v-model={tempTime.end}
-                        />
+                        <FormItem type="date" label="开始时间" v-model={tempTime.start} />
+                        <FormItem type="date" label="结束时间" v-model={tempTime.end} />
                         <div class={s.actions}>
-                          <button
-                            type="button"
-                            onClick={() =>
-                              (refDateOverlayVisible.value = false)
-                            }
-                          >
+                          <button type="button" onClick={() => (refDateOverlayVisible.value = false)}>
                             取消
                           </button>
                           <button type="submit">确定</button>

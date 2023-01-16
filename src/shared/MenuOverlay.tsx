@@ -26,7 +26,9 @@ export const MenuOverlay = defineComponent({
       localStorage.removeItem('jwt')
       router.go(0)
     }
-
+    const onClickStatistics = () => {
+      router.push('/statistics')
+    }
     return () => (
       <>
         <div class={s.mask} onClick={props.onClose}></div>
@@ -45,7 +47,7 @@ export const MenuOverlay = defineComponent({
             )}
           </section>
           <ol>
-            <li>
+            <li onClick={onClickStatistics}>
               <div class={s.left}>
                 <Icon name="statistics" class={s.logo} />
                 <span>统计图表</span>

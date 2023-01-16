@@ -8,8 +8,6 @@ export const StatisticsPage = defineComponent({
     },
   },
   setup: (props, context) => {
-    return () => (
-      <TimeTabsLayout component={Charts} iconName="left" title="统计图表" />
-    )
+    return () => <TimeTabsLayout component={Charts} iconName="left" title="统计图表" rerenderOnSwitchTab={true} />
   },
 })
