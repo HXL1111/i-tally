@@ -1,7 +1,7 @@
 import { FormItem } from '@/shared/Form'
 import { http } from '@/shared/Http'
 import { Time } from '@/shared/time'
-import { computed, defineComponent, onMounted, PropType, ref } from 'vue'
+import { computed, defineComponent, onMounted, PropType, ref, watch } from 'vue'
 import { Bars } from './Bars'
 import s from './Charts.module.scss'
 import { LineChart } from './LineChart'
@@ -22,6 +22,10 @@ export const Charts = defineComponent({
   },
   setup: (props, context) => {
     const refKind = ref('expense')
+    watch(
+      () => refKind.value,
+      () => {}
+    )
     const data1 = ref<Data1>([])
     const betterData1 = computed<[string, number][]>(() => {
       if (!props.startDate || !props.endDate) {
@@ -42,7 +46,7 @@ export const Charts = defineComponent({
       }
       return array as [string, number][]
     })
-    onMounted(async () => {
+    const fetchData1 = async () => {
       const response = await http.get<{ groups: Data1 }>('/items/summary', {
         happen_after: props.startDate!,
         happen_before: props.endDate!,
@@ -51,7 +55,9 @@ export const Charts = defineComponent({
         _mock: 'itemSummary',
       })
       data1.value = response.data.groups
-    })
+    }
+    onMounted(fetchData1)
+    watch(() => refKind.value, fetchData1)
     const data2 = ref<Data2>([])
     const betterData2 = computed<{ name: string; value: number }[]>(() =>
       data2.value.map((item) => ({
@@ -59,7 +65,7 @@ export const Charts = defineComponent({
         value: item.amount,
       }))
     )
-    onMounted(async () => {
+    const fetchData2 = async () => {
       const response = await http.get<{ groups: Data2 }>('/item/summary', {
         happen_after: props.startDate!,
         happen_before: props.endDate!,
@@ -68,12 +74,14 @@ export const Charts = defineComponent({
         _mock: 'itemSummary',
       })
       data2.value = response.data.groups
-    })
-    const betterData3 = computed<{tag:Tag, amount:number, percent: number}[]>(() => {
+    }
+    onMounted(fetchData2)
+    watch(() => refKind.value, fetchData2)
+    const betterData3 = computed<{ tag: Tag; amount: number; percent: number }[]>(() => {
       const total = data2.value.reduce((sum, item) => sum + item.amount, 0)
       return data2.value.map((item) => ({
         ...item,
-        percent: Math.round((item.amount / total) * 100) ,
+        percent: Math.round((item.amount / total) * 100),
       }))
     })
     return () => (

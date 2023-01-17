@@ -102,7 +102,8 @@ export const mockItemIndexBalance: Mock = (config) => {
   ]
 }
 export const mockItemSummary: Mock = (config) => {
-  if (config.params.group_by === 'happen_at') {
+  const { group_by, kind } = config.params
+  if (group_by === 'happen_at' && kind === 'expense') {
     return [
       200,
       {
@@ -111,6 +112,18 @@ export const mockItemSummary: Mock = (config) => {
           { happen_at: '2023-01-12T00:00:00.000+0800', amount: 100 },
           { happen_at: '2023-01-13T00:00:00.000+0800', amount: 300 },
           { happen_at: '2023-01-16T00:00:00.000+0800', amount: 200 },
+        ],
+      },
+    ]
+  } else if (group_by === 'happen_at' && kind === 'income') {
+    return [
+      200,
+      {
+        groups: [
+          { happen_at: '2023-01-1T00:00:00.000+0800', amount: 300 },
+          { happen_at: '2023-01-2T00:00:00.000+0800', amount: 100 },
+          { happen_at: '2023-01-3T00:00:00.000+0800', amount: 300 },
+          { happen_at: '2023-01-4T00:00:00.000+0800', amount: 200 },
         ],
       },
     ]
