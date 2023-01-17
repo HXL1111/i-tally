@@ -1,0 +1,16 @@
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: calc(100vh - 84px);
+  > .icon {
+    width: 240px;
+    height: 240px;
+  }
+  > span {
+    padding-top: 56px;
+    font-size: 24px;
+    color: #d8d8d8;
+  }
+}

@@ -29,6 +29,12 @@ export const MenuOverlay = defineComponent({
     const onClickStatistics = () => {
       router.push('/statistics')
     }
+    const onClickExport = () => {
+      router.push('/export')
+    }
+    const onClickNotify = () => {
+      router.push('/notify')
+    }
     return () => (
       <>
         <div class={s.mask} onClick={props.onClose}></div>
@@ -54,14 +60,14 @@ export const MenuOverlay = defineComponent({
               </div>
               <Icon name="right" class={s.right} />
             </li>
-            <li>
+            <li onClick={onClickExport}>
               <div class={s.left}>
                 <Icon name="export" class={s.logo} />
                 <span>导出数据</span>
               </div>
               <Icon name="right" class={s.right} />
             </li>
-            <li>
+            <li onClick={onClickNotify}>
               <div class={s.left}>
                 <Icon name="clock" class={s.logo} />
                 <span>记账提醒</span>

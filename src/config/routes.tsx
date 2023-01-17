@@ -11,7 +11,9 @@ import { SecondActions } from '@/components/welcome/SecondActions'
 import { Third } from '@/components/welcome/Third'
 import { ThirdActions } from '@/components/welcome/ThirdAction'
 import { http } from '@/shared/Http'
+import { ExportPage } from '@/views/ExportPage'
 import { ItemPage } from '@/views/ItemPage'
+import { NotifyPage } from '@/views/NotifyPage'
 import { SignInPage } from '@/views/SignInPage'
 import { StartPage } from '@/views/StartPage'
 import { StatisticsPage } from '@/views/StatisticsPage'
@@ -73,4 +75,6 @@ export const routes: RouteRecordRaw[] = [
   },
   { path: '/sign_in', component: SignInPage },
   { path: '/statistics', component: StatisticsPage },
+  { path: '/export', component: ExportPage },
+  { path: '/notify', component: NotifyPage },
 ]
