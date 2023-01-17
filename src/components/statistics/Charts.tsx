@@ -5,8 +5,11 @@ import { computed, defineComponent, onMounted, PropType, ref } from 'vue'
 import { Bars } from './Bars'
 import s from './Charts.module.scss'
 import { LineChart } from './LineChart'
+import { PieChart } from './PieChart'
 type Data1Item = { happen_at: string; amount: number }
+type Data2Item = { tag_id: string; tag: Tag; amount: number }
 type Data1 = Data1Item[]
+type Data2 = Data2Item[]
 const DAY = 24 * 3600 * 1000
 export const Charts = defineComponent({
   props: {
@@ -40,13 +43,31 @@ export const Charts = defineComponent({
       return array as [string, number][]
     })
     onMounted(async () => {
-      const response = await http.get<{ groups: Data1; summary: number }>('/items/summary', {
+      const response = await http.get<{ groups: Data1 }>('/items/summary', {
         happen_after: props.startDate!,
         happen_before: props.endDate!,
         kind: refKind.value,
+        group_by: 'happen_at',
         _mock: 'itemSummary',
       })
       data1.value = response.data.groups
+    })
+    const data2 = ref<Data2>([])
+    const betterData2 = computed<{ name: string; value: number }[]>(() =>
+      data2.value.map((item) => ({
+        name: item.tag.name,
+        value: item.amount,
+      }))
+    )
+    onMounted(async () => {
+      const response = await http.get<{ groups: Data2 }>('/item/summary', {
+        happen_after: props.startDate!,
+        happen_before: props.endDate!,
+        kind: refKind.value,
+        group_by: 'tag_id',
+        _mock: 'itemSummary',
+      })
+      data2.value = response.data.groups
     })
     return () => (
       <div class={s.charts}>
@@ -61,6 +82,7 @@ export const Charts = defineComponent({
           direction="row"
         />
         <LineChart data={betterData1.value} />
+        <PieChart data={betterData2.value} />
         <Bars />
       </div>
     )
