@@ -66,13 +66,17 @@ export const Charts = defineComponent({
       }))
     )
     const fetchData2 = async () => {
-      const response = await http.get<{ groups: Data2 }>('/item/summary', {
-        happen_after: props.startDate!,
-        happen_before: props.endDate!,
-        kind: refKind.value,
-        group_by: 'tag_id',
-        _mock: 'itemSummary',
-      })
+      const response = await http.get<{ groups: Data2 }>(
+        '/item/summary',
+        {
+          happen_after: props.startDate!,
+          happen_before: props.endDate!,
+          kind: refKind.value,
+          group_by: 'tag_id',
+          _mock: 'itemSummary',
+        },
+        { _autoLoading: true }
+      )
       data2.value = response.data.groups
     }
     onMounted(fetchData2)

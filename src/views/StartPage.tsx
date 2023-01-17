@@ -18,7 +18,6 @@ export const StartPage = defineComponent({
     const overlayVisible = ref(false)
     const overlayOnClick = () => {
       overlayVisible.value = !overlayVisible.value
-      console.log(overlayVisible.value)
     }
     return () => (
       <div class={s.wrapper}>

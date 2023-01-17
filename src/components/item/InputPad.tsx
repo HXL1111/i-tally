@@ -5,6 +5,7 @@ import { DatePicker, Popup } from 'vant'
 import 'vant/es/picker/style'
 import 'vant/es/popup/style'
 import { Time } from '@/shared/time'
+import { useRouter } from 'vue-router'
 
 export const InputPad = defineComponent({
   props: {
@@ -38,6 +39,7 @@ export const InputPad = defineComponent({
         refAmount.value = refAmount.value.slice(0, -1)
       }
     }
+    const router = useRouter()
     const buttons = [
       {
         text: '1',
@@ -111,6 +113,7 @@ export const InputPad = defineComponent({
           context.emit('update:amount', parseFloat(refAmount.value) * 100)
           props.onSubmit?.()
           refAmount.value = '0'
+          router.push('/item/list')
         },
       },
       {
@@ -128,21 +131,14 @@ export const InputPad = defineComponent({
     ]
     const refAmount = ref(props.amount ? (props.amount / 100).toString() : '0')
     let now = props.happenAt
-    const refCurrentDate = ref([
-      new Time(now).format('YYYY'),
-      new Time(now).format('MM'),
-      new Time(now).format('DD'),
-    ])
+    const refCurrentDate = ref([new Time(now).format('YYYY'), new Time(now).format('MM'), new Time(now).format('DD')])
     const refDatePickerVisible = ref(false)
     const showDatePicker = () => (refDatePickerVisible.value = true)
     const hideDatePicker = () => (refDatePickerVisible.value = false)
     const setDate = (date: any) => {
       refCurrentDate.value = date.selectedValues
       console.log(new Date(String(refCurrentDate.value)))
-      context.emit(
-        'update:happenAt',
-        new Date(String(refCurrentDate.value)).toISOString()
-      )
+      context.emit('update:happenAt', new Date(String(refCurrentDate.value)).toISOString())
       hideDatePicker()
     }
     return () => (
@@ -156,15 +152,9 @@ export const InputPad = defineComponent({
               }}
             >
               <Icon name="date" class={s.icon} />
-              <span>
-                {new Time(new Date(String(refCurrentDate.value))).format()}
-              </span>
+              <span>{new Time(new Date(String(refCurrentDate.value))).format()}</span>
             </div>
-            <Popup
-              v-model:show={refDatePickerVisible.value}
-              position="bottom"
-              close-on-click-overlay={false}
-            >
+            <Popup v-model:show={refDatePickerVisible.value} position="bottom" close-on-click-overlay={false}>
               <DatePicker
                 modelValue={refCurrentDate.value}
                 title="选择日期"

@@ -32,9 +32,9 @@ export const ItemCreate = defineComponent({
     }
     const router = useRouter()
     const onSubmit = async () => {
-      const response = await http
+      await http
         .post<Resource<Item>>('/items', formData, {
-          params: { _mock: 'itemCreate' },
+          _mock: 'itemCreate',
         })
         .catch(onError)
       router.push('/item')
@@ -47,23 +47,13 @@ export const ItemCreate = defineComponent({
               <div class={s.wrapper}>
                 <Tabs v-model:selected={formData.kind} class={s.tabs}>
                   <Tab name="支出" class={s.tab}>
-                    <Tags
-                      kind="expense"
-                      v-model:selected={formData.tags_id[0]}
-                    />
+                    <Tags kind="expense" v-model:selected={formData.tags_id[0]} />
                   </Tab>
                   <Tab name="收入" class={s.tab}>
-                    <Tags
-                      kind="income"
-                      v-model:selected={formData.tags_id[0]}
-                    />
+                    <Tags kind="income" v-model:selected={formData.tags_id[0]} />
                   </Tab>
                 </Tabs>
-                <InputPad
-                  v-model:amount={formData.amount}
-                  v-model:happenAt={formData.happen_at}
-                  onSubmit={onSubmit}
-                />
+                <InputPad v-model:amount={formData.amount} v-model:happenAt={formData.happen_at} onSubmit={onSubmit} />
               </div>
             ),
           }}

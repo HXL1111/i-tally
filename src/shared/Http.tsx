@@ -1,4 +1,5 @@
 import axios, { AxiosError, AxiosHeaders, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
+import { closeToast, showLoadingToast } from 'vant'
 import {
   mockItemCreate,
   mockItemIndex,
@@ -90,8 +91,25 @@ http.instance.interceptors.request.use((config) => {
   if (jwt) {
     ;(config.headers as AxiosHeaders).set('Authorization', `Bearer ${jwt}`)
   }
+  if (config._autoLoading === true) {
+    showLoadingToast({
+      message: '加载中...',
+      forbidClick: true,
+      duration: 0,
+    })
+  }
   return config
 })
+
+http.instance.interceptors.response.use(
+  (response) => {
+    closeToast()
+    return response
+  },
+  (error) => {
+    throw error
+  }
+)
 
 http.instance.interceptors.response.use(
   (response) => {

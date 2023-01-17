@@ -14,10 +14,14 @@ export const Tags = defineComponent({
   emits: ['update:selected'],
   setup: (props, context) => {
     onMounted(async () => {
-      const response = await http.get<Resources<Tag>>('/tags', {
-        kind: props.kind,
-        _mock: 'tagIndex',
-      })
+      const response = await http.get<Resources<Tag>>(
+        '/tags',
+        {
+          kind: props.kind,
+          _mock: 'tagIndex',
+        },
+        { _autoLoading: true }
+      )
       refTags.value = response.data.resources
     })
     const refTags = ref<Tag[]>([])
@@ -28,9 +32,7 @@ export const Tags = defineComponent({
     const currentTag = ref<HTMLDivElement>()
     const router = useRouter()
     const onLongPress = (tagId: Tag['id']) => {
-      router.push(
-        `/tag/${tagId}/edit?kind=${props.kind}&return_to=${router.currentRoute.value.fullPath}`
-      )
+      router.push(`/tag/${tagId}/edit?kind=${props.kind}&return_to=${router.currentRoute.value.fullPath}`)
     }
     const onTouchStart = (e: TouchEvent, tag: Tag) => {
       currentTag.value = e.currentTarget as HTMLDivElement
@@ -42,24 +44,15 @@ export const Tags = defineComponent({
       clearTimeout(timer.value)
     }
     const onTouchMove = (e: TouchEvent) => {
-      const pointedElement = document.elementFromPoint(
-        e.touches[0].clientX,
-        e.touches[0].clientY
-      )
-      if (
-        currentTag.value !== pointedElement &&
-        currentTag.value?.contains(pointedElement) === false
-      ) {
+      const pointedElement = document.elementFromPoint(e.touches[0].clientX, e.touches[0].clientY)
+      if (currentTag.value !== pointedElement && currentTag.value?.contains(pointedElement) === false) {
         clearTimeout(timer.value)
       }
     }
     return () => (
       <ol class={s.tags} onTouchmove={onTouchMove}>
         <li>
-          <RouterLink
-            to={`/tag/create?kind=${props.kind}`}
-            class={s.icon_wrapper}
-          >
+          <RouterLink to={`/tag/create?kind=${props.kind}`} class={s.icon_wrapper}>
             <Icon name="add" class={s.icon} />
           </RouterLink>
           <span>新增</span>
@@ -67,10 +60,7 @@ export const Tags = defineComponent({
         {refTags.value.map((tag) => (
           <li>
             <div
-              class={[
-                s.icon_wrapper,
-                props.selected === tag.id ? s.selectedLogo : '',
-              ]}
+              class={[s.icon_wrapper, props.selected === tag.id ? s.selectedLogo : '']}
               onClick={() => onSelect(tag)}
               onTouchstart={(e) => onTouchStart(e, tag)}
               onTouchend={onTouchEnd}
