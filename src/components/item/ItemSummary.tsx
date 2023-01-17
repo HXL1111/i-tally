@@ -4,6 +4,7 @@ import { http } from '@/shared/Http'
 import { Icon } from '@/shared/Icon'
 import { Money } from '@/shared/Money'
 import { defineComponent, onMounted, PropType, reactive, ref, watch } from 'vue'
+import { RouterLink } from 'vue-router'
 import s from './ItemSummary.module.scss'
 export const ItemSummary = defineComponent({
   props: {
@@ -22,16 +23,12 @@ export const ItemSummary = defineComponent({
       if (!props.startDate || !props.endDate) {
         return
       }
-      const response = await http.get<Resources<Item>>(
-        '/items',
-        {
-          happen_after: props.startDate,
-          happen_before: props.endDate,
-          page: page.value + 1,
-          _mock: 'itemIndex',
-        },
-        { _autoLoading: true }
-      )
+      const response = await http.get<Resources<Item>>('/items', {
+        happen_after: props.startDate,
+        happen_before: props.endDate,
+        page: page.value + 1,
+        _mock: 'itemIndex',
+      })
       const { resources, pager } = response.data
       items.value?.push(...resources)
       hasMore.value = (pager.page - 1) * pager.per_page + resources.length < pager.count
@@ -80,7 +77,7 @@ export const ItemSummary = defineComponent({
     )
     return () => (
       <div class={s.itemSummary}>
-        {items.value ? (
+        {items.value && items.value.length > 0 ? (
           <>
             <ol class={s.total}>
               <li class={s.expense}>
@@ -127,10 +124,17 @@ export const ItemSummary = defineComponent({
             </div>
           </>
         ) : (
-          <div class={s.center}>
-            <Icon name="bill" class={s.icon} />
-            <span>暂无数据</span>
-          </div>
+          <>
+            <div class={s.center}>
+              <Icon name="bill" class={s.icon} />
+              <span>暂无数据</span>
+            </div>
+            <RouterLink to="/item/create">
+              <div class={s.button_wrapper}>
+                <Button>开始记账</Button>
+              </div>
+            </RouterLink>
+          </>
         )}
       </div>
     )

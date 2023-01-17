@@ -8,7 +8,7 @@ export const FourthActions = () => (
   <div class={s.actions}>
     <SkipFeatures class={s.fake} />
     <span onClick={onClick}>
-      <RouterLink to="/start">开启应用</RouterLink>
+      <RouterLink to="/item">开启应用</RouterLink>
     </span>
     <SkipFeatures />
   </div>

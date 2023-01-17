@@ -17,7 +17,7 @@ const router = createRouter({
 fetchMe()
 
 router.beforeEach(async (to, from) => {
-  if (to.path === '/' || to.path.startsWith('/welcome') || to.path.startsWith('/sign_in') || to.path.startsWith('/start')) {
+  if (to.path === '/' || to.path.startsWith('/welcome') || to.path.startsWith('/sign_in') || to.path.startsWith('/item')) {
     return true
   } else {
     return mePromise!.then(() => true, () => {
