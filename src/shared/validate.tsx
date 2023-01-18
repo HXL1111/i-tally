@@ -1,10 +1,10 @@
 type FDate = {
-  [k: string]: string | number | null | undefined | FDate
+  [k: string]:JSONValue
 }
 type Rule<T> = {
   key: keyof T
   message: string
-} & ({ type: 'required' } | { type: 'pattern'; regex: RegExp })
+} & ({ type: 'required' } | { type: 'pattern'; regex: RegExp } | { type: 'notEqual'; value: JSONValue })
 type Rules<T> = Rule<T>[]
 export type { FDate, Rule, Rules }
 export const validate = <T extends FDate>(formDate: T, rules: Rules<T>) => {
@@ -30,6 +30,11 @@ export const validate = <T extends FDate>(formDate: T, rules: Rules<T>) => {
         break
       default:
         return
+      case 'notEqual':
+        if (value && value === rule.value) {
+          errors[key] = errors[key] ?? []
+          errors[key]?.push(message)
+        }
     }
   })
   return errors

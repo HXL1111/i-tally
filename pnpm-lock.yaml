@@ -10,7 +10,7 @@ specifiers:
   sass: 1.49.11
   svgo: 2.8.0
   svgstore: 3.0.1
-  typescript: 4.9.4
+  typescript: 4.6.3
   unplugin-vue-components: 0.22.12
   vant: 4.0.4
   vite: 3.0.0
@@ -33,10 +33,10 @@ devDependencies:
   '@types/node': 18.11.17
   '@vitejs/plugin-vue': 3.0.0_vite@3.0.0+vue@3.2.31
   '@vitejs/plugin-vue-jsx': 2.0.0_vite@3.0.0+vue@3.2.31
-  typescript: 4.9.4
+  typescript: 4.6.3
   unplugin-vue-components: 0.22.12_vue@3.2.31
   vite: 3.0.0_sass@1.49.11
-  vue-tsc: 0.29.8_typescript@4.9.4
+  vue-tsc: 0.29.8_typescript@4.6.3
 
 packages:
 
@@ -1759,8 +1759,8 @@ packages:
     resolution: {integrity: sha512-tGyy4dAjRIEwI7BzsB0lynWgOpfqjUdq91XXAlIWD2OwKBH7oCl/GZG/HT4BOHrTlPMOASlMQ7veyTqpmRcrNA==}
     dev: false
 
-  /typescript/4.9.4:
-    resolution: {integrity: sha512-Uz+dTXYzxXXbsFpM86Wh3dKCxrQqUcVMxwU54orwlJjOpO3ao8L7j5lH+dWfTwgCwIuM9GQ2kvVotzYJMXTBZg==}
+  /typescript/4.6.3:
+    resolution: {integrity: sha512-yNIatDa5iaofVozS/uQJEl3JRWLKKGJKh6Yaiv0GLGSuhpFJe7P3SbHZ8/yjAHRQwKRoA6YZqlfjXWmVzoVSMw==}
     engines: {node: '>=4.2.0'}
     hasBin: true
     dev: true
@@ -1983,14 +1983,14 @@ packages:
       vue: 3.2.31
     dev: false
 
-  /vue-tsc/0.29.8_typescript@4.9.4:
+  /vue-tsc/0.29.8_typescript@4.6.3:
     resolution: {integrity: sha512-pT0wLRjvRuSmB+J4WJT6uuV9mO0KtSSXEAtaVXZQzyk5+DJdbLIQTbRce/TXSkfqt1l1WogO78RjtOJFiMCgfQ==}
     hasBin: true
     peerDependencies:
       typescript: '*'
     dependencies:
       '@volar/shared': 0.29.8
-      typescript: 4.9.4
+      typescript: 4.6.3
       vscode-vue-languageservice: 0.29.8
     dev: true
 

@@ -1,6 +1,7 @@
 import { NavBarLayout } from '@/layouts/NavBarLayout'
 import { http } from '@/shared/Http'
 import { Tabs, Tab } from '@/shared/Tabs'
+import { hasError, validate } from '@/shared/validate'
 import { AxiosError } from 'axios'
 import { showDialog } from 'vant'
 import { defineComponent, PropType, reactive } from 'vue'
@@ -21,6 +22,12 @@ export const ItemCreate = defineComponent({
       amount: 0,
       happen_at: new Date().toISOString(),
     })
+    const errors = reactive<{ [K in keyof typeof formData]: string[] }>({
+      kind: [],
+      tag_ids: [],
+      amount: [],
+      happen_at: [],
+    })
     const onError = (error: AxiosError<ResourceError>) => {
       if (error.response?.status === 422) {
         showDialog({
@@ -32,10 +39,29 @@ export const ItemCreate = defineComponent({
     }
     const router = useRouter()
     const onSubmit = async () => {
+      Object.assign(errors, { kind: [], tag_ids: [], amount: [], happen_at: [] })
+      Object.assign(
+        errors,
+        validate(formData, [
+          { key: 'kind', type: 'required', message: '类型必填' },
+          { key: 'tag_ids', type: 'required', message: '标签必填' },
+          { key: 'amount', type: 'required', message: '金额必填' },
+          { key: 'amount', type: 'notEqual', value: 0, message: '金额不能为零' },
+          { key: 'happen_at', type: 'required', message: '时间必填' },
+        ])
+      )
+      if (hasError(errors)) {
+        showDialog({
+          title: '出错',
+          message: Object.values(errors)
+            .filter((i) => i.length > 0)
+            .join('\n'),
+        })
+        return
+      }
       await http
         .post<Resource<Item>>('/items', formData, {
           _mock: 'itemCreate',
-          _autoLoading: true,
         })
         .catch(onError)
       router.push('/item')

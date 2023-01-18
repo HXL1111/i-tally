@@ -113,7 +113,6 @@ export const InputPad = defineComponent({
           context.emit('update:amount', parseFloat(refAmount.value) * 100)
           props.onSubmit?.()
           refAmount.value = '0'
-          router.push('/item/list')
         },
       },
       {
