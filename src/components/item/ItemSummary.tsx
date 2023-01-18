@@ -49,6 +49,7 @@ export const ItemSummary = defineComponent({
     onMounted(() => {
       fetchItems()
     })
+
     const itemsBalance = reactive({
       expenses: 0,
       income: 0,
@@ -58,12 +59,15 @@ export const ItemSummary = defineComponent({
       if (!props.startDate || !props.endDate) {
         return
       }
-      const response = await http.get('/item/balance', {
-        happen_after: props.startDate,
-        happen_before: props.endDate,
-        page: page.value + 1,
-        _mock: 'itemIndexBalance',
-      })
+      const response = await http.get(
+        '/items/balance',
+        {
+          happen_after: props.startDate,
+          happen_before: props.endDate,
+          page: page.value + 1,
+        },
+        { _mock: 'itemIndexBalance' }
+      )
       Object.assign(itemsBalance, response.data)
     }
     onMounted(fetchItemsBalance)
@@ -116,7 +120,7 @@ export const ItemSummary = defineComponent({
                       </div>
                     </div>
                   </div>
-                  <div class={[s.right, s.expense]}>
+                  <div class={[s.right, item.kind === 'expenses' ? s.expense : s.income]}>
                     ￥<Money value={item.amount} />
                   </div>
                 </li>

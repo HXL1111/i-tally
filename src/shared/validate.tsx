@@ -1,5 +1,5 @@
 type FDate = {
-  [k: string]:JSONValue
+  [k: string]: JSONValue
 }
 type Rule<T> = {
   key: keyof T
@@ -35,6 +35,7 @@ export const validate = <T extends FDate>(formDate: T, rules: Rules<T>) => {
           errors[key] = errors[key] ?? []
           errors[key]?.push(message)
         }
+        break
     }
   })
   return errors
