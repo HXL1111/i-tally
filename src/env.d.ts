@@ -43,5 +43,6 @@ type Resource<T> = {
   resource: T
 }
 type ResourceError = {
-  error: Record<string, string[]>
+  errors: Record<string, string[]>
 }
+

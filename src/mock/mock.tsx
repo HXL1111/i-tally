@@ -25,7 +25,7 @@ export const mockTagShow: Mock = (config) => {
     id: createId(),
     name: faker.lorem.word(),
     sign: 'caiWu4',
-    kind: 'expense',
+    kind: 'expenses',
     ...attrs,
   })
   return [200, { resource: createTag() }]
@@ -95,7 +95,7 @@ export const mockItemIndexBalance: Mock = (config) => {
   return [
     200,
     {
-      expense: 9900,
+      expenses: 9900,
       income: 9900,
       balance: 0,
     },
@@ -103,7 +103,7 @@ export const mockItemIndexBalance: Mock = (config) => {
 }
 export const mockItemSummary: Mock = (config) => {
   const { group_by, kind } = config.params
-  if (group_by === 'happen_at' && kind === 'expense') {
+  if (group_by === 'happen_at' && kind === 'expenses') {
     return [
       200,
       {
@@ -186,9 +186,9 @@ export const mockTagIndex: Mock = (config) => {
       balance: 0,
     },
   })
-  if (kind === 'expense' && (!page || page === 1)) {
+  if (kind === 'expenses' && (!page || page === 1)) {
     return [200, createBody(25)]
-  } else if (kind === 'expense' && page === 2) {
+  } else if (kind === 'expenses' && page === 2) {
     return [200, createBody(1)]
   } else {
     return [200, { resources: createTag(30) }]

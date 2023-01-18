@@ -15,9 +15,9 @@ export const ItemCreate = defineComponent({
     },
   },
   setup: (props, context) => {
-    const formData = reactive({
-      kind: '支出',
-      tags_id: [],
+    const formData = reactive<Partial<Item>>({
+      kind: 'expenses',
+      tag_ids: [],
       amount: 0,
       happen_at: new Date().toISOString(),
     })
@@ -25,7 +25,7 @@ export const ItemCreate = defineComponent({
       if (error.response?.status === 422) {
         showDialog({
           title: '出错',
-          message: Object.values(error.response.data.error).join('\n'),
+          message: Object.values(error.response.data.errors).join('\n'),
         })
       }
       throw error
@@ -35,6 +35,7 @@ export const ItemCreate = defineComponent({
       await http
         .post<Resource<Item>>('/items', formData, {
           _mock: 'itemCreate',
+          _autoLoading: true,
         })
         .catch(onError)
       router.push('/item')
@@ -46,11 +47,11 @@ export const ItemCreate = defineComponent({
             default: () => (
               <div class={s.wrapper}>
                 <Tabs v-model:selected={formData.kind} class={s.tabs}>
-                  <Tab name="支出" class={s.tab}>
-                    <Tags kind="expense" v-model:selected={formData.tags_id[0]} />
+                  <Tab value="expenses" name="支出" class={s.tab}>
+                    <Tags kind="expenses" v-model:selected={formData.tag_ids![0]} />
                   </Tab>
-                  <Tab name="收入" class={s.tab}>
-                    <Tags kind="income" v-model:selected={formData.tags_id[0]} />
+                  <Tab value="income" name="收入" class={s.tab}>
+                    <Tags kind="income" v-model:selected={formData.tag_ids![0]} />
                   </Tab>
                 </Tabs>
                 <InputPad v-model:amount={formData.amount} v-model:happenAt={formData.happen_at} onSubmit={onSubmit} />

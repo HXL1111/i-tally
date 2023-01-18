@@ -90,16 +90,16 @@ export const TimeTabsLayout = defineComponent({
                   onUpdate:selected={onSelectTime}
                   rerenderOnSelect={props.rerenderOnSwitchTab}
                 >
-                  <Tab name={timeMap[0].name} class={s.tab}>
+                  <Tab value={timeMap[0].name} name={timeMap[0].name} class={s.tab}>
                     <props.component startDate={timeMap[0].timeList.start} endDate={timeMap[0].timeList.end} />
                   </Tab>
-                  <Tab name={timeMap[1].name}>
+                  <Tab value={timeMap[1].name} name={timeMap[1].name}>
                     <props.component startDate={timeMap[1].timeList.start} endDate={timeMap[1].timeList.end} />
                   </Tab>
-                  <Tab name={timeMap[2].name}>
+                  <Tab value={timeMap[2].name} name={timeMap[2].name}>
                     <props.component startDate={timeMap[2].timeList.start} endDate={timeMap[2].timeList.end} />
                   </Tab>
-                  <Tab name="自定义时间">
+                  <Tab value="自定义时间" name="自定义时间">
                     <props.component startDate={customTime.start} endDate={customTime.end} />
                   </Tab>
                 </Tabs>

@@ -10,7 +10,7 @@ export const FourthActions = () => (
     <span onClick={onClick}>
       <RouterLink to="/item">开启应用</RouterLink>
     </span>
-    <SkipFeatures />
+    <SkipFeatures class={s.fake} />
   </div>
 )
 

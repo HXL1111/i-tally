@@ -15,8 +15,7 @@ export const TagForm = defineComponent({
     const route = useRoute()
     const router = useRouter()
     const formData = reactive<Partial<Tag>>({
-      id: undefined,
-      kind: route.query.kind!.toString(),
+      kind: route.query.kind!.toString() as 'expenses' | 'income',
       name: '',
       sign: '',
     })
@@ -46,12 +45,13 @@ export const TagForm = defineComponent({
         const promise = (await formData.id)
           ? http.patch(`/tags/${formData.id}`, formData, {
               params: { _mock: 'tagEdit' },
+              _autoLoading: true,
             })
           : http.post('/tags', formData, {
-              params: { _mock: 'tagCreate' },
+              params: { _mock: 'tagCreate', _autoLoading: true },
             })
         await promise.catch((error) => {
-          onFormError(error, (data) => Object.assign(errors, data.error))
+          onFormError(error, (data) => Object.assign(errors, data.errors))
         })
         router.back()
       }
@@ -64,7 +64,6 @@ export const TagForm = defineComponent({
         _mock: 'tagShow',
       })
       Object.assign(formData, response.data.resource)
-      console.log(response.data.resource)
     })
     return () => (
       <div class={s.wrapper}>
@@ -77,12 +76,7 @@ export const TagForm = defineComponent({
               v-model={formData.name}
               error={errors.name?.[0]}
             />
-            <FormItem
-              label="符号"
-              type="logoList"
-              v-model={formData.sign}
-              error={errors.sign?.[0]}
-            />
+            <FormItem label="符号" type="logoList" v-model={formData.sign} error={errors.sign?.[0]} />
             <p>记账时长按标签，即可进行编辑</p>
             <div class={s.buttons}>
               <Button type="submit" class={s.button}>

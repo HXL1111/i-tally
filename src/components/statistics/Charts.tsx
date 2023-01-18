@@ -21,7 +21,7 @@ export const Charts = defineComponent({
     },
   },
   setup: (props, context) => {
-    const refKind = ref('expense')
+    const refKind = ref('expenses')
     watch(
       () => refKind.value,
       () => {}
@@ -94,7 +94,7 @@ export const Charts = defineComponent({
           label="类型"
           type="select"
           options={[
-            { value: 'expense', text: '支出' },
+            { value: 'expenses', text: '支出' },
             { value: 'income', text: '收入' },
           ]}
           v-model={refKind.value}

@@ -14,7 +14,7 @@ fetchMe()
 
 const whiteList: Record<string, 'exact' | 'startsWith'> = {
   '/': 'exact',
-  '/start': 'exact',
+  '/item': 'exact',
   '/welcome': 'startsWith',
   '/sign_in': 'startsWith',
 }

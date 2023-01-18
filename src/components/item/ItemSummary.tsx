@@ -50,7 +50,7 @@ export const ItemSummary = defineComponent({
       fetchItems()
     })
     const itemsBalance = reactive({
-      expense: 0,
+      expenses: 0,
       income: 0,
       balance: 0,
     })
@@ -71,7 +71,7 @@ export const ItemSummary = defineComponent({
       () => [props.endDate, props.startDate],
       () => {
         Object.assign(itemsBalance, {
-          expense: 0,
+          expenses: 0,
           income: 0,
           balance: 0,
         })
@@ -86,7 +86,7 @@ export const ItemSummary = defineComponent({
               <li class={s.expense}>
                 <span>支出</span>
                 <span>
-                  <Money value={itemsBalance.expense} />
+                  <Money value={itemsBalance.expenses} />
                 </span>
               </li>
               <li class={s.income}>
