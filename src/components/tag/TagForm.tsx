@@ -4,7 +4,7 @@ import { Form, FormItem } from '@/shared/Form'
 import { http } from '@/shared/Http'
 import { onFormError } from '@/shared/onFormError'
 import { hasError, Rules, validate } from '@/shared/validate'
-import { defineComponent, onMounted, PropType, reactive } from 'vue'
+import { defineComponent, onMounted, reactive, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import s from './Tag.module.scss'
 export const TagForm = defineComponent({
@@ -20,6 +20,7 @@ export const TagForm = defineComponent({
       name: '',
       sign: '',
     })
+    const array = ref<string[]>([])
     const errors = reactive<{ [k in keyof typeof formData]?: string[] }>({})
     const onSubmit = async (e: Event) => {
       e.preventDefault()
@@ -31,6 +32,7 @@ export const TagForm = defineComponent({
           regex: /^.{1,4}$/,
           message: '只能填 1 到 4 个字符',
         },
+        { key: 'name', type: 'repeat', data: array.value, message: '标签名重复' },
         {
           key: 'sign',
           type: 'required',
@@ -58,12 +60,23 @@ export const TagForm = defineComponent({
       }
     }
     onMounted(async () => {
+      const response = await http.get<Resources<Tag>>('/tags')
+      Object.assign(
+        array.value,
+        response.data.resources.map((item) => item.name)
+      )
+    })
+    onMounted(async () => {
       if (!props.id) {
         return
       }
-      const response = await http.get<Resource<Tag>>(`/tags/${props.id}`, {
-        _mock: 'tagShow',
-      })
+      const response = await http.get<Resource<Tag>>(
+        `/tags/${props.id}`,
+        {
+          _mock: 'tagShow',
+        },
+        { _autoLoading: true }
+      )
       Object.assign(formData, response.data.resource)
     })
     return () => (

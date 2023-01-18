@@ -4,7 +4,12 @@ type FDate = {
 type Rule<T> = {
   key: keyof T
   message: string
-} & ({ type: 'required' } | { type: 'pattern'; regex: RegExp } | { type: 'notEqual'; value: JSONValue })
+} & (
+  | { type: 'required' }
+  | { type: 'pattern'; regex: RegExp }
+  | { type: 'notEqual'; value: JSONValue }
+  | { type: 'repeat'; data: JSONValue[] }
+)
 type Rules<T> = Rule<T>[]
 export type { FDate, Rule, Rules }
 export const validate = <T extends FDate>(formDate: T, rules: Rules<T>) => {
@@ -32,6 +37,12 @@ export const validate = <T extends FDate>(formDate: T, rules: Rules<T>) => {
         return
       case 'notEqual':
         if (value && value === rule.value) {
+          errors[key] = errors[key] ?? []
+          errors[key]?.push(message)
+        }
+        break
+      case 'repeat':
+        if (value && rule.data.indexOf(value) >= 0) {
           errors[key] = errors[key] ?? []
           errors[key]?.push(message)
         }
