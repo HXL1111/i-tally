@@ -36,7 +36,7 @@ export const Charts = defineComponent({
       const n = diff / DAY + 1
       let data1Index = 0
       for (let i = 0; i < n; i++) {
-        const time = new Time(props.startDate + 'T00:00:00.000+0800').add(i, 'day').getTimestamp()
+        const time = new Time(props.startDate + 'T00:00:00.000Z').add(i, 'day').getTimestamp()
         if (data1.value[data1Index] && new Date(data1.value[data1Index].happen_at).getTime() === time) {
           array.push([new Date(time).toISOString(), data1.value[data1Index].amount])
           data1Index += 1
@@ -67,7 +67,7 @@ export const Charts = defineComponent({
     )
     const fetchData2 = async () => {
       const response = await http.get<{ groups: Data2 }>(
-        '/item/summary',
+        '/items/summary',
         {
           happen_after: props.startDate!,
           happen_before: props.endDate!,
