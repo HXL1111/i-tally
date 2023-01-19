@@ -34,6 +34,7 @@ export const ItemSummary = defineComponent({
       )
       const { resources, pager } = response.data
       items.value?.push(...resources)
+      items.value.reverse()
       hasMore.value = (pager.page - 1) * pager.per_page + resources.length < pager.count
       page.value += 1
     }
@@ -134,7 +135,7 @@ export const ItemSummary = defineComponent({
           <>
             <div class={s.center}>
               <Icon name="bill" class={s.icon} />
-              <span>暂无数据</span>
+              <span>未发现账单，试着记一笔哦~</span>
             </div>
             <RouterLink to="/item/create">
               <div class={s.button_wrapper}>

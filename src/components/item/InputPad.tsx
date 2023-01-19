@@ -136,7 +136,6 @@ export const InputPad = defineComponent({
     const hideDatePicker = () => (refDatePickerVisible.value = false)
     const setDate = (date: any) => {
       refCurrentDate.value = date.selectedValues
-      console.log(new Date(String(refCurrentDate.value)))
       context.emit('update:happenAt', new Date(String(refCurrentDate.value)).toISOString())
       hideDatePicker()
     }

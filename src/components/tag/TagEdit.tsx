@@ -20,7 +20,7 @@ export const TagEdit = defineComponent({
     const onDelete = async () => {
       await showConfirmDialog({
         title: '确认',
-        message: '确认要删除吗?',
+        message: '(对应的账单也会删除)确认要删除吗?',
       })
       await http.delete(`/tags/${numberId}`).catch(onError)
       router.back()
