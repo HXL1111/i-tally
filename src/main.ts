@@ -1,16 +1,23 @@
 import { routes } from './config/routes';
 import { createApp } from 'vue'
+import { createPinia } from 'pinia'
 import { App } from './App'
 import { createRouter } from 'vue-router'
 import { history } from './shared/history';
 import '@svgstore';
-import { fetchMe, mePromise } from './shared/me';
 import '@/assets/stylesheet/reset.scss'
 import '@/assets/stylesheet/vars.scss'
 import 'vant/lib/index.css';
+import { useMeStore } from './stores/useMeStore';
 const router = createRouter({ history, routes })
+const app = createApp(App)
+const pinia = createPinia()
+app.use(pinia)
+app.use(router)
+app.mount('#app')
 
-fetchMe()
+const meStore = useMeStore()
+meStore.fetchMe()
 
 const whiteList: Record<string, 'exact' | 'startsWith'> = {
   '/': 'exact',
@@ -29,12 +36,9 @@ router.beforeEach((to, from) => {
       return true
     }
   }
-  return mePromise!.then(
+  return meStore.mePromise!.then(
     () => true,
     () => '/sign_in?return_to=' + to.path
   )
 })
 
-const app = createApp(App)
-app.use(router)
-app.mount('#app')

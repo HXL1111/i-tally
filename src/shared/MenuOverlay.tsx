@@ -1,8 +1,9 @@
+import { useMeStore } from '@/stores/useMeStore'
 import { showConfirmDialog } from 'vant'
 import { defineComponent, onMounted, PropType, ref } from 'vue'
 import { RouterLink, useRoute, useRouter } from 'vue-router'
 import { Icon } from './Icon'
-import { mePromise } from './me'
+
 import s from './MenuOverlay.module.scss'
 export const MenuOverlay = defineComponent({
   props: {
@@ -11,11 +12,12 @@ export const MenuOverlay = defineComponent({
     },
   },
   setup: (props, context) => {
+    const meStore = useMeStore()
     const router = useRouter()
     const route = useRoute()
     const refMe = ref<User>()
     onMounted(async () => {
-      const response = await mePromise
+      const response = await meStore.mePromise
       refMe.value = response?.data.resource
     })
     const onSignOut = async () => {
