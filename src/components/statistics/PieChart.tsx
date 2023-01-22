@@ -7,7 +7,7 @@ const echartsOption = {
     trigger: 'item',
     formatter: (x: { name: string; value: number; percent: number }) => {
       const { name, value, percent } = x
-      return `${name}: ￥${getMoney(value)} 占比 ${percent}%`
+      return `${name}: ￥${getMoney(value)} 占比 ${Math.round(percent)}%`
     },
   },
   series: [
