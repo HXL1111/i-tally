@@ -19,6 +19,9 @@ export const WelcomePage = defineComponent({
     const replace = throttle(() => {
       const name = (route.name || 'Welcome1').toString()
       router.replace(pushMap[name])
+      if (name === 'Welcome4') {
+        localStorage.setItem('skipFeatures', 'yes')
+      }
     }, 500)
     watchEffect(() => {
       if (swiping.value && direction.value === 'left') {
