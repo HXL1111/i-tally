@@ -4,7 +4,7 @@ import { http } from '@/shared/Http'
 import { Icon } from '@/shared/Icon'
 import { Money } from '@/shared/Money'
 import { useItemStore } from '@/stores/useItemStore'
-import { defineComponent, onMounted, PropType, reactive, watch } from 'vue'
+import { defineComponent, onMounted, onUpdated, PropType, reactive, watch } from 'vue'
 import { RouterLink } from 'vue-router'
 import s from './ItemSummary.module.scss'
 export const ItemSummary = defineComponent({
@@ -17,19 +17,16 @@ export const ItemSummary = defineComponent({
     },
   },
   setup: (props, context) => {
-    if (!props.startDate || !props.endDate) {
-      return () => <div>请先选择时间范围</div>
-    }
-    const itemStore = useItemStore(['items', props.startDate, props.endDate])
-
+    const itemStore = useItemStore(['items', props.startDate!, props.endDate!])
     onMounted(() => {
       itemStore.fetchItems(props.startDate, props.endDate)
     })
+
     watch(
       () => [props.startDate, props.endDate],
       () => {
         itemStore.$reset()
-        itemStore.fetchItems()
+        itemStore.fetchItems(props.startDate, props.endDate)
       }
     )
 

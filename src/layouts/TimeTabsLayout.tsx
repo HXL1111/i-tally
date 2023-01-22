@@ -72,12 +72,12 @@ export const TimeTabsLayout = defineComponent({
       start: new Time().format(),
       end: new Time().format(),
     })
+    const customTime = reactive<{ start?: string; end?: string }>({})
     const onSubmitCustomTime = (e: Event) => {
       e.preventDefault()
       refDateOverlayVisible.value = false
       Object.assign(customTime, tempTime)
     }
-    const customTime = reactive<{ start?: string; end?: string }>({})
     return () => (
       <div class={s.wrapper}>
         <NavBarLayout iconName={props.iconName} title={props.title} onClick={props.iconOnClick}>
