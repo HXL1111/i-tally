@@ -1,3 +1,12 @@
-.lineChart {
-  height: 200px;
+.wrapper {
+  height: 220px;
+  background: var(--chart-bg);
+  border-radius: var(--border-radius);
+  text-align: center;
+  .lineChart {
+    height: 200px;
+  }
+}
+.empty {
+  padding-top: 90px;
 }

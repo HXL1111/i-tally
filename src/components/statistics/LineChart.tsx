@@ -45,6 +45,9 @@ export const LineChart = defineComponent({
       type: Array as PropType<[string, number][]>,
       required: true,
     },
+    display: {
+      type: Boolean,
+    },
   },
   setup: (props, context) => {
     const refDiv = ref<HTMLDivElement>()
@@ -78,6 +81,14 @@ export const LineChart = defineComponent({
         ],
       })
     })
-    return () => <div ref={refDiv} class={s.lineChart}></div>
+    return () => (
+      <div class={s.wrapper}>
+        {props.display ? (
+          <div ref={refDiv} class={s.lineChart}></div>
+        ) : (
+          <div class={s.empty}>不支持显示超过一个月的时间数据</div>
+        )}
+      </div>
+    )
   },
 })

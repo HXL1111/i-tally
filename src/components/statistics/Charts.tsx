@@ -1,5 +1,6 @@
 import { FormItem } from '@/shared/Form'
 import { http } from '@/shared/Http'
+import { Icon } from '@/shared/Icon'
 import { Time } from '@/shared/time'
 import { computed, defineComponent, onMounted, PropType, ref, watch } from 'vue'
 import { Bars } from './Bars'
@@ -22,14 +23,14 @@ export const Charts = defineComponent({
   },
   setup: (props, context) => {
     const refKind = ref('expenses')
-    watch(
-      () => refKind.value,
-      () => {}
-    )
     const data1 = ref<Data1>([])
+    let display = true
     const betterData1 = computed<[string, number][]>(() => {
       if (!props.startDate || !props.endDate) {
         return []
+      }
+      if (new Time(props.endDate).getTimestamp() - new Time(props.startDate).getTimestamp() > 2678400000) {
+        display = false
       }
       const array = []
       const diff = new Date(props.endDate).getTime() - new Date(props.startDate).getTime()
@@ -47,9 +48,12 @@ export const Charts = defineComponent({
       return array as [string, number][]
     })
     const fetchData1 = async () => {
+      if (!props.startDate || !props.endDate) {
+        return
+      }
       const response = await http.get<{ groups: Data1 }>('/items/summary', {
-        happen_after: props.startDate!,
-        happen_before: props.endDate!,
+        happen_after: props.startDate,
+        happen_before: props.endDate,
         kind: refKind.value,
         group_by: 'happen_at',
         _mock: 'itemSummary',
@@ -58,6 +62,7 @@ export const Charts = defineComponent({
     }
     onMounted(fetchData1)
     watch(() => refKind.value, fetchData1)
+    watch(() => [props.startDate, props.endDate], fetchData1)
     const data2 = ref<Data2>([])
     const betterData2 = computed<{ name: string; value: number }[]>(() =>
       data2.value.map((item) => ({
@@ -66,6 +71,9 @@ export const Charts = defineComponent({
       }))
     )
     const fetchData2 = async () => {
+      if (!props.startDate || !props.endDate) {
+        return
+      }
       const response = await http.get<{ groups: Data2 }>(
         '/items/summary',
         {
@@ -81,6 +89,7 @@ export const Charts = defineComponent({
     }
     onMounted(fetchData2)
     watch(() => refKind.value, fetchData2)
+    watch(() => [props.startDate, props.endDate], fetchData2)
     const betterData3 = computed<{ tag: Tag; amount: number; percent: number }[]>(() => {
       const total = data2.value.reduce((sum, item) => sum + item.amount, 0)
       return data2.value.map((item) => ({
@@ -100,9 +109,18 @@ export const Charts = defineComponent({
           v-model={refKind.value}
           direction="row"
         />
-        <LineChart data={betterData1.value} />
-        <PieChart data={betterData2.value} />
-        <Bars data={betterData3.value} />
+        {data1.value.length > 0 ? (
+          <>
+            <LineChart data={betterData1.value} display={display} />
+            <PieChart data={betterData2.value} />
+            <Bars data={betterData3.value} />
+          </>
+        ) : (
+          <div class={s.center}>
+            <Icon name="bill" class={s.icon} />
+            <span>未发现账单，试着记一笔哦~</span>
+          </div>
+        )}
       </div>
     )
   },
