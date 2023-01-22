@@ -2,6 +2,7 @@ import { getMoney } from '@/shared/Money'
 import * as echarts from 'echarts'
 import { defineComponent, onMounted, PropType, ref, watch } from 'vue'
 import s from './PieChart.module.scss'
+
 const echartsOption = {
   tooltip: {
     trigger: 'item',
@@ -10,10 +11,9 @@ const echartsOption = {
       return `${name}: ￥${getMoney(value)} 占比 ${Math.round(percent)}%`
     },
   },
+  grid: [{ left: 0, top: 0, right: 0, bottom: 0 }],
   series: [
     {
-      name: 'Access From',
-      type: 'pie',
       radius: '70%',
       emphasis: {
         itemStyle: {
@@ -32,8 +32,24 @@ export const PieChart = defineComponent({
     },
   },
   setup: (props, context) => {
-    const refDiv = ref<HTMLDivElement>()
+    const refDiv2 = ref<HTMLDivElement>()
     let chart: echarts.ECharts | undefined = undefined
+    onMounted(() => {
+      if (refDiv2.value === undefined) {
+        return
+      }
+      // 基于准备好的dom，初始化echarts实例
+      chart = echarts.init(refDiv2.value)
+      chart.setOption({
+        ...echartsOption,
+        series: [
+          {
+            data: props.data,
+            type: 'pie',
+          },
+        ],
+      })
+    })
     watch(
       () => props.data,
       () => {
@@ -46,13 +62,6 @@ export const PieChart = defineComponent({
         })
       }
     )
-    onMounted(() => {
-      if (refDiv.value === undefined) {
-        return
-      }
-      chart = echarts.init(refDiv.value)
-      chart.setOption(echartsOption)
-    })
-    return () => <div ref={refDiv} class={s.pieChart}></div>
+    return () => <div ref={refDiv2} class={s.pieChart}></div>
   },
 })
