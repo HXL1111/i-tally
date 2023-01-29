@@ -1,8 +1,8 @@
 import { Button } from '@/shared/Button'
 import { DateTime } from '@/shared/DateTime'
-import { http } from '@/shared/Http'
 import { Icon } from '@/shared/Icon'
 import { Money } from '@/shared/Money'
+import { useBalanceStore } from '@/stores/useBalanceStore'
 import { useItemStore } from '@/stores/useItemStore'
 import { defineComponent, onMounted, onUpdated, PropType, reactive, watch } from 'vue'
 import { RouterLink } from 'vue-router'
@@ -29,36 +29,15 @@ export const ItemSummary = defineComponent({
         itemStore.fetchItems(props.startDate, props.endDate)
       }
     )
-
-    const itemsBalance = reactive({
-      expenses: 0,
-      income: 0,
-      balance: 0,
+    const balanceStore = useBalanceStore(['balance', props.startDate!, props.endDate!])
+    onMounted(() => {
+      balanceStore.fetchItemsBalance(props.startDate, props.endDate)
     })
-    const fetchItemsBalance = async () => {
-      if (!props.startDate || !props.endDate) {
-        return
-      }
-      const response = await http.get(
-        '/items/balance',
-        {
-          happen_after: props.startDate,
-          happen_before: props.endDate,
-        },
-        { _mock: 'itemIndexBalance' }
-      )
-      Object.assign(itemsBalance, response.data)
-    }
-    onMounted(fetchItemsBalance)
     watch(
       () => [props.endDate, props.startDate],
       () => {
-        Object.assign(itemsBalance, {
-          expenses: 0,
-          income: 0,
-          balance: 0,
-        })
-        fetchItemsBalance()
+        balanceStore.$reset()
+        balanceStore.fetchItemsBalance(props.startDate, props.endDate)
       }
     )
     return () => (
@@ -69,19 +48,19 @@ export const ItemSummary = defineComponent({
               <li class={s.expense}>
                 <span>支出</span>
                 <span>
-                  <Money value={itemsBalance.expenses} />
+                  <Money value={balanceStore.expenses} />
                 </span>
               </li>
               <li class={s.income}>
                 <span>收入</span>
                 <span>
-                  <Money value={itemsBalance.income} />
+                  <Money value={balanceStore.income} />
                 </span>
               </li>
               <li>
                 <span class={s.netIncome}>结余</span>
                 <span>
-                  <Money value={itemsBalance.balance} />
+                  <Money value={balanceStore.balance} />
                 </span>
               </li>
             </ol>

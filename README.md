@@ -6,8 +6,6 @@
 
 ### ref 默认值
 
-## 如何打包
-
 推荐使用
 
 ```tsx
@@ -19,6 +17,8 @@ const div = ref<HTMLDivElement>()
 ```tsx
 const div = ref<HTMLDivElement | null>(null)
 ```
+
+## 如何打包
 
 ## 如何开发
 
