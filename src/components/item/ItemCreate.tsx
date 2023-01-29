@@ -2,9 +2,11 @@ import { NavBarLayout } from '@/layouts/NavBarLayout'
 import { http } from '@/shared/Http'
 import { Tabs, Tab } from '@/shared/Tabs'
 import { hasError, validate } from '@/shared/validate'
+import { useTabsStore } from '@/stores/useTabsStore'
 import { AxiosError } from 'axios'
+
 import { showDialog } from 'vant'
-import { defineComponent, PropType, reactive } from 'vue'
+import { defineComponent, onMounted, PropType, reactive, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { InputPad } from './InputPad'
 import s from './ItemCreate.module.scss'
@@ -16,8 +18,9 @@ export const ItemCreate = defineComponent({
     },
   },
   setup: (props, context) => {
+    const tabStore = useTabsStore()
     const formData = reactive<Partial<Item>>({
-      kind: 'expenses',
+      kind: tabStore.typeTab,
       tag_ids: [],
       amount: 0,
       happen_at: new Date().toISOString(),
@@ -37,6 +40,16 @@ export const ItemCreate = defineComponent({
       }
       throw error
     }
+    watch(
+      () => formData.kind,
+      () => {
+        tabStore.typeTab = formData.kind
+        tabStore.setTab('typeTab', tabStore.typeTab!.toString())
+      }
+    )
+    onMounted(() => {
+      tabStore.fetchTab('typeTab')
+    })
     const router = useRouter()
     const onSubmit = async () => {
       Object.assign(errors, { kind: [], tag_ids: [], amount: [], happen_at: [] })

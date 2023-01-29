@@ -2,9 +2,11 @@ import { NavBarLayout } from '@/layouts/NavBarLayout'
 import { Overlay } from 'vant'
 import { Tabs, Tab } from '@/shared/Tabs'
 import { Time } from '@/shared/time'
-import { defineComponent, PropType, reactive, ref } from 'vue'
+import { defineComponent, onMounted, PropType, reactive, ref, watch } from 'vue'
 import s from './TimeTabsLayout.module.scss'
 import { Form, FormItem } from '@/shared/Form'
+import { useTabsStore } from '@/stores/useTabsStore'
+
 const demo = defineComponent({
   props: {
     startDate: {
@@ -61,8 +63,9 @@ export const TimeTabsLayout = defineComponent({
     },
   },
   setup: (props, context) => {
-    const refKind = ref('本月')
+    const tabStore = useTabsStore()
     const refDateOverlayVisible = ref(false)
+    const refKind = ref('')
     const onSelectTime = (name: string) => {
       if (name === '自定义时间') {
         refDateOverlayVisible.value = true
@@ -78,6 +81,27 @@ export const TimeTabsLayout = defineComponent({
       refDateOverlayVisible.value = false
       Object.assign(customTime, tempTime)
     }
+    onMounted(() => {
+      if (props.component.__hmrId === '98990140') {
+        refKind.value = tabStore.itemSummaryTab.toString()
+        tabStore.fetchTab('itemSummaryTab')
+      } else {
+        refKind.value = tabStore.statisticsTab.toString()
+        tabStore.fetchTab('statisticsTab')
+      }
+    })
+    watch(
+      () => refKind.value,
+      () => {
+        if (props.component.__hmrId === '98990140') {
+          tabStore.itemSummaryTab = refKind.value
+          tabStore.setTab('itemSummaryTab', tabStore.itemSummaryTab.toString())
+        } else {
+          tabStore.statisticsTab = refKind.value
+          tabStore.setTab('statisticsTab', tabStore.statisticsTab.toString())
+        }
+      }
+    )
     return () => (
       <div class={s.wrapper}>
         <NavBarLayout iconName={props.iconName} title={props.title} onClick={props.iconOnClick}>
