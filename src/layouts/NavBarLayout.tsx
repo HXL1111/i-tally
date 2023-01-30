@@ -33,13 +33,7 @@ export const NavBarLayout = defineComponent({
       <div class={s.wrapper}>
         <NavBar>
           {{
-            icon: () => (
-              <Icon
-                onClick={props.onClick || onBackClick}
-                name={props.iconName}
-                class={s.icon}
-              />
-            ),
+            icon: () => <Icon onClick={props.onClick || onBackClick} name={props.iconName} class={s.icon} />,
             title: () => <span class={s.title}>{props.title}</span>,
           }}
         </NavBar>
