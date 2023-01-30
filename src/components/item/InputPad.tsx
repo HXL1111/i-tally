@@ -6,6 +6,7 @@ import 'vant/es/picker/style'
 import 'vant/es/popup/style'
 import { Time } from '@/shared/time'
 import { useRouter } from 'vue-router'
+import dayjs from 'dayjs'
 
 export const InputPad = defineComponent({
   props: {
@@ -141,6 +142,7 @@ export const InputPad = defineComponent({
     }
     return () => (
       <div class={s.inputPad}>
+        {dayjs(String(refCurrentDate.value)).format('YYYY-MM-DD')}
         <div class={s.amountAndDate}>
           <div class={s.date}>
             <div
