@@ -29,12 +29,15 @@ export const Charts = defineComponent({
       if (!props.startDate || !props.endDate) {
         return []
       }
-      if (new Time(props.endDate).getTimestamp() - new Time(props.startDate).getTimestamp() > 2678400000) {
+      if (
+        new Time(props.endDate.split(' ')[0]).getTimestamp() - new Time(props.startDate).getTimestamp() >
+        2678400000
+      ) {
         display = false
       }
       const array = []
-      const diff = new Date(props.endDate).getTime() - new Date(props.startDate).getTime()
-      const n = diff / DAY
+      const diff = new Date(props.endDate.split(' ')[0]).getTime() - new Date(props.startDate).getTime()
+      const n = diff / DAY + 1
       let data1Index = 0
       for (let i = 0; i < n; i++) {
         const time = new Time(props.startDate + 'T00:00:00.000Z').add(i, 'day').getTimestamp()
