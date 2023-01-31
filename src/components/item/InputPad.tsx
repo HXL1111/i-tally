@@ -6,7 +6,6 @@ import 'vant/es/picker/style'
 import 'vant/es/popup/style'
 import { Time } from '@/shared/time'
 import { useRouter } from 'vue-router'
-import dayjs from 'dayjs'
 
 export const InputPad = defineComponent({
   props: {
@@ -137,12 +136,11 @@ export const InputPad = defineComponent({
     const hideDatePicker = () => (refDatePickerVisible.value = false)
     const setDate = (date: any) => {
       refCurrentDate.value = date.selectedValues
-      context.emit('update:happenAt', new Date(String(refCurrentDate.value)).toISOString())
+      context.emit('update:happenAt', new Date(String(refCurrentDate.value).replaceAll(',', '-')).toISOString())
       hideDatePicker()
     }
     return () => (
       <div class={s.inputPad}>
-        {dayjs(String(refCurrentDate.value)).format('YYYY-MM-DD')}
         <div class={s.amountAndDate}>
           <div class={s.date}>
             <div
@@ -152,7 +150,9 @@ export const InputPad = defineComponent({
               }}
             >
               <Icon name="date" class={s.icon} />
-              <span>{new Time(new Date(String(refCurrentDate.value))).format()}</span>
+              <span>
+                {new Time(new Date(String(refCurrentDate.value).replaceAll(',', '-')).toISOString()).format()}
+              </span>
             </div>
             <Popup v-model:show={refDatePickerVisible.value} position="bottom" close-on-click-overlay={false}>
               <DatePicker
