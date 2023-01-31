@@ -34,7 +34,7 @@ export const Charts = defineComponent({
       }
       const array = []
       const diff = new Date(props.endDate).getTime() - new Date(props.startDate).getTime()
-      const n = diff / DAY + 1
+      const n = diff / DAY
       let data1Index = 0
       for (let i = 0; i < n; i++) {
         const time = new Time(props.startDate + 'T00:00:00.000Z').add(i, 'day').getTimestamp()
