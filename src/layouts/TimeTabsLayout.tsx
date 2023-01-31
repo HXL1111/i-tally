@@ -22,21 +22,21 @@ const timeMap = [
     name: '本月',
     timeList: {
       start: new Time().firstDayOfMonth().format(),
-      end: new Time().lastDayOfMonth().format(),
+      end: new Time().lastDayOfMonth().format('YYYY-MM-DD HH:mm:ss'),
     },
   },
   {
     name: '上个月',
     timeList: {
       start: new Time().add(-1, 'month').firstDayOfMonth().format(),
-      end: new Time().add(-1, 'month').lastDayOfMonth().format(),
+      end: new Time().add(-1, 'month').lastDayOfMonth().format('YYYY-MM-DD HH:mm:ss'),
     },
   },
   {
     name: '今年',
     timeList: {
       start: new Time().firstDayOfYear().format(),
-      end: new Time().lastDayOfYear().format(),
+      end: new Time().lastDayOfYear().format('YYYY-MM-DD HH:mm:ss'),
     },
   },
 ]
@@ -79,7 +79,6 @@ export const TimeTabsLayout = defineComponent({
     const onSubmitCustomTime = (e: Event) => {
       e.preventDefault()
       refDateOverlayVisible.value = false
-
       Object.assign(customTime, tempTime)
     }
     onMounted(() => {
@@ -125,7 +124,14 @@ export const TimeTabsLayout = defineComponent({
                     <props.component startDate={timeMap[2].timeList.start} endDate={timeMap[2].timeList.end} />
                   </Tab>
                   <Tab value="自定义时间" name="自定义时间">
-                    <props.component startDate={customTime.start} endDate={customTime.end} />
+                    <props.component
+                      startDate={customTime.start}
+                      endDate={new Time(customTime.end)
+                        .add(1, 'day')
+                        .add(-8, 'hour')
+                        .add(-1, 'second')
+                        .format('YYYY-MM-DD HH:mm:ss')}
+                    />
                   </Tab>
                 </Tabs>
                 <Overlay show={refDateOverlayVisible.value} class={s.overlay}>

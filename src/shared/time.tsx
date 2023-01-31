@@ -46,9 +46,11 @@ export class Time {
   }
   lastDayOfMonth() {
     return new Time(new Date(this.date.getFullYear(), this.date.getMonth() + 1, 0, 0, 0, 0))
+      .add(1, 'day')
+      .add(-1, 'second')
   }
   lastDayOfYear() {
-    return new Time(new Date(this.date.getFullYear() + 1, 0, 0, 0, 0, 0))
+    return new Time(new Date(this.date.getFullYear() + 1, 0, 0, 0, 0, 0)).add(1, 'day').add(-1, 'second')
   }
   getRaw() {
     return this.date

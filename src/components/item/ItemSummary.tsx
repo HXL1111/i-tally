@@ -4,7 +4,7 @@ import { Icon } from '@/shared/Icon'
 import { Money } from '@/shared/Money'
 import { useBalanceStore } from '@/stores/useBalanceStore'
 import { useItemStore } from '@/stores/useItemStore'
-import { defineComponent, onMounted, onUpdated, PropType, reactive, watch } from 'vue'
+import { defineComponent, onMounted, PropType, watch } from 'vue'
 import { RouterLink } from 'vue-router'
 import s from './ItemSummary.module.scss'
 export const ItemSummary = defineComponent({

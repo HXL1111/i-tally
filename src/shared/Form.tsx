@@ -27,7 +27,9 @@ export const FormItem = defineComponent({
       type: String,
     },
     type: {
-      type: String as PropType<'text' | 'logoList' | 'date' | 'validationCode' | 'select'>,
+      type: String as PropType<
+        'text' | 'logoList' | 'date' | 'validationCode' | 'select'
+      >,
     },
     placeholder: {
       type: String,
@@ -91,7 +93,9 @@ export const FormItem = defineComponent({
           return (
             <LogoSelect
               modelValue={props.modelValue}
-              onUpdateModelValue={(value) => context.emit('update:modelValue', value)}
+              onUpdateModelValue={(value) =>
+                context.emit('update:modelValue', value)
+              }
             />
           )
         case 'date':
@@ -105,14 +109,21 @@ export const FormItem = defineComponent({
                 }}
                 class={s.dateInput}
               />
-              <Popup position="bottom" v-model:show={refDateVisible.value} close-on-click-overlay={false}>
+              <Popup
+                position="bottom"
+                v-model:show={refDateVisible.value}
+                close-on-click-overlay={false}
+              >
                 <DatePicker
-                  modelValue={props.modelValue?.split('-') || new Time().format().split('-')}
+                  modelValue={
+                    props.modelValue?.split('-') ||
+                    new Time().format().split('-')
+                  }
                   title="选择年月日"
                   onConfirm={(date: any) => {
                     context.emit(
                       'update:modelValue',
-                      new Time(new Date(String(date.selectedValues).replaceAll(',', '-')).toISOString()).format()
+                      new Time(new Date(date.selectedValues)).format()
                     )
                     refDateVisible.value = false
                   }}
@@ -138,7 +149,9 @@ export const FormItem = defineComponent({
                 class={s.button}
                 autoSelfDisabled={true}
               >
-                {isCounting.value ? `${count.value}秒后可重新发送` : '发送验证码'}
+                {isCounting.value
+                  ? `${count.value}秒后可重新发送`
+                  : '发送验证码'}
               </Button>
             </div>
           )
@@ -164,7 +177,9 @@ export const FormItem = defineComponent({
       <label class={props.direction && s.row}>
         <div class={s.text}>
           <span>{props.label}</span>
-          {props.error && <span class={s.error}>{getFriendlyError(props.error)}</span>}
+          {props.error && (
+            <span class={s.error}>{getFriendlyError(props.error)}</span>
+          )}
         </div>
         {content.value}
       </label>
