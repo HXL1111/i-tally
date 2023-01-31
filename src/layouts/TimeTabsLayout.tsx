@@ -79,6 +79,7 @@ export const TimeTabsLayout = defineComponent({
     const onSubmitCustomTime = (e: Event) => {
       e.preventDefault()
       refDateOverlayVisible.value = false
+
       Object.assign(customTime, tempTime)
     }
     onMounted(() => {
@@ -132,8 +133,8 @@ export const TimeTabsLayout = defineComponent({
                     <header>请选择时间</header>
                     <main>
                       <Form class={s.form} onSubmit={onSubmitCustomTime}>
-                        <FormItem type="date" label="开始时间" v-model={tempTime.start} />
-                        <FormItem type="date" label="结束时间" v-model={tempTime.end} />
+                        <FormItem type="date" label="开始时间" v-model:modelValue={tempTime.start} />
+                        <FormItem type="date" label="结束时间" v-model:modelValue={tempTime.end} />
                         <div class={s.actions}>
                           <button type="button" onClick={() => (refDateOverlayVisible.value = false)}>
                             取消
