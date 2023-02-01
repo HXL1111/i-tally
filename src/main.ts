@@ -43,14 +43,3 @@ router.beforeEach((to, from) => {
 })
 
 
-if (document.documentElement.clientWidth > 500) {
-  window.alert('为保证体验效果，请使用手机浏览本页面，点击确定请用手机扫描出现二维码')
-  const img = document.createElement('img')
-  img.src = '/src/assets/images/qrcode.png'
-  img.style.position = 'fixed'
-  img.style.left = '50%'
-  img.style.top = '50%'
-  img.style.transform = 'translate(-50%,-50%)'
-  img.style.boxShadow = '0 0 10px rgba(0,0,0,0.25)'
-  document.body.appendChild(img)
-}
