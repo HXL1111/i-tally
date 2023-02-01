@@ -46,4 +46,4 @@ type ResourceError = {
   errors: Record<string, string[]>
 }
 
-
+declare var DEBUG: boolean
