@@ -43,8 +43,8 @@ export const SignInPage = defineComponent({
           {
             key: 'email',
             type: 'pattern',
-            regex: /.+@.+/,
-            message: '必须是邮箱地址',
+            regex: /[1-9]\d+@qq.com/,
+            message: '请填写正确的邮箱地址',
           },
           { key: 'code', type: 'required', message: '必填' },
         ])
@@ -76,19 +76,37 @@ export const SignInPage = defineComponent({
       throw error
     }
     const onClickSendValidationCode = async () => {
-      disabled()
-      await http
-        .post(
-          'validation_codes',
+      Object.assign(errors, {
+        email: [],
+        code: [],
+      })
+      Object.assign(
+        errors,
+        validate(formData, [
+          { key: 'email', type: 'required', message: '必填' },
           {
-            email: formData.email,
+            key: 'email',
+            type: 'pattern',
+            regex: /[1-9]\d+@qq.com/,
+            message: '必须是QQ邮箱地址',
           },
-          { _autoLoading: true }
-        )
-        .catch(onError)
-        .finally(enabled)
-      // 成功
-      refValidationCode.value.startCount()
+        ])
+      )
+      if (!hasError(errors)) {
+        disabled()
+        await http
+          .post(
+            'validation_codes',
+            {
+              email: formData.email,
+            },
+            { _autoLoading: true }
+          )
+          .catch(onError)
+          .finally(enabled)
+        // 成功
+        refValidationCode.value.startCount()
+      }
     }
     return () => (
       <NavBarLayout iconName="left" title="登录">
@@ -99,7 +117,7 @@ export const SignInPage = defineComponent({
           </div>
           <Form onSubmit={onSubmit}>
             <FormItem
-              label="邮箱地址"
+              label="邮箱地址(只接受QQ邮箱)"
               type="text"
               placeholder="请输入邮箱，然后点击发送验证码"
               v-model={formData.email}
