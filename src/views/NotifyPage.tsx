@@ -10,3 +10,4 @@ export const NotifyPage = defineComponent({
     return () => <ComingSoon title="记账提醒" />
   },
 })
+export default NotifyPage

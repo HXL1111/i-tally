@@ -11,3 +11,5 @@ export const StatisticsPage = defineComponent({
     return () => <TimeTabsLayout component={Charts} iconName="left" title="统计图表" rerenderOnSwitchTab={true} />
   },
 })
+
+export default StatisticsPage

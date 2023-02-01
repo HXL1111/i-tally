@@ -11,6 +11,26 @@ const { resolve } = require('path')
 // https://vitejs.dev/config/
 export default defineConfig({
   base: '/i-tally-website/',
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id: any) {
+          if (id.includes('echarts')) {
+            return 'echarts';
+          }
+          if (id.includes('mock') || id.includes('faker')) {
+            return 'mock';
+          }
+          if (id.includes('vant')) {
+            return 'vant';
+          }
+          if (id.includes('node_modules')) {
+            return 'vendor';
+          }
+        }
+      }
+    }
+  },
   plugins: [
     vue(),
     vueJsx({

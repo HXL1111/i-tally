@@ -10,3 +10,4 @@ export const ExportPage = defineComponent({
     return () => <ComingSoon title="导出数据" />
   },
 })
+export default ExportPage
